@@ -10,43 +10,21 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column @NotBlank
-    private String username;
-
-    @Column @NotBlank
-    private String password;
-
-    @Column @NotBlank
-    private String firstname;
-
-    @Column @NotBlank
-    private String lastname;
+    private long id_user;
 
     @Column @NotBlank
     private String email;
 
-    @Column
-    private String role;
-
     @Column @NotBlank
-    private Date birthDate;
+    private String password;
 
-    public long getId() {
-        return id;
+
+    public long getId_user() {
+        return id_user;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId_user(long id_user) {
+        this.id_user = id_user;
     }
 
     public String getPassword() {
@@ -57,31 +35,7 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public String getEmail() {
         return email;
@@ -91,25 +45,12 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
+                "id_user=" + id_user +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", birthDate=" + birthDate +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
