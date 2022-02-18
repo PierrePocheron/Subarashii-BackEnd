@@ -1,5 +1,13 @@
 package com.jfam.subarashii.entities;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "anime")
 public class Anime {
 
     private String nom;
@@ -9,6 +17,10 @@ public class Anime {
     private String producer;
 
     private String image;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     public Anime(){}
 
@@ -49,5 +61,14 @@ public class Anime {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public Long getId() {
+        return id;
     }
 }
