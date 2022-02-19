@@ -1,12 +1,16 @@
 package com.jfam.subarashii.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
@@ -16,7 +20,54 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
     @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .cors().and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll();
+/*        http.addFilterBefore(jwtRequestFilter, JwtRequestFilter.class)
+                .csrf()
+                .ignoringAntMatchers("/auth/login");*/
+    }
+
+/*    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+*//*        http.csrf().disable().addFilterBefore(jwtRequestFilter, FilterSecurityInterceptor.class);
+
+        http.authorizeRequests().antMatchers("/auth/login").permitAll()
+                .anyRequest().authenticated();*//*
+
+        http.cors().and()
+                .csrf().disable().authorizeRequests()
+                .antMatchers("/auth/login\"").permitAll()
+                .and()
+                .csrf().disable();
+
+        http.addFilterBefore(jwtRequestFilter, JwtRequestFilter.class);
+    }*/
+/*
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.csrf().disable()
+                // dont authenticate this particular request
+                .authorizeRequests().antMatchers("/auth/login").permitAll().
+                // all other requests need to be authenticated
+                        anyRequest().authenticated().and().
+                // make sure we use stateless session; session won't be used to
+                // store user's state.
+                        exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
+    }
+*/
+
+   /* @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
@@ -27,8 +78,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
-    }
-
+    }*/
     /*@Override
     protected void configure(HttpSecurity http) throws Exception {
         http

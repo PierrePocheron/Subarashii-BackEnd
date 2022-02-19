@@ -7,8 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "anime")
+@Table(name = "animes")
 public class Anime {
+
+    @Id
+    @GeneratedValue
+    private long id;
 
     private String nom;
 
@@ -18,9 +22,7 @@ public class Anime {
 
     private String image;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+
 
     public Anime(){}
 
@@ -29,6 +31,14 @@ public class Anime {
         this.alias = alias;
         this.producer = producer;
         this.image = image;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -61,14 +71,5 @@ public class Anime {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public Long getId() {
-        return id;
     }
 }
