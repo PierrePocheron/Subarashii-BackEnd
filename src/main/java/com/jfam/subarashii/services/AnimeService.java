@@ -1,7 +1,6 @@
 package com.jfam.subarashii.services;
 
 import com.jfam.subarashii.entities.Anime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.List;
 
 @Service
 public class AnimeService {
+
     public Anime getOne(){
         Anime anime =  new Anime("Dragon ball Z" , "DBZ", "Akira Toriyama", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
         return anime;

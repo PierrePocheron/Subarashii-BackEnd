@@ -20,14 +20,4 @@ public class Helpers {
         c.add(Calendar.MINUTE, minute);
         return c.getTime();
     }
-
-    public static Date CurrentDateMinusSecond(int minute)
-    {
-        Date date = new Date();
-        // Convert Date to Calendar
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.add(Calendar.MINUTE, -minute);
-        return c.getTime();
-    }
 }

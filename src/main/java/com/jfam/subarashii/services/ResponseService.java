@@ -17,7 +17,6 @@ public class ResponseService {
     ObjectMapper mapper;
     ResponseDTO responsedto;
 
-
     public void ErrorF(HttpServletResponse response, String errormessage, int Errorstatut, Object body) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(Errorstatut);
