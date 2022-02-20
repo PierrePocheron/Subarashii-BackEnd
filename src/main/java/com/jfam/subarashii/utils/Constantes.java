@@ -20,10 +20,11 @@ public class Constantes {
         public final static String TOKEN_INVALIDE = "Le token est invalide";
         public final static String AUTHENTIFICATION_NOT_OK = "Email ou mots de passe incorrect";
         public final static String EMPTY_EMAIL_OR_PASSWORD = "Le mot de passe ou  ou mots de passe incorrect";
+        public final static String ANIME_NOT_FOUND = "Aucun animé a été trouvé";
     }
     public static class SuccessMessage {
         public final static String CONNECTION_OK= "Authentification ok bienvenue !";
-        public final static String INSCRIPTION_OK= "L'inscription à été réalisé, veuillez vous connecter !";
+        public final static String INSCRIPTION_OK= "L'inscription à été réalisé avec succès, veuillez vous connecter !";
 
     }
 

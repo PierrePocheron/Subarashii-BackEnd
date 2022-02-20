@@ -48,8 +48,7 @@ public class JwtService {
     public boolean VerifyToken(String token){
         try {
             algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .build(); //Reusable verifier instance
+            JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (JWTVerificationException exception) {

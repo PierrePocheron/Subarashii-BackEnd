@@ -17,9 +17,6 @@ public class UserService {
     UserRepository userRepository;
 
     public User login(User user){
-        if(user == null){
-            return null ;
-        }
         logger.info("Tentative de login sur l'utilisateur: " + user.toString());
         return userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
     }
