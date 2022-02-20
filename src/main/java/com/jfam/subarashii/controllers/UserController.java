@@ -34,7 +34,9 @@ public class UserController {
 
     @PostMapping(value = "sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void SignUpUser(@RequestBody User user, HttpServletResponse res) throws IOException {
+
         boolean isValidateUser = User.validatorSignUp.test(user);
+
         if(!isValidateUser){
             responseService.ErrorF(res,"Inscription incorrecte",HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE,User.validatorSignUp.getErrors());
             return;
@@ -47,14 +49,14 @@ public class UserController {
         if(user == null)
             return;
 
-        User userFetching = userService.login(user);
-
+        //User userFetching = userService.login(user);
+        User userFetching = new User();
         if(userFetching == null) {
             responseService.ErrorF(res, Constantes.ErrorMessage.AUTHENTIFICATION_NOT_OK, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
 
-        String token = jwtService.CreateToken(user.getEmail(),user.getRole());
+        String token = jwtService.CreateToken(userFetching.getEmail(),userFetching.getRole());
         res.setHeader(Constantes.Token_value.AUTHORIZATION_BEARER,token);
         responseService.SuccessF(res,Constantes.SuccessMessage.CONNECTION_OK,true);
     }

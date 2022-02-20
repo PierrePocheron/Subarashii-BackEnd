@@ -1,6 +1,5 @@
 package com.jfam.subarashii.configs;
 
-import com.jfam.subarashii.entities.Roles;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
@@ -21,7 +20,7 @@ import java.io.IOException;
 
 
 @Component
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class RequestFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtService jwtService;
@@ -45,15 +44,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             responseService.ErrorF(response, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
+        // set user role
         String email = jwtService.getClaims(token,Constantes.Claims.EMAIL).asString();
         String role = jwtService.getClaims(token,Constantes.Claims.ROLE).asString();
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null,
         AuthorityUtils.createAuthorityList("ROLE_"+ role));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        final boolean isUserAdmin= request.isUserInRole(Roles.ADMIN.toString());
-        final boolean isUserStandard= request.isUserInRole(Roles.USER.toString());
         chain.doFilter(request, response);
     }
 

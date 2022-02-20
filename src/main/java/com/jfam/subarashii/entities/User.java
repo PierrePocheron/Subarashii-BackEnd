@@ -25,6 +25,10 @@ public class User {
     @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
     private String role = Roles.USER.toString();
 
+    @OneToMany
+    @JoinColumn( name = "user_id")
+    private List<UserLists> lists;
+
     public String getRole() {
         return role;
     }
@@ -40,10 +44,6 @@ public class User {
     public void setLists(List<UserLists> lists) {
         this.lists = lists;
     }
-
-    @OneToMany
-    @JoinColumn( name = "user_id")
-    private List<UserLists> lists;
 
     public long getId_User() {
         return id_User;
@@ -77,7 +77,7 @@ public class User {
     }
 
     public static Validator<User> validatorSignUp = Validator.stream(User.class)
-            .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
+            .add(User::getEmail, Validator.REQUIRED & Validator.EMAIL, "Un email est requis pour l'inscription")
             .add(User::getPassword, Validator.REQUIRED , "Aucun password n'a été renseigné")
             .min(User::getPassword, 5, "Le password doit contenir au minimum 5 caractères");
 }

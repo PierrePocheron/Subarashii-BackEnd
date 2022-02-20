@@ -4,6 +4,7 @@ import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
+import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class AnimeController {
     public void GetOne(HttpServletResponse res) throws IOException {
         Anime anime = animeService.getOne();
         if(anime == null){
-            responseService.ErrorF(res,"Aucune animé n'à été trouvé",HttpServletResponse.SC_NOT_FOUND, null);
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANIME_NOT_FOUND,HttpServletResponse.SC_NOT_FOUND, null);
             return;
         }
         responseService.SuccessF(res,"Un animé à été trouvé", anime);
@@ -40,10 +41,12 @@ public class AnimeController {
     @GetMapping(path = "/all")
     public void GetAll(HttpServletRequest req,HttpServletResponse res) throws IOException {
         List<Anime> animeList = animeService.getAll();
+
         if(animeList == null || animeList.size() == 0){
-            responseService.ErrorF(res,"Aucune animé n'à été trouvé",HttpServletResponse.SC_NOT_FOUND, null);
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANIME_NOT_FOUND,HttpServletResponse.SC_NOT_FOUND, null);
             return;
         }
+
         responseService.SuccessF(res,"Des animés ont été trouvés", animeList);
     }
 
