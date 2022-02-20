@@ -1,7 +1,10 @@
 package com.jfam.subarashii.entities;
 
+import com.github.uzrnem.verify.Validator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -13,13 +16,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_User;
 
-    @Column @NotBlank
+    @Column @NotBlank @NotNull
     private String email;
 
-    @Column @NotBlank
+    @Column @NotBlank @NotNull
     private String password;
 
-    @Column @NotBlank
+    @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
     private String role = Roles.USER.toString();
 
     public String getRole() {
@@ -72,4 +75,9 @@ public class User {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public static Validator<User> validatorSignUp = Validator.stream(User.class)
+            .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
+            .add(User::getPassword, Validator.REQUIRED , "Aucun password n'a été renseigné")
+            .min(User::getPassword, 5, "Le password doit contenir au minimum 5 caractères");
 }

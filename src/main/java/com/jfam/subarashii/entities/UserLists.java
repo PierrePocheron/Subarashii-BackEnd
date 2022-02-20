@@ -2,6 +2,7 @@ package com.jfam.subarashii.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "userlists")
@@ -11,7 +12,7 @@ public class UserLists {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column @NotBlank
+    @Column @NotBlank @NotNull
     private String nom;
 
     @Column

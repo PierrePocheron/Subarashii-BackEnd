@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class Constantes {
     public final static String ENCODE = "UTF-8";
-    public final static String ROUTE_AUTHENTICATE = "/users/login";
+    public final static String ROUTE_SIGN_IN = "/users/sign-in";
+    public final static String ROUTE_SIGN_UP = "/users/sign-up";
 
     public static class Claims{
         public final static String EMAIL= "email";
@@ -18,9 +19,11 @@ public class Constantes {
         public final static String TOKEN_NOT_EXIST = "Veuillez vous identifier";
         public final static String TOKEN_INVALIDE = "Le token est invalide";
         public final static String AUTHENTIFICATION_NOT_OK = "Email ou mots de passe incorrect";
+        public final static String EMPTY_EMAIL_OR_PASSWORD = "Le mot de passe ou  ou mots de passe incorrect";
     }
     public static class SuccessMessage {
-        public final static String AUTHENTIFICATION_OK= "Authentification ok bienvenue !";
+        public final static String CONNECTION_OK= "Authentification ok bienvenue !";
+        public final static String INSCRIPTION_OK= "L'inscription à été réalisé, veuillez vous connecter !";
 
     }
 

@@ -22,6 +22,19 @@ public class Anime {
 
     private String image;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId_api() {
+        return id_api;
+    }
+
+    public void setId_api(long id_api) {
+        this.id_api = id_api;
+    }
+
+    private long id_api;
 
 
     public Anime(){}

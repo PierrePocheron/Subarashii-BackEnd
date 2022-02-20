@@ -1,21 +1,15 @@
 package com.jfam.subarashii.configs;
 
-import ch.qos.logback.classic.Logger;
 import com.jfam.subarashii.entities.Roles;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
-import org.apache.catalina.Role;
-import org.apache.catalina.realm.GenericPrincipal;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -23,9 +17,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.IOException;
-import java.security.Principal;
 
 
 @Component
@@ -66,10 +58,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-
-        // alone route who as not filter
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return Constantes.ROUTE_AUTHENTICATE.equals(path);
+        return path.equals(Constantes.ROUTE_SIGN_UP)  || path.equals(Constantes.ROUTE_SIGN_IN);
     }
 }
