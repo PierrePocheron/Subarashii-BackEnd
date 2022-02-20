@@ -9,8 +9,13 @@ import org.apache.catalina.Role;
 import org.apache.catalina.realm.GenericPrincipal;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -48,6 +53,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             responseService.ErrorF(response, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
+        String email = jwtService.getClaims(token,Constantes.Claims.EMAIL).asString();
+        String role = jwtService.getClaims(token,Constantes.Claims.ROLE).asString();
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(email, null,
+        AuthorityUtils.createAuthorityList("ROLE_"+ role));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final boolean isUserAdmin= request.isUserInRole(Roles.ADMIN.toString());
         final boolean isUserStandard= request.isUserInRole(Roles.USER.toString());

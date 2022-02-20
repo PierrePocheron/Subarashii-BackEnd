@@ -17,6 +17,11 @@ public class Constantes {
         public final static String TOKEN_CREATE = "La création du token à échoué :";
         public final static String TOKEN_NOT_EXIST = "Veuillez vous identifier";
         public final static String TOKEN_INVALIDE = "Le token est invalide";
+        public final static String AUTHENTIFICATION_NOT_OK = "Email ou mots de passe incorrect";
+    }
+    public static class SuccessMessage {
+        public final static String AUTHENTIFICATION_OK= "Authentification ok bienvenue !";
+
     }
 
     public static class Token_value{

@@ -8,16 +8,19 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.jfam.subarashii.entities.Roles;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.beans.JavaBean;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Service
 public class JwtService {
@@ -26,17 +29,17 @@ public class JwtService {
     Algorithm algorithm ;
 
     public String CreateToken(String email, String role){
+        role = role == null ? Roles.USER.toString() : role;
         algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
         Map<String, Object> headerClaims = new HashMap();
-        headerClaims.put(Constantes.Claims.EMAIL, "developer@test.fr");
-        headerClaims.put(Constantes.Claims.ROLE, "developer");
+        headerClaims.put(Constantes.Claims.EMAIL, email);
+        headerClaims.put(Constantes.Claims.ROLE, role);
         try {
             return JWT.create()
                     .withHeader(headerClaims)
                     .withExpiresAt(Helpers.CurrentDatePlusMinutes(Constantes.Token_value.MINUTE_VALIDATION))
                     .sign(algorithm);
         } catch (JWTCreationException exception){
-            //Invalid Signing configuration / Couldn't convert Claims.
             logger.warn(Constantes.ErrorMessage.TOKEN_CREATE + exception.getMessage());
         }
         return null;
