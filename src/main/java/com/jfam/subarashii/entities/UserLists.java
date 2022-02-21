@@ -16,7 +16,7 @@ public class UserLists {
     private String nom;
 
     @Column @NotBlank @NotNull
-    private boolean isDeletabled;
+    private boolean isDeletabled = true;
 
     public long getId() {
         return id;
