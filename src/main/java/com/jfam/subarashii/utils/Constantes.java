@@ -31,7 +31,8 @@ public class Constantes {
     public static class Token_value{
 
         public static String JWT_SECRET_KEY;
-        public final static String AUTHORIZATION_BEARER = "Autorization-bearer";
+        public final static String AUTHORIZATION_HEADER = "Authorization";
+        public final static String TOKEN_PREFIX = "bearer ";
         public static Integer MINUTE_VALIDATION;
     }
 }

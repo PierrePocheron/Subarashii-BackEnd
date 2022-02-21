@@ -33,7 +33,7 @@ public class RequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException, AuthenticationException {
 
-        String token = request.getHeader(Constantes.Token_value.AUTHORIZATION_BEARER);
+        String token = request.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER).replace(Constantes.Token_value.TOKEN_PREFIX,"");
 
         if (token == null) {
             responseService.ErrorF(response, Constantes.ErrorMessage.TOKEN_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);

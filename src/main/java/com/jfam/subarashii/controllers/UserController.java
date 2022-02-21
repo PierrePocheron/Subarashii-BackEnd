@@ -57,7 +57,7 @@ public class UserController {
         }
 
         String token = jwtService.CreateToken(userFetching.getEmail(),userFetching.getRole());
-        res.setHeader(Constantes.Token_value.AUTHORIZATION_BEARER,token);
+        res.setHeader(Constantes.Token_value.AUTHORIZATION_HEADER, Constantes.Token_value.TOKEN_PREFIX +  token);
         responseService.SuccessF(res,Constantes.SuccessMessage.CONNECTION_OK,true);
     }
 
