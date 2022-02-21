@@ -16,7 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_User;
 
-    @Column @NotBlank @NotNull
+    @Column(unique = true) @NotBlank @NotNull
     private String email;
 
     @Column @NotBlank @NotNull
@@ -77,7 +77,7 @@ public class User {
     }
 
     public static Validator<User> validatorSignUp = Validator.stream(User.class)
-            .add(User::getEmail, Validator.REQUIRED & Validator.EMAIL, "Un email est requis pour l'inscription")
+            .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
             .add(User::getPassword, Validator.REQUIRED , "Aucun password n'a été renseigné")
             .min(User::getPassword, 5, "Le password doit contenir au minimum 5 caractères");
 }

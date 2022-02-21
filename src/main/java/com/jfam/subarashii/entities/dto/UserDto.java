@@ -1,16 +1,52 @@
 package com.jfam.subarashii.entities.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jfam.subarashii.entities.User;
+import com.jfam.subarashii.entities.UserLists;
+
+import java.util.List;
 
 public class UserDto {
+
+    private String email;
+    private List<UserLists> lists;
 
     public UserDto() {
     }
 
     public UserDto(User user) {
+        this.email = user.getEmail();
+        this.lists = user.getLists();
     }
 
     public User toEntity(){
-        return null;
+        User user = new User();
+        user.setEmail(this.email);
+        user.setLists(this.lists);
+        return user;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<UserLists> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<UserLists> lists) {
+        this.lists = lists;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "email='" + email + '\'' +
+                ", lists=" + lists +
+                '}';
     }
 }

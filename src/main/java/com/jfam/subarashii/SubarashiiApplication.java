@@ -14,8 +14,6 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args)  {
 		SpringApplication.run(SubarashiiApplication.class, args);
-		System.out.println("JWT secret key: " + Constantes.Token_value.JWT_SECRET_KEY);
-		System.out.println("JWT time validation: " + Constantes.Token_value.MINUTE_VALIDATION);
 	}
 
 	@Value("${spring.jwt.secret.key}")
@@ -24,7 +22,7 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 	}
 
 	@Value("${token.minute.validation}")
-	public void setSecretKey(Integer minuteTokenValidation) {
+	public void setTokenTime(Integer minuteTokenValidation) {
 		Constantes.Token_value.MINUTE_VALIDATION = minuteTokenValidation;
 	}
 
