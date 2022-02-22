@@ -7,13 +7,12 @@ import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class AnimeController {
     }
 
     @GetMapping("/{id}")
-    public void GetById(@RequestParam("id") Integer idAnime){
-
+    public void GetById(@PathVariable long id){
+        Anime anime = animeService.getById(id);
     }
 }

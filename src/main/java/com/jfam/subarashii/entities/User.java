@@ -24,11 +24,11 @@ public class User {
     @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
     private String role = Role.USER.toString();
 
-    @OneToMany @NotBlank @NotNull
+    @OneToMany
     @JoinColumn( name = "user_id")
     private List<UserList> lists;
 
-    @OneToMany @NotBlank @NotNull
+    @OneToMany
     @JoinColumn( name = "anime_id")
     private List<UserListAnime> animesId;
 
