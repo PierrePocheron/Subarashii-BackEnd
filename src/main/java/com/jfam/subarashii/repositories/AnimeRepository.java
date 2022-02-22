@@ -1,4 +1,7 @@
 package com.jfam.subarashii.repositories;
 
-public interface AnimeRepository {
+import com.jfam.subarashii.entities.Anime;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AnimeRepository extends JpaRepository<Anime,Long> {
 }

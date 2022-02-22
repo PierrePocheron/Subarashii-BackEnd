@@ -1,4 +1,7 @@
 package com.jfam.subarashii.repositories;
 
-public interface RoleRepository {
+import com.jfam.subarashii.entities.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RoleRepository extends JpaRepository<Role,Long> {
 }
