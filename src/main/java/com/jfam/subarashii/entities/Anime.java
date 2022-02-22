@@ -22,7 +22,7 @@ public class Anime {
 
     @OneToMany
     @JoinColumn( name = "anime_id")
-    private List<Comments> anime_id;
+    private List<Comment> anime_id;
 
 
     public void setId(long id) {
@@ -89,11 +89,11 @@ public class Anime {
         this.image = image;
     }
 
-    public List<Comments> getAnime_id() {
+    public List<Comment> getAnime_id() {
         return anime_id;
     }
 
-    public void setAnime_id(List<Comments> anime_id) {
+    public void setAnime_id(List<Comment> anime_id) {
         this.anime_id = anime_id;
     }
 }

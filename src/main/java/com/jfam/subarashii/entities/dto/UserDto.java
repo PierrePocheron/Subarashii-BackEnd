@@ -1,15 +1,14 @@
 package com.jfam.subarashii.entities.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jfam.subarashii.entities.User;
-import com.jfam.subarashii.entities.UserLists;
+import com.jfam.subarashii.entities.UserList;
 
 import java.util.List;
 
 public class UserDto {
 
     private String email;
-    private List<UserLists> lists;
+    private List<UserList> lists;
 
     public UserDto() {
     }
@@ -34,11 +33,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public List<UserLists> getLists() {
+    public List<UserList> getLists() {
         return lists;
     }
 
-    public void setLists(List<UserLists> lists) {
+    public void setLists(List<UserList> lists) {
         this.lists = lists;
     }
 

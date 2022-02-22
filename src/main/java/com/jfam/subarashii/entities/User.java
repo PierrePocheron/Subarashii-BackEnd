@@ -5,7 +5,6 @@ import com.github.uzrnem.verify.Validator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,15 +22,15 @@ public class User {
     private String password;
 
     @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
-    private String role = Roles.USER.toString();
+    private String role = Role.USER.toString();
 
     @OneToMany @NotBlank @NotNull
     @JoinColumn( name = "user_id")
-    private List<UserLists> lists;
+    private List<UserList> lists;
 
     @OneToMany @NotBlank @NotNull
     @JoinColumn( name = "anime_id")
-    private List<UserListsAnimes> animesId;
+    private List<UserListAnime> animesId;
 
     public String getRole() {
         return role;
@@ -41,11 +40,11 @@ public class User {
         this.role = role;
     }
 
-    public List<UserLists> getLists() {
+    public List<UserList> getLists() {
         return lists;
     }
 
-    public void setLists(List<UserLists> lists) {
+    public void setLists(List<UserList> lists) {
         this.lists = lists;
     }
 
