@@ -1,10 +1,8 @@
 package com.jfam.subarashii.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "animes")
@@ -21,6 +19,11 @@ public class Anime {
     private String producer;
 
     private String image;
+
+    @OneToMany
+    @JoinColumn( name = "anime_id")
+    private List<Comments> anime_id;
+
 
     public void setId(long id) {
         this.id = id;
@@ -84,5 +87,13 @@ public class Anime {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<Comments> getAnime_id() {
+        return anime_id;
+    }
+
+    public void setAnime_id(List<Comments> anime_id) {
+        this.anime_id = anime_id;
     }
 }
