@@ -1,6 +1,6 @@
 package com.jfam.subarashii.entities;
 
-public enum Roles {
+public enum Role {
     USER,
     ADMIN
 }

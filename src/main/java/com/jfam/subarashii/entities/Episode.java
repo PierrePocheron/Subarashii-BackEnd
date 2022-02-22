@@ -23,7 +23,7 @@ public class Episode {
 
     @OneToMany @NotBlank @NotNull
     @JoinColumn( name = "episode_id")
-    private List<Comments> episode_id;
+    private List<Comment> episode_id;
 
     @OneToMany @NotBlank @NotNull
     @JoinColumn( name = "anime_id")
@@ -55,11 +55,11 @@ public class Episode {
 
 
 
-    public List<Comments> getEpisode_id() {
+    public List<Comment> getEpisode_id() {
         return episode_id;
     }
 
-    public void setEpisode_id(List<Comments> episode_id) {
+    public void setEpisode_id(List<Comment> episode_id) {
         this.episode_id = episode_id;
     }
 

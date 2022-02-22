@@ -8,19 +8,16 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.jfam.subarashii.entities.Roles;
+import com.jfam.subarashii.entities.Role;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.beans.JavaBean;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 @Service
 public class JwtService {
@@ -29,7 +26,7 @@ public class JwtService {
     Algorithm algorithm ;
 
     public String CreateToken(String email, String role){
-        role = role == null ? Roles.USER.toString() : role;
+        role = role == null ? Role.USER.toString() : role;
         algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
         Map<String, Object> headerClaims = new HashMap();
         headerClaims.put(Constantes.Claims.EMAIL, email);

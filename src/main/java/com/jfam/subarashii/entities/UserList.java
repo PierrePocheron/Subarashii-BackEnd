@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "userlists")
-public class UserLists {
+public class UserList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class UserLists {
 
     @OneToMany @NotBlank @NotNull
     @JoinColumn( name = "userList_id")
-    private List<UserListsAnimes> userLists_id;
+    private List<UserListAnime> userLists_id;
 
     public long getId() {
         return id;
@@ -49,11 +49,11 @@ public class UserLists {
 
     
 
-    public List<UserListsAnimes> getUserLists_id() {
+    public List<UserListAnime> getUserLists_id() {
         return userLists_id;
     }
 
-    public void setUserLists_id(List<UserListsAnimes> userLists_id) {
+    public void setUserLists_id(List<UserListAnime> userLists_id) {
         this.userLists_id = userLists_id;
     }
 }
