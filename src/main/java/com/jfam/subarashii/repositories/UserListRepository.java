@@ -1,4 +1,4 @@
 package com.jfam.subarashii.repositories;
 
-public interface UserListsRepository {
+public interface UserListRepository {
 }
