@@ -32,14 +32,13 @@ public class RequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException, AuthenticationException {
+        String header = request.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER);
 
-        String token = request.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER).replace(Constantes.Token_value.TOKEN_PREFIX,"");
-
-        if (token == null) {
+        if (header == null) {
             responseService.ErrorF(response, Constantes.ErrorMessage.TOKEN_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
-
+        String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,"");
         if (!jwtService.VerifyToken(token)) {
             responseService.ErrorF(response, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
