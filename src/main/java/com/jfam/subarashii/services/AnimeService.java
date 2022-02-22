@@ -1,11 +1,10 @@
 package com.jfam.subarashii.services;
 
-import com.jfam.subarashii.configs.HttpClient;
+import com.jfam.subarashii.utils.HttpClient;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +20,7 @@ public class AnimeService {
 
 
     public Anime getOne(){
-        Anime anime =  new Anime("Dragon ball Z" , "DBZ", "Akira Toriyama", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
-        return anime;
+        return new Anime("Dragon ball Z" , "DBZ", "Akira Toriyama", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
     }
 
     public List<Anime> getAll(){
@@ -39,7 +37,7 @@ public class AnimeService {
 
     public Anime getById(long id){
 
-        var object =  httpClient.GetQuery("http://localhost:8080/animes");
+        //var object =  httpClient.GetQuery("http://localhost:8080/animes");
         return animeRepository.findById(id).orElse(null);
     }
 }
