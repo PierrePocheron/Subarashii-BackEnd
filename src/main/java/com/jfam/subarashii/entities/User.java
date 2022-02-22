@@ -25,9 +25,13 @@ public class User {
     @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
     private String role = Roles.USER.toString();
 
-    @OneToMany
+    @OneToMany @NotBlank @NotNull
     @JoinColumn( name = "user_id")
     private List<UserLists> lists;
+
+    @OneToMany @NotBlank @NotNull
+    @JoinColumn( name = "anime_id")
+    private List<UserListsAnimes> animesId;
 
     public String getRole() {
         return role;
