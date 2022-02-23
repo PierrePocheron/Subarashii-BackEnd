@@ -1,6 +1,16 @@
 package com.jfam.subarashii.entities;
 
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "animes")
 public class Anime {
+
+    @Id
+    @GeneratedValue
+    private long id;
 
     private String nom;
 
@@ -10,6 +20,26 @@ public class Anime {
 
     private String image;
 
+    @OneToMany
+    @JoinColumn( name = "anime_id")
+    private List<Comment> anime_id;
+
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId_api() {
+        return id_api;
+    }
+
+    public void setId_api(long id_api) {
+        this.id_api = id_api;
+    }
+
+    private long id_api;
+
+
     public Anime(){}
 
     public Anime(String nom, String alias, String producer, String image) {
@@ -17,6 +47,14 @@ public class Anime {
         this.alias = alias;
         this.producer = producer;
         this.image = image;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -49,5 +87,13 @@ public class Anime {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<Comment> getAnime_id() {
+        return anime_id;
+    }
+
+    public void setAnime_id(List<Comment> anime_id) {
+        this.anime_id = anime_id;
     }
 }

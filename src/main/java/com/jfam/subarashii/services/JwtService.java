@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.jfam.subarashii.entities.Role;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 import org.slf4j.Logger;
@@ -22,22 +23,20 @@ import java.util.Map;
 public class JwtService {
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
 
-    String fakeToken = "eyJyb2xlIjoiZGV2ZWxvcGVyIiwidHlwIjoiSldUIiwicHNldWRvIjoiZGV2ZWxvcGVyIiwiYWxnIjoiSFMyNTYiLCJlbWFpbCI6ImRldmVsb3BlckB0ZXN0LmZyIn0.eyJleHAiOjE2NDUxMjk3Mjl9.HQY4eAd-7lSraLcI18gJYvv83l8ujW_oIJ8kH39qbSU";
+    Algorithm algorithm ;
 
-    Algorithm algorithm  = Algorithm.HMAC256(Constantes.JWT_SECRET_KEY);
-
-    public String CreateToken(String pseudo, String email, String role){
+    public String CreateToken(String email, String role){
+        role = role == null ? Role.USER.toString() : role;
+        algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
         Map<String, Object> headerClaims = new HashMap();
-        headerClaims.put("pseudo", "developer");
-        headerClaims.put("email", "developer@test.fr");
-        headerClaims.put("role", "developer");
+        headerClaims.put(Constantes.Claims.EMAIL, email);
+        headerClaims.put(Constantes.Claims.ROLE, role);
         try {
             return JWT.create()
                     .withHeader(headerClaims)
-                    .withExpiresAt(Helpers.CurrentDatePlusMinutes(2))
+                    .withExpiresAt(Helpers.CurrentDatePlusMinutes(Constantes.Token_value.MINUTE_VALIDATION))
                     .sign(algorithm);
         } catch (JWTCreationException exception){
-            //Invalid Signing configuration / Couldn't convert Claims.
             logger.warn(Constantes.ErrorMessage.TOKEN_CREATE + exception.getMessage());
         }
         return null;
@@ -45,9 +44,9 @@ public class JwtService {
 
     public boolean VerifyToken(String token){
         try {
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .build(); //Reusable verifier instance
-            DecodedJWT jwt = verifier.verify(fakeToken);
+            algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (JWTVerificationException exception) {
             //Invalid signature/claims
@@ -57,7 +56,8 @@ public class JwtService {
 
     public Date getExpirationDate(String token){
         try {
-            DecodedJWT jwt =  JWT.decode(fakeToken);
+            algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
+            DecodedJWT jwt =  JWT.decode(token);
             return jwt.getExpiresAt();
         } catch (JWTDecodeException exception){
             //Invalid token
@@ -66,10 +66,11 @@ public class JwtService {
         }
     }
 
-    public Claim getClaims(String token){
+    public Claim getClaims(String token,String claimValue){
         try {
-            DecodedJWT jwt =  JWT.decode(fakeToken);
-            return jwt.getHeaderClaim("pseudo");
+            algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
+            DecodedJWT jwt =  JWT.decode(token);
+            return jwt.getHeaderClaim(claimValue);
         }
 
         catch (JWTDecodeException exception){
