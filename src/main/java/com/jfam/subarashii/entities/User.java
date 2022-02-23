@@ -1,8 +1,11 @@
 package com.jfam.subarashii.entities;
 
+import com.github.uzrnem.verify.Validator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -10,70 +13,24 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long id_User;
 
-    @Column @NotBlank
-    private String username;
-
-    @Column @NotBlank
-    private String password;
-
-    @Column @NotBlank
-    private String firstname;
-
-    @Column @NotBlank
-    private String lastname;
-
-    @Column @NotBlank
+    @Column(unique = true) @NotBlank @NotNull
     private String email;
 
-    @Column
-    private String role;
+    @Column @NotBlank @NotNull
+    private String password;
 
-    @Column @NotBlank
-    private Date birthDate;
+    @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
+    private String role = Role.USER.toString();
 
-    public long getId() {
-        return id;
-    }
+    @OneToMany
+    @JoinColumn( name = "user_id")
+    private List<UserList> lists;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-
+    @OneToMany
+    @JoinColumn( name = "anime_id")
+    private List<UserListAnime> animesId;
 
     public String getRole() {
         return role;
@@ -81,6 +38,22 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<UserList> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<UserList> lists) {
+        this.lists = lists;
+    }
+
+    public long getId_User() {
+        return id_User;
+    }
+
+    public void setId_User(long id_User) {
+        this.id_User = id_User;
     }
 
     public String getEmail() {
@@ -91,25 +64,23 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public String getPassword() {
+        return password;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", birthDate=" + birthDate +
                 '}';
     }
+
+    public static Validator<User> validatorSignUp = Validator.stream(User.class)
+            .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
+            .add(User::getPassword, Validator.REQUIRED , "Aucun password n'a été renseigné")
+            .min(User::getPassword, 5, "Le password doit contenir au minimum 5 caractères");
 }

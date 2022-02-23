@@ -1,5 +1,7 @@
 package com.jfam.subarashii.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Calendar;
@@ -21,13 +23,7 @@ public class Helpers {
         return c.getTime();
     }
 
-    public static Date CurrentDateMinusSecond(int minute)
-    {
-        Date date = new Date();
-        // Convert Date to Calendar
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.add(Calendar.MINUTE, -minute);
-        return c.getTime();
+    public static String SubstringBefore(String sentence,String word){
+        return StringUtils.substringBefore(sentence, word);
     }
 }
