@@ -2,6 +2,7 @@ package com.jfam.subarashii.controllers;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.jfam.subarashii.entities.Anime;
+import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
@@ -55,7 +56,7 @@ public class AnimeController {
 
     @GetMapping("/{id}")
     public void GetById(@PathVariable long id,HttpServletResponse res) throws IOException{
-        Anime result = animeService.getById(id);
-        responseService.SuccessF(res,"l'animé a été trouvé", result);
+        Anime anime = animeService.getById(id);
+        responseService.SuccessF(res,"l'animé a été trouvé", anime);
     }
 }

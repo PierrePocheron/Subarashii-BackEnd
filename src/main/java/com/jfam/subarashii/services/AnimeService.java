@@ -39,8 +39,19 @@ public class AnimeService {
     }
 
     public Anime getById(long id){
-        JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID,id));
-        return new Anime(jsonObject);
-        //return animeRepository.findById(id).orElse(null);
+        Anime anime  = databaseFetch(id);
+        return anime == null ? apiFetch(id) : anime;
     }
+
+    Anime databaseFetch(Long id){
+        return animeRepository.findByIdApi(id);
+    }
+
+    Anime apiFetch(Long id){
+        String route = String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID,id);
+        JsonObject jsonObject = httpClient.GetQuery(route);
+        Anime animeApi = new Anime(jsonObject);
+        return animeRepository.save(animeApi);
+    }
+
 }
