@@ -1,5 +1,6 @@
 package com.jfam.subarashii.controllers;
 
+import com.google.gson.internal.LinkedTreeMap;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.JwtService;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -51,7 +54,8 @@ public class AnimeController {
     }
 
     @GetMapping("/{id}")
-    public void GetById(@PathVariable long id){
-        Anime anime = animeService.getById(id);
+    public void GetById(@PathVariable long id,HttpServletResponse res) throws IOException{
+        Anime result = animeService.getById(id);
+        responseService.SuccessF(res,"Des animés ont été trouvés", result);
     }
 }

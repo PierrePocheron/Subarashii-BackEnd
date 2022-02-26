@@ -20,6 +20,46 @@ public class Anime {
 
     private String image;
 
+    private String title;
+
+    private String title_english;
+
+    private String title_japanese;
+
+    private Float episodes;
+
+    public Float getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(Float episodes) {
+        this.episodes = episodes;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Object getTitle_english() {
+        return title_english;
+    }
+
+    public void setTitle_english(String title_english) {
+        this.title_english = title_english;
+    }
+
+    public String getTitle_japanese() {
+        return title_japanese;
+    }
+
+    public void setTitle_japanese(String title_japanese) {
+        this.title_japanese = title_japanese;
+    }
+
     @OneToMany
     @JoinColumn( name = "anime_id")
     private List<Comment> anime_id;
