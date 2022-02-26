@@ -25,9 +25,12 @@ public class Episode {
     @JoinColumn( name = "episode_id")
     private List<Comment> episode_id;
 
-    @OneToMany @NotBlank @NotNull
+    @ManyToOne @NotBlank @NotNull
     @JoinColumn( name = "anime_id")
-    private List<Episode> anime_id;
+    private Anime anime;
+
+
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -63,11 +66,5 @@ public class Episode {
         this.episode_id = episode_id;
     }
 
-    public List<Episode> getAnime_id() {
-        return anime_id;
-    }
-
-    public void setAnime_id(List<Episode> anime_id) {
-        this.anime_id = anime_id;
-    }
+    //endregion
 }

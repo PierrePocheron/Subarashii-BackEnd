@@ -2,6 +2,7 @@ package com.jfam.subarashii.entities;
 
 
 import com.google.gson.JsonObject;
+import com.jfam.subarashii.utils.Constantes;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,95 +13,47 @@ public class Anime {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
+
+    private Long idApi;
 
     private String nom;
 
-    private String alias;
+    private Long nbSaison;
 
-    private String producer;
+    private Long nbEpisodes;
 
     private String image;
 
-    private String title;
+    private String description;
 
-    private String title_english;
-
-    private String title_japanese;
-
-    private Float episodes;
-
-    public Float getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(Float episodes) {
-        this.episodes = episodes;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Object getTitle_english() {
-        return title_english;
-    }
-
-    public void setTitle_english(String title_english) {
-        this.title_english = title_english;
-    }
-
-    public String getTitle_japanese() {
-        return title_japanese;
-    }
-
-    public void setTitle_japanese(String title_japanese) {
-        this.title_japanese = title_japanese;
-    }
+    private Float note;
 
     @OneToMany
     @JoinColumn( name = "anime_id")
     private List<Comment> anime_id;
 
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId_api() {
-        return id_api;
-    }
-
-    public void setId_api(long id_api) {
-        this.id_api = id_api;
-    }
-
-    private long id_api;
-
+    @OneToMany(mappedBy = "anime")
+    private List<Episode> episodes;
 
     public Anime(){}
 
+
     public Anime(String nom, String alias, String producer, String image) {
         this.nom = nom;
-        this.alias = alias;
-        this.producer = producer;
         this.image = image;
     }
 
     public Anime(JsonObject jsonObject) {
-        this.nom = nom;
-        this.alias = alias;
-        this.producer = producer;
-        this.image = image;
+        this.idApi = jsonObject.get("id").getAsLong();
+        this.nom = jsonObject.get("name").getAsString();
+        this.nbSaison = jsonObject.get("number_of_seasons").getAsLong();
+        this.nbEpisodes = jsonObject.get("number_of_episodes").getAsLong();
+        this.description = jsonObject.get("overview").getAsString();
+        this.image = Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
     }
 
-
-
-
+    //region  === getter-setter ===
 
     public Long getId() {
         return id;
@@ -108,6 +61,14 @@ public class Anime {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getIdApi() {
+        return idApi;
+    }
+
+    public void setIdApi(Long idApi) {
+        this.idApi = idApi;
     }
 
     public String getNom() {
@@ -118,20 +79,20 @@ public class Anime {
         this.nom = nom;
     }
 
-    public String getAlias() {
-        return alias;
+    public Long getNbSaison() {
+        return nbSaison;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setNbSaison(Long nbSaison) {
+        this.nbSaison = nbSaison;
     }
 
-    public String getProducer() {
-        return producer;
+    public Long getNbEpisodes() {
+        return nbEpisodes;
     }
 
-    public void setProducer(String producer) {
-        this.producer = producer;
+    public void setNbEpisodes(Long nbEpisodes) {
+        this.nbEpisodes = nbEpisodes;
     }
 
     public String getImage() {
@@ -142,6 +103,22 @@ public class Anime {
         this.image = image;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Float getNote() {
+        return note;
+    }
+
+    public void setNote(Float note) {
+        this.note = note;
+    }
+
     public List<Comment> getAnime_id() {
         return anime_id;
     }
@@ -149,4 +126,15 @@ public class Anime {
     public void setAnime_id(List<Comment> anime_id) {
         this.anime_id = anime_id;
     }
+
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
+    }
+
+
+//endregion
 }

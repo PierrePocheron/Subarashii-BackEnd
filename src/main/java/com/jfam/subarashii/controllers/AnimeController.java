@@ -56,6 +56,6 @@ public class AnimeController {
     @GetMapping("/{id}")
     public void GetById(@PathVariable long id,HttpServletResponse res) throws IOException{
         Anime result = animeService.getById(id);
-        responseService.SuccessF(res,"Des animés ont été trouvés", result);
+        responseService.SuccessF(res,"l'animé a été trouvé", result);
     }
 }
