@@ -1,6 +1,8 @@
 package com.jfam.subarashii.entities;
 
 
+import com.google.gson.JsonObject;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -88,6 +90,17 @@ public class Anime {
         this.producer = producer;
         this.image = image;
     }
+
+    public Anime(JsonObject jsonObject) {
+        this.nom = nom;
+        this.alias = alias;
+        this.producer = producer;
+        this.image = image;
+    }
+
+
+
+
 
     public Long getId() {
         return id;
