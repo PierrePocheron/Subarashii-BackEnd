@@ -2,8 +2,10 @@ package com.jfam.subarashii.controllers;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.jfam.subarashii.entities.Anime;
+import com.jfam.subarashii.entities.Episode;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.services.AnimeService;
+import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
@@ -30,33 +32,22 @@ public class AnimeController {
     @Autowired
     ResponseService responseService;
 
+    @Autowired
+    EpisodeService episodeService;
 
-    @GetMapping
-    public void GetOne(HttpServletResponse res) throws IOException {
-        Anime anime = animeService.getOne();
-        if(anime == null){
-            responseService.ErrorF(res, Constantes.ErrorMessage.ANIME_NOT_FOUND,HttpServletResponse.SC_NOT_FOUND, null);
-            return;
-        }
-        responseService.SuccessF(res,"Un animé à été trouvé", anime);
-    }
 
-    @PreAuthorize("#req.isUserInRole('ADMIN')")
-    @GetMapping(path = "/all")
-    public void GetAll(HttpServletRequest req,HttpServletResponse res) throws IOException {
-        List<Anime> animeList = animeService.getAll();
 
-        if(animeList == null || animeList.size() == 0){
-            responseService.ErrorF(res, Constantes.ErrorMessage.ANIME_NOT_FOUND,HttpServletResponse.SC_NOT_FOUND, null);
-            return;
-        }
-
-        responseService.SuccessF(res,"Des animés ont été trouvés", animeList);
-    }
 
     @GetMapping("/{id}")
     public void GetById(@PathVariable long id,HttpServletResponse res) throws IOException{
-        Anime anime = animeService.getById(id);
+        Anime anime = animeService.getByIdApi(id);
         responseService.SuccessF(res,"l'animé a été trouvé", anime);
+    }
+
+
+    @GetMapping("/{idanime}/season/{idseason}")
+    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException{
+        List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
+        responseService.SuccessF(res,"les épisodes ont été trouvé", episodeList);
     }
 }

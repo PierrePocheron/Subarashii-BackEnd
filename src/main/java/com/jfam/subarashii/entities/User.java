@@ -15,13 +15,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_User;
 
-    @Column(unique = true) @NotBlank @NotNull
+    @Column(unique = true) @NotNull
     private String email;
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private String password;
 
-    @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
+    @Column(columnDefinition = "varchar(255) default 'USER'") @NotNull
     private String role = Role.USER.toString();
 
     @OneToMany

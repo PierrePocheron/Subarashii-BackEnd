@@ -48,5 +48,6 @@ public class Constantes {
         public final static String PARAMETER_LANGUE_FR = "language=fr-Fr" ;
 
         public static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
+        public static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
     }
 }

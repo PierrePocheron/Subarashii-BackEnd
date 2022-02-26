@@ -13,13 +13,13 @@ public class UserList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private String nom;
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private boolean isDeletabled = true;
 
-    @OneToMany @NotBlank @NotNull
+    @OneToMany @NotNull
     @JoinColumn( name = "userList_id")
     private List<UserListAnime> userLists_id;
 

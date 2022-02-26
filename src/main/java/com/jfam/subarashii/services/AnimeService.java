@@ -22,32 +22,26 @@ public class AnimeService {
     HttpClient httpClient;
 
 
-    public Anime getOne(){
-        return new Anime("Dragon ball Z" , "DBZ", "Akira Toriyama", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
-    }
-
-    public List<Anime> getAll(){
-
-        List<Anime> animeList = new ArrayList<>();
-        Anime anime =  new Anime("Dragon ball Z" , "DBZ", "Akira Toriyama", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
-        Anime anime2 =  new Anime("Naruto" , "Naruto", "Masashi Kishimoto", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
-        Anime anime3 =  new Anime("One piece" , "One piece", "Eiichirō Oda", "https://media.ouest-france.fr/v1/pictures/MjAyMDEyOWZlNzlmZTlmM2VmNzMxM2IzYjBlZDM4MjYxM2Y4OTg?width=1260&height=708&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=87704e84993984ab6724c7852fa13b7ace4e91171f4c20adf921e675597b59de");
-        animeList.add(anime);
-        animeList.add(anime2);
-        animeList.add(anime3);
-        return animeList;
-    }
-
-    public Anime getById(long id){
+    public Anime getByIdApi(long id){
         Anime anime  = databaseFetch(id);
         return anime == null ? apiFetch(id) : anime;
     }
 
-    Anime databaseFetch(Long id){
+    /**
+     * Recherche un animé par différent critère comme :
+     * le nom
+     * @return
+     */
+    public Anime SearchAnime(){
+        return null;
+    }
+
+
+    private Anime databaseFetch(Long id){
         return animeRepository.findByIdApi(id);
     }
 
-    Anime apiFetch(Long id){
+    private Anime apiFetch(Long id){
         String route = String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID,id);
         JsonObject jsonObject = httpClient.GetQuery(route);
         Anime animeApi = new Anime(jsonObject);

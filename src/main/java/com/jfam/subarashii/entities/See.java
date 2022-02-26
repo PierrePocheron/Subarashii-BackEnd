@@ -12,11 +12,11 @@ public class See {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany @NotBlank @NotNull
+    @OneToMany  @NotNull
     @JoinColumn( name = "user_id")
     private List<See> user_id;
 
-    @OneToMany @NotBlank @NotNull
+    @OneToMany  @NotNull
     @JoinColumn( name = "episode_id")
     private List<See> episode_id;
 
