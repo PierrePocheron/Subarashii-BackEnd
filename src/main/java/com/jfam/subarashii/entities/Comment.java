@@ -22,11 +22,12 @@ public class Comment {
     private String Item3;
 
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private String Statut;
 
-
-
+    @ManyToOne @NotNull
+    @JoinColumn( name = "anime_id")
+    private Anime anime;
 
 
     public long getId() {

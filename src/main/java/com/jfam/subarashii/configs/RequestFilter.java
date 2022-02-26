@@ -28,7 +28,6 @@ public class RequestFilter extends OncePerRequestFilter {
     @Autowired
     private ResponseService responseService;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException, AuthenticationException {

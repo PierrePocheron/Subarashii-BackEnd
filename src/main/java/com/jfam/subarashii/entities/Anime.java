@@ -31,19 +31,14 @@ public class Anime {
     private Float note;
 
     @OneToMany
-    @JoinColumn( name = "anime_id")
-    private List<Comment> anime_id;
+    @JoinColumn( name = "anime")
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "anime")
     private List<Episode> episodes;
 
     public Anime(){}
 
-
-    public Anime(String nom, String alias, String producer, String image) {
-        this.nom = nom;
-        this.image = image;
-    }
 
     public Anime(JsonObject jsonObject) {
         this.idApi = jsonObject.get("id").getAsLong();
@@ -121,14 +116,6 @@ public class Anime {
         this.note = note;
     }
 
-    public List<Comment> getAnime_id() {
-        return anime_id;
-    }
-
-    public void setAnime_id(List<Comment> anime_id) {
-        this.anime_id = anime_id;
-    }
-
     public List<Episode> getEpisodes() {
         return episodes;
     }
@@ -137,6 +124,12 @@ public class Anime {
         this.episodes = episodes;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 //endregion
 }

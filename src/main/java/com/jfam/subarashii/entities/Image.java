@@ -12,10 +12,10 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private long api_image_id;
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private String url_image;
 
     public long getId() {

@@ -21,7 +21,7 @@ public class Rating {
     @Column
     private String Item3;
 
-    @OneToMany @NotBlank @NotNull
+    @OneToMany @NotNull
     @JoinColumn( name = "anime_id")
     private List<Rating> anime_id;
 
