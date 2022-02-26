@@ -25,6 +25,10 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 	public void setTokenTime(Integer minuteTokenValidation) {
 		Constantes.Token_value.MINUTE_VALIDATION = minuteTokenValidation;
 	}
+	@Value("${api.movie.token}")
+	public void setTokenTime(String tokenKey) {
+		Constantes.ApiMovie.TOKEN_SECRET = tokenKey;
+	}
 
 
 /*	@Override

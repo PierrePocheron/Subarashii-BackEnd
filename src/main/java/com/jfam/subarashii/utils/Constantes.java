@@ -38,4 +38,11 @@ public class Constantes {
         public final static String TOKEN_PREFIX = "bearer ";
 
     }
+
+    public static class ApiMovie{
+        public static String TOKEN_SECRET ;
+        public final static String URL_IMAGE="https://image.tmdb.org/t/p/w500";
+        public final static String BASE_URL= "https://api.themoviedb.org/3/";
+        public final static String PARAMETER_LANGUE_FR = "language=fr-Fr" ;
+    }
 }
