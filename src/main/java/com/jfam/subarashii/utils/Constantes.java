@@ -43,6 +43,10 @@ public class Constantes {
         public static String TOKEN_SECRET ;
         public final static String URL_IMAGE="https://image.tmdb.org/t/p/w500";
         public final static String BASE_URL= "https://api.themoviedb.org/3/";
+        public final static String TAG_SERIE= "tv/";
+        public final static String TAG_PARAMETER= "?";
         public final static String PARAMETER_LANGUE_FR = "language=fr-Fr" ;
+
+        public static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
     }
 }

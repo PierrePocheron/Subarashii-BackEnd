@@ -2,6 +2,7 @@ package com.jfam.subarashii.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.HttpClient;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.repositories.AnimeRepository;
@@ -38,11 +39,8 @@ public class AnimeService {
     }
 
     public Anime getById(long id){
-
-        JsonObject jsonObject = httpClient.GetQuery(HttpClient.Route.GET_ANIME_BY_ID + id);
-        Gson gson= new Gson();
-        Anime anime = gson.fromJson(jsonObject.toString(),Anime.class);
-        return anime;
+        JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID,id));
+        return new Anime(jsonObject);
         //return animeRepository.findById(id).orElse(null);
     }
 }
