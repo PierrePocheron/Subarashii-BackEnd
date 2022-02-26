@@ -25,6 +25,7 @@ public class Anime {
 
     private String image;
 
+    @Column(columnDefinition = "text")
     private String description;
 
     private Float note;
@@ -50,6 +51,7 @@ public class Anime {
         this.nbSaison = jsonObject.get("number_of_seasons").getAsLong();
         this.nbEpisodes = jsonObject.get("number_of_episodes").getAsLong();
         this.description = jsonObject.get("overview").getAsString();
+        this.note = jsonObject.get("vote_average").getAsFloat();
         this.image = Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
     }
 
