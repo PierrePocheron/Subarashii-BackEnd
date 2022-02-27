@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.utils.Constantes;
 
@@ -51,7 +52,9 @@ public class Anime {
         this.nbEpisodes = jsonObject.get("number_of_episodes").getAsLong();
         this.description = jsonObject.get("overview").getAsString();
         this.note = jsonObject.get("vote_average").getAsFloat();
-        this.image = Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
+
+        JsonElement jsonElement = jsonObject.get("poster_path");
+        this.image =  jsonElement == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
     }
 
     //region  === getter-setter ===

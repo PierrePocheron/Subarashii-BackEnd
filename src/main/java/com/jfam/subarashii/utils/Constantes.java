@@ -5,7 +5,7 @@ public class Constantes {
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
-
+    public final static String URL_IMAGE_NOT_FOUND = "https://image.shutterstock.com/image-vector/no-image-available-vector-hand-600w-745639717.jpg";
 
     public static class Claims{
         public final static String EMAIL= "email";
@@ -48,7 +48,15 @@ public class Constantes {
         public final static String TAG_SERIE= "tv/";
         public final static String TAG_PARAMETER= "?";
         public final static String PARAMETER_LANGUE_FR = "language=fr-Fr" ;
+
         public final static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
         public final static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
+
+        /**
+         * genre 16 = animation , original_language=ja = japan
+         */
+        public final static String ROUTE_SERIES_DISCOVER_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-FR";
+
+        public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION= 458;
     }
 }
