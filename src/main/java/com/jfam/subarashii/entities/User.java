@@ -26,11 +26,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserList> lists;
 
-    @OneToMany
-    @JoinColumn( name = "animeId")
-    private List<UserListAnime> animesId;
-
-
     public User(){}
 
     public User(String name, String role){
@@ -87,13 +82,6 @@ public class User {
         this.idUser = idUser;
     }
 
-    public List<UserListAnime> getAnimesId() {
-        return animesId;
-    }
-
-    public void setAnimesId(List<UserListAnime> animesId) {
-        this.animesId = animesId;
-    }
 
 
 //endregion
