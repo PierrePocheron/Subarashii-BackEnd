@@ -1,5 +1,7 @@
 package com.jfam.subarashii.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,11 +18,22 @@ public class UserList {
     private String nom;
 
     @Column @NotNull
-    private boolean isDeletabled = true;
+    private boolean isDeletable = true;
 
-    @OneToMany @NotNull
-    @JoinColumn( name = "userListId")
-    private List<UserListAnime> userListsId;
+    @ManyToOne
+    @JoinColumn( name = "userId")
+    @JsonBackReference
+    private User user;
+
+    public UserList(){}
+
+
+    public UserList(String nom , User user , Boolean isDeletable){
+        this.nom = nom;
+        this.user = user;
+        this.isDeletable = isDeletable == null ? true : isDeletable ;
+    }
+
 
     //region  === getter-setter ===
 
@@ -41,28 +54,19 @@ public class UserList {
     }
 
     public boolean isDeletable() {
-        return isDeletabled;
+        return isDeletable;
     }
 
     public void setDeletable(boolean deletable) {
-        isDeletabled = deletable;
+        isDeletable = deletable;
     }
 
-    public boolean isDeletabled() {
-        return isDeletabled;
+    public User getUser() {
+        return user;
     }
 
-    public void setDeletabled(boolean deletabled) {
-        isDeletabled = deletabled;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-    public List<UserListAnime> getUserListsId() {
-        return userListsId;
-    }
-
-    public void setUserListsId(List<UserListAnime> userListsId) {
-        this.userListsId = userListsId;
-    }
-
-    //endregion
+//endregion
 }
