@@ -6,6 +6,8 @@ import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "/users")
+@Tag(name = "User")
 public class UserController {
 
     @Autowired
@@ -33,6 +36,7 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Operation(summary = "Créer un utilisateur")
     @PostMapping(value = "sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void SignUpUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         boolean isValidateUser = User.validatorSignUp.test(user);
@@ -48,6 +52,7 @@ public class UserController {
         responseService.SuccessF(res,Constantes.SuccessMessage.INSCRIPTION_OK,userDto);
     }
 
+    @Operation(summary = "Connexion d'un utilisateur")
     @PostMapping(value = "/sign-in",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void SignInUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         if(user == null)

@@ -3,6 +3,7 @@ package com.jfam.subarashii.services;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.UserListRepository;
+import org.hibernate.query.criteria.internal.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,24 @@ public class UserListService {
     public List<UserList> getCurrentUserList(User user){
         List<UserList> userList = userListRepository.findAllByUser(user);
         return userList;
+    }
+
+    /***Récupère la liste de l'utilisateur
+     * @param idUserList id de la liste
+     * @param user l'utilisateur courant
+     * @return si null la liste n'existe pas ou n'appartient pas à l'utilisateur
+     */
+    public UserList GetOneUserListForUser(Long idUserList , User user){
+
+        // check si existe grace à l'id user list and anime
+        UserList userList = userListRepository.findByIdAndUser(idUserList, user);
+
+        if(userList == null)
+            return null;
+        return userList;
+    }
+
+    public UserList updateUserList(UserList userList){
+        return userListRepository.save(userList);
     }
 }

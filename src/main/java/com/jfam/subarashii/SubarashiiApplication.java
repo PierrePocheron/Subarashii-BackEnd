@@ -1,16 +1,17 @@
 package com.jfam.subarashii;
 
 import com.jfam.subarashii.utils.Constantes;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
+
 public class SubarashiiApplication extends SpringBootServletInitializer{
-
-
-
 	public static void main(String[] args)  {
 		SpringApplication.run(SubarashiiApplication.class, args);
 	}

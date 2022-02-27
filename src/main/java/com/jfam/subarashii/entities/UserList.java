@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "userlists")
+@SecurityRequirement(name = "javainuseapi")
 public class UserList {
 
     @Id
@@ -25,14 +27,22 @@ public class UserList {
     @JsonBackReference
     private User user;
 
-    public UserList(){}
 
+    @ManyToMany
+    @JoinTable(name = "userlist_anime",
+            joinColumns = @JoinColumn(name = "userlistId"),
+            inverseJoinColumns = @JoinColumn(name = "animeId")
+    )
+    private List<Anime> animes;
+
+    public UserList(){}
 
     public UserList(String nom , User user , Boolean isDeletable){
         this.nom = nom;
         this.user = user;
         this.isDeletable = isDeletable == null ? true : isDeletable ;
     }
+
 
 
     //region  === getter-setter ===
@@ -68,5 +78,14 @@ public class UserList {
     public void setUser(User user) {
         this.user = user;
     }
-//endregion
+
+    public List<Anime> getAnimes() {
+        return animes;
+    }
+
+    public void setAnimes(List<Anime> animes) {
+        this.animes = animes;
+    }
+
+    //endregion
 }
