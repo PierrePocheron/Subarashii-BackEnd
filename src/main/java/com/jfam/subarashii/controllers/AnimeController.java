@@ -6,11 +6,16 @@ import com.jfam.subarashii.entities.Episode;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/animes")
+@Tag(name = "Anime")
 public class AnimeController {
 
     @Autowired
@@ -30,15 +36,14 @@ public class AnimeController {
     EpisodeService episodeService;
 
 
-
-
-    @GetMapping("/{id}")
-    public void GetById(@PathVariable long id,HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-        Anime anime = animeService.getByIdApi(id);
+    @Operation(summary = "Récupère un anime par son id api, s'il n'existe pas en bdd l'ajoute grâce à l'api")
+    @GetMapping("/{idapi}")
+    public void GetById(@PathVariable long idapi,HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        Anime anime = animeService.getByIdApi(idapi);
         responseService.SuccessF(res,"l'animé a été trouvé", anime);
     }
 
-
+    @Operation(summary = "Récupère la saison d'un anime grâce à l'id api de l'anime et du numéro de la saison, ajoute en bdd les épisodes et l'anime s'il n'existe pas")
     @GetMapping("/{idanime}/season/{idseason}")
     public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);

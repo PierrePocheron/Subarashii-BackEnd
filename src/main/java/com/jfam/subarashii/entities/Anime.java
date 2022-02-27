@@ -37,8 +37,12 @@ public class Anime {
     @OneToMany(mappedBy = "anime")
     private List<Episode> episodes;
 
-    public Anime(){}
 
+    @ManyToMany(mappedBy = "animes")
+    private List<UserList> userLists;
+
+
+    public Anime(){}
 
     public Anime(JsonObject jsonObject) {
         this.idApi = jsonObject.get("id").getAsLong();
@@ -131,5 +135,14 @@ public class Anime {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-//endregion
+
+    public List<UserList> getUserLists() {
+        return userLists;
+    }
+
+    public void setUserLists(List<UserList> userLists) {
+        this.userLists = userLists;
+    }
+
+    //endregion
 }

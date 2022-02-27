@@ -27,6 +27,7 @@ public class Constantes {
     public static class SuccessMessage {
         public final static String CONNECTION_OK= "Authentification ok bienvenue !";
         public final static String INSCRIPTION_OK= "L'inscription à été réalisé avec succès, veuillez vous connecter !";
+        public static String ADD_ANIME_ON_USER_LIST= "L'animé %s a correctement été ajouté à la liste %s!";
 
     }
 
