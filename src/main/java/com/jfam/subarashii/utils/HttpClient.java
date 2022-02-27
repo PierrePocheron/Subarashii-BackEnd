@@ -1,7 +1,9 @@
 package com.jfam.subarashii.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import kong.unirest.Unirest;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +20,25 @@ public class HttpClient {
                 .body(body).asJson().getBody();
     }
 
-    public <T> T GetQuery(String url){
+    public JsonObject GetQuery(String url) throws ResourceApiNotFoundException {
         LinkedTreeMap LTM = (LinkedTreeMap) Unirest.get(url)
                 .header("Content-Type", "application/json;charset=utf-8")
                 .header("Authorization", Constantes.ApiMovie.TOKEN_SECRET)
                 .asObject(Object.class)
                 .getBody();
-/*        LTM = removeDataTag(LTM);*/
-        return (T) gson.toJsonTree(LTM).getAsJsonObject();
-    }
 
-    LinkedTreeMap removeDataTag(LinkedTreeMap LTM){
-        var key = LTM.keySet().iterator().next();
-        return (LinkedTreeMap) LTM.get(key);
+        JsonObject jsonObject = gson.toJsonTree(LTM).getAsJsonObject();
+        try{
+            if(jsonObject.has("status_code") && jsonObject.get("status_code").getAsInt() == 34){
+                throw new ResourceApiNotFoundException("la ressource que vous avez recherché n'a pas été trouvé");
+            }
+        }
+        catch(ResourceApiNotFoundException exception){
+
+        }
+        if(jsonObject.has("status_code") && jsonObject.get("status_code").getAsInt() == 34){
+           throw new ResourceApiNotFoundException("la ressource que vous avez recherché n'a pas été trouvé");
+        }
+        return gson.toJsonTree(LTM).getAsJsonObject();
     }
 }

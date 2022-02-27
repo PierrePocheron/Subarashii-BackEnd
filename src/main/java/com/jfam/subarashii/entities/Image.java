@@ -12,10 +12,12 @@ public class Image {
     private long id;
 
     @Column @NotNull
-    private long api_image_id;
+    private long apiImageId;
 
     @Column @NotNull
-    private String url_image;
+    private String urlImage;
+
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -25,29 +27,21 @@ public class Image {
         this.id = id;
     }
 
-
-    public long getUrl_image_id() {
-        return api_image_id;
+    public long getApiImageId() {
+        return apiImageId;
     }
 
-    public void setUrl_image_id(long url_image_id) {
-        this.api_image_id = url_image_id;
+    public void setApiImageId(long apiImageId) {
+        this.apiImageId = apiImageId;
     }
 
-    public String getUrl_image() {
-        return url_image;
+    public String getUrlImage() {
+        return urlImage;
     }
 
-    public void setUrl_image(String url_image) {
-        this.url_image = url_image;
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 
-    @Override
-    public String toString() {
-        return "Image{" +
-                "id=" + id +
-                ", api_image_id=" + api_image_id +
-                ", url_image='" + url_image + '\'' +
-                '}';
-    }
+    //endregion
 }

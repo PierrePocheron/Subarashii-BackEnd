@@ -1,6 +1,7 @@
 package com.jfam.subarashii.services;
 
 import com.google.gson.JsonObject;
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.utils.Constantes;
@@ -18,10 +19,22 @@ public class AnimeService {
     HttpClient httpClient;
 
 
-    public Anime getByIdApi(long id){
-        Anime anime  = databaseFetch(id);
-        return anime == null ? apiFetch(id) : anime;
+    public Anime getByIdApi(long id) throws ResourceApiNotFoundException {
+
+        Anime anime  = animeRepository.findByIdApi(id);
+
+        // if isn't on database fetch to api
+        if(anime == null){
+            String route = String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID,id);
+            JsonObject jsonObject = httpClient.GetQuery(route);
+            Anime animeApi = new Anime(jsonObject);
+            anime = animeRepository.save(animeApi);
+        }
+
+        return anime;
     }
+
+
 
     /**
      * Recherche un animé par différent critère comme :
@@ -33,15 +46,15 @@ public class AnimeService {
     }
 
 
-    private Anime databaseFetch(Long id){
-        return animeRepository.findByIdApi(id);
-    }
 
-    private Anime apiFetch(Long id){
+
+
+
+
+    private Anime apiFetch(Long id) throws ResourceApiNotFoundException {
         String route = String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID,id);
         JsonObject jsonObject = httpClient.GetQuery(route);
         Anime animeApi = new Anime(jsonObject);
         return animeRepository.save(animeApi);
     }
-
 }

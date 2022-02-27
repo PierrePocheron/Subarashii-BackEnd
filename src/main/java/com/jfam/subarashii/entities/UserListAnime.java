@@ -11,6 +11,7 @@ public class UserListAnime {
     private long id;
 
 
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -20,5 +21,5 @@ public class UserListAnime {
         this.id = id;
     }
 
-
+//endregion
 }
