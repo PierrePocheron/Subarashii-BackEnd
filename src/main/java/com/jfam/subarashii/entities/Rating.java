@@ -21,8 +21,11 @@ public class Rating {
     private String Item3;
 
     @OneToMany @NotNull
-    @JoinColumn( name = "anime_id")
-    private List<Rating> anime_id;
+    @JoinColumn( name = "animeId")
+    private List<Rating> animeId;
+
+
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -56,22 +59,13 @@ public class Rating {
         Item3 = item3;
     }
 
-    public List<Rating> getAnime_id() {
-        return anime_id;
+    public List<Rating> getAnimeId() {
+        return animeId;
     }
 
-    public void setAnime_id(List<Rating> anime_id) {
-        this.anime_id = anime_id;
+    public void setAnimeId(List<Rating> animeId) {
+        this.animeId = animeId;
     }
 
-    @Override
-    public String toString() {
-        return "Rating{" +
-                "id=" + id +
-                ", Item1='" + Item1 + '\'' +
-                ", Item2='" + Item2 + '\'' +
-                ", Item3='" + Item3 + '\'' +
-                ", anime_id=" + anime_id +
-                '}';
-    }
+    //endregion
 }

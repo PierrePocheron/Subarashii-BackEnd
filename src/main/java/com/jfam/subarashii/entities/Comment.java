@@ -25,9 +25,10 @@ public class Comment {
     private String Statut;
 
     @ManyToOne @NotNull
-    @JoinColumn( name = "anime_id")
+    @JoinColumn( name = "animeId")
     private Anime anime;
 
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -69,9 +70,15 @@ public class Comment {
         Statut = statut;
     }
 
+    public Anime getAnime() {
+        return anime;
+    }
 
+    public void setAnime(Anime anime) {
+        this.anime = anime;
+    }
 
-
+    //endregion
 
     @Override
     public String toString() {

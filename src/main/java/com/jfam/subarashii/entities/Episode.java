@@ -31,13 +31,15 @@ public class Episode {
     private Long numeroEpisode;
 
     @OneToMany
-    @JoinColumn(name = "episode_id")
+    @JoinColumn(name = "episodeId")
     private List<Comment> comments;
 
     @ManyToOne @NotNull
-    @JoinColumn( name = "anime_id")
+    @JoinColumn( name = "animeId")
     @JsonBackReference
     private Anime anime;
+
+    private Long IdApiAnime;
 
     public Episode(){}
 
@@ -48,6 +50,7 @@ public class Episode {
         this.note = jsonObject.get("vote_average").getAsFloat();
         this.anime = anime;
         this.numeroEpisode = jsonObject.get("episode_number").getAsLong();
+        this.IdApiAnime = anime.getIdApi();
     }
     //region  === getter-setter ===
 
@@ -115,5 +118,13 @@ public class Episode {
         this.numeroEpisode = numeroEpisode;
     }
 
+    public Long getIdApiAnime() {
+        return IdApiAnime;
+    }
+
+    public void setIdApiAnime(Long idApiAnime) {
+        IdApiAnime = idApiAnime;
+    }
 //endregion
 }
+

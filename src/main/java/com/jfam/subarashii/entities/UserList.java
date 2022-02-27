@@ -19,8 +19,10 @@ public class UserList {
     private boolean isDeletabled = true;
 
     @OneToMany @NotNull
-    @JoinColumn( name = "userList_id")
-    private List<UserListAnime> userLists_id;
+    @JoinColumn( name = "userListId")
+    private List<UserListAnime> userListsId;
+
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -46,13 +48,21 @@ public class UserList {
         isDeletabled = deletable;
     }
 
-    
-
-    public List<UserListAnime> getUserLists_id() {
-        return userLists_id;
+    public boolean isDeletabled() {
+        return isDeletabled;
     }
 
-    public void setUserLists_id(List<UserListAnime> userLists_id) {
-        this.userLists_id = userLists_id;
+    public void setDeletabled(boolean deletabled) {
+        isDeletabled = deletabled;
     }
+
+    public List<UserListAnime> getUserListsId() {
+        return userListsId;
+    }
+
+    public void setUserListsId(List<UserListAnime> userListsId) {
+        this.userListsId = userListsId;
+    }
+
+    //endregion
 }

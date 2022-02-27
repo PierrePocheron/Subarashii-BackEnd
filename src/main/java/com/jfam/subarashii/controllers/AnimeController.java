@@ -1,5 +1,6 @@
 package com.jfam.subarashii.controllers;
 
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Episode;
 import com.jfam.subarashii.services.AnimeService;
@@ -32,14 +33,14 @@ public class AnimeController {
 
 
     @GetMapping("/{id}")
-    public void GetById(@PathVariable long id,HttpServletResponse res) throws IOException{
+    public void GetById(@PathVariable long id,HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         Anime anime = animeService.getByIdApi(id);
         responseService.SuccessF(res,"l'animé a été trouvé", anime);
     }
 
 
     @GetMapping("/{idanime}/season/{idseason}")
-    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException{
+    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
         responseService.SuccessF(res,"les épisodes ont été trouvé", episodeList);
     }

@@ -12,12 +12,15 @@ public class See {
     private long id;
 
     @OneToMany  @NotNull
-    @JoinColumn( name = "user_id")
-    private List<See> user_id;
+    @JoinColumn( name = "userId")
+    private List<See> userId;
 
     @OneToMany  @NotNull
-    @JoinColumn( name = "episode_id")
-    private List<See> episode_id;
+    @JoinColumn( name = "episodeId")
+    private List<See> episodeId;
+
+
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -27,19 +30,21 @@ public class See {
         this.id = id;
     }
 
-    public List<See> getUser_id() {
-        return user_id;
+    public List<See> getUserId() {
+        return userId;
     }
 
-    public void setUser_id(List<See> user_id) {
-        this.user_id = user_id;
+    public void setUserId(List<See> userId) {
+        this.userId = userId;
     }
 
-    public List<See> getEpisode_id() {
-        return episode_id;
+    public List<See> getEpisodeId() {
+        return episodeId;
     }
 
-    public void setEpisode_id(List<See> episode_id) {
-        this.episode_id = episode_id;
+    public void setEpisodeId(List<See> episodeId) {
+        this.episodeId = episodeId;
     }
+
+    //endregion
 }
