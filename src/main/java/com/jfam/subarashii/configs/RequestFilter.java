@@ -54,6 +54,14 @@ public class RequestFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return path.equals(Constantes.ROUTE_SIGN_UP)  || path.equals(Constantes.ROUTE_SIGN_IN);
+
+
+        if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
+
+            return path.equals(Constantes.ROUTE_SIGN_UP) || path.equals(Constantes.ROUTE_SIGN_IN) ||
+                    path.startsWith("/swagger-ui/") || path.startsWith("/api");
+        }
+
+        return path.equals(Constantes.ROUTE_SIGN_UP) || path.equals(Constantes.ROUTE_SIGN_IN);
     }
 }

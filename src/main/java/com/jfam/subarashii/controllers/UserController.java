@@ -1,16 +1,13 @@
 package com.jfam.subarashii.controllers;
 
-import com.github.uzrnem.verify.Validator;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.dto.UserDto;
-import com.jfam.subarashii.repositories.UserRepository;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static com.jfam.subarashii.entities.User.validatorSignUp;
 
 @RestController
 @RequestMapping(path = "/users")

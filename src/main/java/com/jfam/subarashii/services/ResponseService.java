@@ -2,10 +2,7 @@ package com.jfam.subarashii.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfam.subarashii.entities.dto.ResponseDTO;
-import com.jfam.subarashii.utils.Constantes;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;

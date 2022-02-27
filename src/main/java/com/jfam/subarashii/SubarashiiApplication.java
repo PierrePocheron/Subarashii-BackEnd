@@ -4,7 +4,6 @@ import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
@@ -28,6 +27,10 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 	@Value("${api.movie.token}")
 	public void setTokenTime(String tokenKey) {
 		Constantes.ApiMovie.TOKEN_SECRET = tokenKey;
+	}
+	@Value("${environnement.type}")
+	public void setEnvironementType(String environnementType) {
+		Constantes.ENVIRONNEMENT_TYPE = environnementType;
 	}
 
 
