@@ -3,24 +3,17 @@ package com.jfam.subarashii.configs;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
-import com.sun.jdi.InternalException;
-import jdk.jshell.spi.ExecutionControl;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
-import org.springframework.jca.endpoint.GenericMessageEndpointFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
 

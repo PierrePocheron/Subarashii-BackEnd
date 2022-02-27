@@ -2,12 +2,10 @@ package com.jfam.subarashii.services;
 
 import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.User;
-import com.jfam.subarashii.entities.dto.UserDto;
 import com.jfam.subarashii.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

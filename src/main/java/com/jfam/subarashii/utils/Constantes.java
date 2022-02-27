@@ -1,11 +1,11 @@
 package com.jfam.subarashii.utils;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class Constantes {
     public final static String ENCODE = "UTF-8";
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
+    public static String ENVIRONNEMENT_TYPE;
+
 
     public static class Claims{
         public final static String EMAIL= "email";
@@ -23,6 +23,7 @@ public class Constantes {
         public final static String ANIME_NOT_FOUND = "Aucun animé a été trouvé";
         public final static String ERROR_UNIQUE_CONTRAINT_DATABASE = "L'information existe déjà dans la base de donnée";
     }
+
     public static class SuccessMessage {
         public final static String CONNECTION_OK= "Authentification ok bienvenue !";
         public final static String INSCRIPTION_OK= "L'inscription à été réalisé avec succès, veuillez vous connecter !";
@@ -46,8 +47,7 @@ public class Constantes {
         public final static String TAG_SERIE= "tv/";
         public final static String TAG_PARAMETER= "?";
         public final static String PARAMETER_LANGUE_FR = "language=fr-Fr" ;
-
-        public static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
-        public static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
+        public final static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
+        public final static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
     }
 }

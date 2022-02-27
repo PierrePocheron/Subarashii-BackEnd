@@ -1,16 +1,12 @@
 package com.jfam.subarashii.services;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.jfam.subarashii.utils.Constantes;
-import com.jfam.subarashii.utils.HttpClient;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.repositories.AnimeRepository;
+import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class AnimeService {
