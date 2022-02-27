@@ -1,7 +1,9 @@
 package com.jfam.subarashii.configs;
 
+import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
+import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,27 +30,42 @@ public class RequestFilter extends OncePerRequestFilter {
     @Autowired
     private ResponseService responseService;
 
+    @Autowired
+    UserService userService;
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws ServletException, IOException, AuthenticationException {
-        String header = request.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER);
+        String header = req.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER);
 
         if (header == null) {
-            responseService.ErrorF(response, Constantes.ErrorMessage.TOKEN_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
         String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,"");
         if (!jwtService.VerifyToken(token)) {
-            responseService.ErrorF(response, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
-        // set user role
+        // set user role for security
         String email = jwtService.getClaims(token,Constantes.Claims.EMAIL).asString();
+
+        User currrentUser = userService.getUserForRequestByEmail(email);
+        if(currrentUser == null){
+            responseService.ErrorF(res, "l'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée", HttpServletResponse.SC_UNAUTHORIZED, false);
+            return;
+        }
+
         String role = jwtService.getClaims(token,Constantes.Claims.ROLE).asString();
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null,
         AuthorityUtils.createAuthorityList("ROLE_"+ role));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(request, response);
+
+        // add user on request
+        req.setAttribute("user" , currrentUser);
+
+
+        chain.doFilter(req, res);
     }
 
     @Override

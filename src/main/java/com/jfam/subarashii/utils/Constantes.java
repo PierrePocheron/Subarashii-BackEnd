@@ -36,7 +36,7 @@ public class Constantes {
         public static Integer MINUTE_VALIDATION;
 
         public final static String AUTHORIZATION_HEADER = "Authorization";
-        public final static String TOKEN_PREFIX = "bearer ";
+        public final static String TOKEN_PREFIX = "Bearer ";
 
     }
 

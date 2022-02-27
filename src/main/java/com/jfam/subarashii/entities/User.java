@@ -23,13 +23,21 @@ public class User {
     @Column(columnDefinition = "varchar(255) default 'USER'") @NotNull
     private String role = Role.USER.toString();
 
-    @OneToMany
-    @JoinColumn( name = "userId")
+    @OneToMany(mappedBy = "user")
     private List<UserList> lists;
 
     @OneToMany
     @JoinColumn( name = "animeId")
     private List<UserListAnime> animesId;
+
+
+    public User(){}
+
+    public User(String name, String role){
+        this.email = name;
+        this.role = role;
+    }
+
 
     public static Validator<User> validatorSignUp = Validator.stream(User.class)
             .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
@@ -86,6 +94,8 @@ public class User {
     public void setAnimesId(List<UserListAnime> animesId) {
         this.animesId = animesId;
     }
+
+
 //endregion
 
 }
