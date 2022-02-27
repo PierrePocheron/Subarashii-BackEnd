@@ -6,6 +6,7 @@ import com.jfam.subarashii.entities.Episode;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
+import com.jfam.subarashii.utils.Constantes;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/animes")
@@ -48,5 +50,16 @@ public class AnimeController {
     public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
         responseService.SuccessF(res,"les épisodes ont été trouvé", episodeList);
+    }
+
+
+    @GetMapping("/discover")
+    public void DiscoverAnimed(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        int randomPageDiscovery = new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION);
+        List<Anime> animeList = animeService.getDiscoverAnime(randomPageDiscovery);
+        if(animeList == null){
+            responseService.ErrorF(res,"Aucun animé n'a été trouvé à la page " + randomPageDiscovery, HttpServletResponse.SC_BAD_GATEWAY,false);
+        }
+        responseService.SuccessF(res,"Une liste d'animé à découvrir a été trouvé", animeList);
     }
 }
