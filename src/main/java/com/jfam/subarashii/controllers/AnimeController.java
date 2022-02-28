@@ -1,5 +1,7 @@
 package com.jfam.subarashii.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Episode;
@@ -7,20 +9,18 @@ import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -52,7 +52,7 @@ public class AnimeController {
         responseService.SuccessF(res,"les épisodes ont été trouvé", episodeList);
     }
 
-
+    @Operation(summary = "Récupère 20 animés au hasard (se sert de la pagination de l'api)")
     @GetMapping("/discover")
     public void DiscoverAnimed(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         int randomPageDiscovery = new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION);
@@ -62,4 +62,36 @@ public class AnimeController {
         }
         responseService.SuccessF(res,"Une liste d'animé à découvrir a été trouvé", animeList);
     }
+
+
+    @PostMapping("/searchbyname")
+    public void SearchAnimedByName(@RequestBody Map<String, String> payload , HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        //https://api.themoviedb.org/3/discover/tv?
+        String query = payload.get("query");
+
+        if(query == null)
+        {
+            responseService.ErrorF(res,"Le paramètre n'est pas celui attendu ou ne possède pas de la valeur", HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+            return;
+        }
+
+        List<Anime> animeList = animeService.SearchAnimeByName(query);
+        if(animeList.size() == 0)
+        {
+            responseService.SuccessF(res,"Aucun animé n'a été trouvé...", null);
+            return;
+        }
+        responseService.SuccessF(res,animeList.size() + " ont été trouvé(s)", animeList);
+    }
+
+    @PostMapping("/searchbyinfo")
+    public void SearchAnimedByOtherInfo(HttpServletRequest req){
+        //https://api.themoviedb.org/3/discover/tv?
+
+    }
+
+
+
+
+
 }

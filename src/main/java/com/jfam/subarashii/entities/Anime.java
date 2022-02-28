@@ -1,9 +1,11 @@
 package com.jfam.subarashii.entities;
 
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 
 import javax.persistence.*;
 import java.util.List;
@@ -43,6 +45,13 @@ public class Anime {
     private List<UserList> userLists;
 
 
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "anime_genres",
+            joinColumns = @JoinColumn(name = "animeId"),
+            inverseJoinColumns = @JoinColumn(name = "genreId")
+    )
+    private List<Genre> genres;
+
     public Anime(){}
 
     public Anime(JsonObject jsonObject) {
@@ -55,7 +64,15 @@ public class Anime {
 
         JsonElement jsonElement = jsonObject.get("poster_path");
         this.image =  jsonElement == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
+
+
     }
+
+    public void setGenreByJsonObjet(JsonObject jsonObject) {
+        JsonArray genresJsonArray = jsonObject.get("genres").getAsJsonArray();
+        this.genres = Helpers.JsonArrayToList(genresJsonArray);
+    }
+
 
     //region  === getter-setter ===
 
@@ -145,6 +162,14 @@ public class Anime {
 
     public void setUserLists(List<UserList> userLists) {
         this.userLists = userLists;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     //endregion

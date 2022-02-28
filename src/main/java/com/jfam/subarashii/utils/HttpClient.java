@@ -28,14 +28,6 @@ public class HttpClient {
                 .getBody();
 
         JsonObject jsonObject = gson.toJsonTree(LTM).getAsJsonObject();
-        try{
-            if(jsonObject.has("status_code") && jsonObject.get("status_code").getAsInt() == 34){
-                throw new ResourceApiNotFoundException("la ressource que vous avez recherché n'a pas été trouvé");
-            }
-        }
-        catch(ResourceApiNotFoundException exception){
-
-        }
         if(jsonObject.has("status_code") && jsonObject.get("status_code").getAsInt() == 34){
            throw new ResourceApiNotFoundException("la ressource que vous avez recherché n'a pas été trouvé");
         }
