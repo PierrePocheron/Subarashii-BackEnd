@@ -35,6 +35,28 @@ public class GenreService {
     }
 
 
+    public List<Genre> convertJsonObjectGenreToListGenre(JsonObject jsonObject,String keywordGenre){
+        JsonArray genresJsonArray = jsonObject.get(keywordGenre).getAsJsonArray();
+        List<Genre> genresList = new ArrayList<>();
+        genresJsonArray.forEach((JsonGenre)->{
+            Genre gen = new Genre(JsonGenre.getAsJsonObject());
+            genresList.add(gen);
+        });
+        return genresList;
+    }
+
+
+    public List<Genre> convertJsonArrayIdGenreToListGenre(JsonArray jsonArray){
+        List<Genre> genresList = new ArrayList<>();
+        jsonArray.forEach((jsonIdGenre)->{
+            Genre genre =  genreRepository.findByIdApi(jsonIdGenre.getAsLong());
+            genresList.add(genre);
+        });
+        return genresList;
+    }
+
+
+
     public List<Genre> getAllByIdAPi(List<Long> idApiGenreList){
         return  genreRepository.findByIdApiIn(idApiGenreList);
     }

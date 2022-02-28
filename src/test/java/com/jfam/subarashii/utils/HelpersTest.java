@@ -29,19 +29,5 @@ public class HelpersTest {
 
         Assertions.assertThat(textSkip).isEqualTo(result);
     }
-
-    @Test
-    void JsonArrayToList() {
-        //GIVEN
-        JsonArray jsonArray = new JsonArray();
-        jsonArray.add(1);
-        jsonArray.add(2);
-        jsonArray.add(3);
-
-        //WHEN
-        List<Integer> integerList = Helpers.JsonArrayToList(jsonArray);
-
-        //THEN
-        Assertions.assertThat(integerList).hasSize(3);
-    }
 }
+
