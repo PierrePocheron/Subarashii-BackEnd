@@ -44,13 +44,7 @@ public class AnimeService {
             JsonObject jsonObject = httpClient.GetQuery(route);
             Anime animeApi = new Anime(jsonObject);
 
-            JsonArray genresJsonArray = jsonObject.get("genres").getAsJsonArray();
-            List<Genre> genresList = new ArrayList<>();
-            genresJsonArray.forEach((JsonGenre)->{
-                Genre gen = new Genre(JsonGenre.getAsJsonObject());
-                genresList.add(gen);
-            });
-
+            List<Genre> genresList = genreService.convertJsonObjectGenreToListGenre(jsonObject,"genres");
             animeApi.setGenres(genresList);
             anime = animeRepository.save(animeApi);
         }
@@ -67,8 +61,20 @@ public class AnimeService {
         JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SEARCH_ANIME_BY_NAME, name));
         JsonArray jsonArrayAnime =  checkAllSerieFetch(jsonObject);
 
+        List<Anime> animeList = new ArrayList<>();
+        jsonArrayAnime.forEach((anim)->{
+            Long id = anim.getAsJsonObject().get("id").getAsLong();
+            Anime anime = null;
+            try {
+                anime = this.getByIdApi(id);
+            } catch (ResourceApiNotFoundException e) {
+                e.printStackTrace();
+            }
+            animeList.add(anime);
+        });
 
-        return null;
+
+        return animeList;
     }
 
     public List<Anime> getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
@@ -108,19 +114,14 @@ public class AnimeService {
         // boucle sur chaque série récupérée
         arrayResult.forEach((result)-> {
             JsonArray arrayIdGenre = result.getAsJsonObject().get("genre_ids").getAsJsonArray();
-             if(arrayIdGenre.size() == 0)
-                 return;
-            checkIfSerieHasGenreAnime(jsonArrayAnime,arrayIdGenre,result);
+            List<Genre> genresList = genreService.convertJsonArrayIdGenreToListGenre(arrayIdGenre);
+            if(genresList.stream().anyMatch(x->x.getIdApi() == 16)){
+                jsonArrayAnime.add(result);
+                return;
+            }
         });
 
         return jsonArrayAnime;
-    }
-
-    private void checkIfSerieHasGenreAnime(JsonArray jsonArrayAnime, JsonArray arrayIdGenre, JsonElement element) {
-        arrayIdGenre.forEach((genre)->{
-            if(genre.getAsInt() == 16)
-                jsonArrayAnime.add(element);
-        });
     }
 
     //endregion

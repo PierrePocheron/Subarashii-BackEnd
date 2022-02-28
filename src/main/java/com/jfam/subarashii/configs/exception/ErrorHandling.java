@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ import java.sql.SQLSyntaxErrorException;
 @ControllerAdvice
 @RestController
 //extends ResponseEntityExceptionHandler si besoin mais supprimer method region overrideSpring.
-public class ErrorHandling {
+public class ErrorHandling extends ResponseEntityExceptionHandler{
 
     @Autowired
     ResponseService responseService;
@@ -71,6 +72,11 @@ public class ErrorHandling {
         responseService.ErrorF(res,"le paramètre fournit ne correponds pas au type du paramètre attendu",HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
+    @ExceptionHandler(RequestRejectedException.class)
+    public final void InvalidDataAccessResourceUsageExceptionException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res,"la requête n'a pas pu être accepté car elle ne corresponds pas au attente",HttpServletResponse.SC_BAD_GATEWAY,false);
+    }
+
 /*    @ExceptionHandler(IllegalStateException.class)
     public final void InvalidDataAccessResourceUsageExceptionException(IllegalStateException ex, HttpServletResponse res) throws IOException {
         responseService.ErrorF(res,"une erreur a eu lieu pendant l'execution de la méthode",HttpServletResponse.SC_BAD_GATEWAY,false);
@@ -78,9 +84,9 @@ public class ErrorHandling {
 
 
     //region  === overrideSpring ===
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+/*    @ExceptionHandler(HttpMessageNotReadableException.class)
     public final void HttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletResponse res) throws IOException {
         responseService.ErrorF(res,"les valeurs du body sont manquants dans la requête",HttpServletResponse.SC_BAD_GATEWAY,false);
-    }
+    }*/
     //endregion
 }

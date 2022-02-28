@@ -28,11 +28,4 @@ public class Helpers {
         return StringUtils.substringBefore(sentence, word);
     }
 
-    public static  <T> List<T> JsonArrayToList(JsonArray jsonArray) {
-        List<T> list = new ArrayList<T>();
-        for (int i=0; i<jsonArray.size(); i++) {
-            list.add((T)jsonArray.get(i));
-        }
-        return list;
-    }
 }

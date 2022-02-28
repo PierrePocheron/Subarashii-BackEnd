@@ -68,12 +68,6 @@ public class Anime {
 
     }
 
-    public void setGenreByJsonObjet(JsonObject jsonObject) {
-        JsonArray genresJsonArray = jsonObject.get("genres").getAsJsonArray();
-        this.genres = Helpers.JsonArrayToList(genresJsonArray);
-    }
-
-
     //region  === getter-setter ===
 
     public Long getId() {
