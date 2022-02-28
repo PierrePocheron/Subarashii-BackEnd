@@ -2,12 +2,10 @@ package com.jfam.subarashii.services;
 
 import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.User;
-import com.jfam.subarashii.entities.dto.UserDto;
 import com.jfam.subarashii.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +20,30 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public User login(User user){
+    @Autowired
+    UserListService userListService;
+
+    public User login(User user) {
         User userFetching = userRepository.findByEmail(user.getEmail());
-        if(userFetching == null)
+        if (userFetching == null)
             return null;
 
-        boolean passOK = passwordEncoder.matches(user.getPassword(),userFetching.getPassword());
-        return  passOK ?  userFetching : null;
+        boolean passOK = passwordEncoder.matches(user.getPassword(), userFetching.getPassword());
+        return passOK ? userFetching : null;
     }
 
+    public User create(User user) {
+        User usr = userRepository.save(user);
+        userListService.createDefaultList(usr);
+        return usr;
+    }
 
-    public User create(User user){
-        return userRepository.save(user);
+    public User getUserForRequestByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        if(user == null)
+            return null;
+        user.setPassword(null);
+        return user;
     }
 }
+

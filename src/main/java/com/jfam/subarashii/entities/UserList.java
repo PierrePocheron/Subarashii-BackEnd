@@ -1,27 +1,51 @@
 package com.jfam.subarashii.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "userlists")
+@SecurityRequirement(name = "javainuseapi")
 public class UserList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private String nom;
 
-    @Column @NotBlank @NotNull
-    private boolean isDeletabled = true;
+    @Column @NotNull
+    private boolean isDeletable = true;
 
-    @OneToMany @NotBlank @NotNull
-    @JoinColumn( name = "userList_id")
-    private List<UserListAnime> userLists_id;
+    @ManyToOne
+    @JoinColumn( name = "userId")
+    @JsonBackReference
+    private User user;
+
+
+    @ManyToMany
+    @JoinTable(name = "userlist_anime",
+            joinColumns = @JoinColumn(name = "userlistId"),
+            inverseJoinColumns = @JoinColumn(name = "animeId")
+    )
+    private List<Anime> animes;
+
+    public UserList(){}
+
+    public UserList(String nom , User user , Boolean isDeletable){
+        this.nom = nom;
+        this.user = user;
+        this.isDeletable = isDeletable == null ? true : isDeletable ;
+    }
+
+
+
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -40,20 +64,28 @@ public class UserList {
     }
 
     public boolean isDeletable() {
-        return isDeletabled;
+        return isDeletable;
     }
 
     public void setDeletable(boolean deletable) {
-        isDeletabled = deletable;
+        isDeletable = deletable;
     }
 
-    
-
-    public List<UserListAnime> getUserLists_id() {
-        return userLists_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserLists_id(List<UserListAnime> userLists_id) {
-        this.userLists_id = userLists_id;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+    public List<Anime> getAnimes() {
+        return animes;
+    }
+
+    public void setAnimes(List<Anime> animes) {
+        this.animes = animes;
+    }
+
+    //endregion
 }

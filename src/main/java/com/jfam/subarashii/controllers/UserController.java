@@ -1,16 +1,15 @@
 package com.jfam.subarashii.controllers;
 
-import com.github.uzrnem.verify.Validator;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.dto.UserDto;
-import com.jfam.subarashii.repositories.UserRepository;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.jfam.subarashii.entities.User.validatorSignUp;
-
 @RestController
 @RequestMapping(path = "/users")
+@Tag(name = "User")
 public class UserController {
 
     @Autowired
@@ -38,6 +36,7 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Operation(summary = "Créer un utilisateur")
     @PostMapping(value = "sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void SignUpUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         boolean isValidateUser = User.validatorSignUp.test(user);
@@ -53,6 +52,7 @@ public class UserController {
         responseService.SuccessF(res,Constantes.SuccessMessage.INSCRIPTION_OK,userDto);
     }
 
+    @Operation(summary = "Connexion d'un utilisateur")
     @PostMapping(value = "/sign-in",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void SignInUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         if(user == null)
