@@ -104,7 +104,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>subarashii</finalName>
+		<finalName>${finalname}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
