@@ -1,7 +1,9 @@
 package com.jfam.subarashii.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.google.gson.JsonObject;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -13,21 +15,44 @@ public class Episode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column @NotBlank
+    @Column
     @NotNull
-    private long id_episode_api;
+    private long idApi;
 
-    @Column @NotBlank @NotNull
-    private String name;
+    @Column @NotNull
+    private String nom;
 
 
-    @OneToMany @NotBlank @NotNull
-    @JoinColumn( name = "episode_id")
-    private List<Comment> episode_id;
+    @Column @NotNull
+    private Long saison;
 
-    @OneToMany @NotBlank @NotNull
-    @JoinColumn( name = "anime_id")
-    private List<Episode> anime_id;
+    private Float note;
+
+    private Long numeroEpisode;
+
+    @OneToMany
+    @JoinColumn(name = "episodeId")
+    private List<Comment> comments;
+
+    @ManyToOne @NotNull
+    @JoinColumn( name = "animeId")
+    @JsonBackReference
+    private Anime anime;
+
+    private Long IdApiAnime;
+
+    public Episode(){}
+
+    public Episode(JsonObject jsonObject, Anime anime){
+        this.idApi = jsonObject.get("id").getAsLong();
+        this.nom = jsonObject.get("name").getAsString();
+        this.saison = jsonObject.get("season_number").getAsLong();
+        this.note = jsonObject.get("vote_average").getAsFloat();
+        this.anime = anime;
+        this.numeroEpisode = jsonObject.get("episode_number").getAsLong();
+        this.IdApiAnime = anime.getIdApi();
+    }
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -37,37 +62,69 @@ public class Episode {
         this.id = id;
     }
 
-    public long getId_episode_api() {
-        return id_episode_api;
+    public long getIdApi() {
+        return idApi;
     }
 
-    public void setId_episode_api(long id_episode_api) {
-        this.id_episode_api = id_episode_api;
+    public void setIdApi(long idApi) {
+        this.idApi = idApi;
     }
 
-    public String getName() {
-        return name;
+    public String getNom() {
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-
-
-    public List<Comment> getEpisode_id() {
-        return episode_id;
+    public Long getSaison() {
+        return saison;
     }
 
-    public void setEpisode_id(List<Comment> episode_id) {
-        this.episode_id = episode_id;
+    public void setSaison(Long saison) {
+        this.saison = saison;
     }
 
-    public List<Episode> getAnime_id() {
-        return anime_id;
+    public Float getNote() {
+        return note;
     }
 
-    public void setAnime_id(List<Episode> anime_id) {
-        this.anime_id = anime_id;
+    public void setNote(Float note) {
+        this.note = note;
     }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Anime getAnime() {
+        return anime;
+    }
+
+    public void setAnime(Anime anime) {
+        this.anime = anime;
+    }
+
+    public Long getNumeroEpisode() {
+        return numeroEpisode;
+    }
+
+    public void setNumeroEpisode(Long numeroEpisode) {
+        this.numeroEpisode = numeroEpisode;
+    }
+
+    public Long getIdApiAnime() {
+        return IdApiAnime;
+    }
+
+    public void setIdApiAnime(Long idApiAnime) {
+        IdApiAnime = idApiAnime;
+    }
+//endregion
 }
+

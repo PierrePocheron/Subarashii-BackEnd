@@ -1,7 +1,6 @@
 package com.jfam.subarashii.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -22,12 +21,14 @@ public class Comment {
     private String Item3;
 
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private String Statut;
 
+    @ManyToOne @NotNull
+    @JoinColumn( name = "animeId")
+    private Anime anime;
 
-
-
+    //region  === getter-setter ===
 
     public long getId() {
         return id;
@@ -69,9 +70,15 @@ public class Comment {
         Statut = statut;
     }
 
+    public Anime getAnime() {
+        return anime;
+    }
 
+    public void setAnime(Anime anime) {
+        this.anime = anime;
+    }
 
-
+    //endregion
 
     @Override
     public String toString() {

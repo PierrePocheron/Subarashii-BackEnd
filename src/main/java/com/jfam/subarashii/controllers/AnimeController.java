@@ -1,23 +1,31 @@
 package com.jfam.subarashii.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
+import com.jfam.subarashii.entities.Episode;
 import com.jfam.subarashii.services.AnimeService;
-import com.jfam.subarashii.services.JwtService;
+import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/animes")
+@Tag(name = "Anime")
 public class AnimeController {
 
     @Autowired
@@ -26,32 +34,64 @@ public class AnimeController {
     @Autowired
     ResponseService responseService;
 
+    @Autowired
+    EpisodeService episodeService;
 
-    @GetMapping
-    public void GetOne(HttpServletResponse res) throws IOException {
-        Anime anime = animeService.getOne();
-        if(anime == null){
-            responseService.ErrorF(res, Constantes.ErrorMessage.ANIME_NOT_FOUND,HttpServletResponse.SC_NOT_FOUND, null);
+
+    @Operation(summary = "Récupère un anime par son id api, s'il n'existe pas en bdd l'ajoute grâce à l'api")
+    @GetMapping("/{idapi}")
+    public void GetById(@PathVariable long idapi,HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        Anime anime = animeService.getByIdApi(idapi);
+        responseService.SuccessF(res,"l'animé a été trouvé", anime);
+    }
+
+    @Operation(summary = "Récupère la saison d'un anime grâce à l'id api de l'anime et du numéro de la saison, ajoute en bdd les épisodes et l'anime s'il n'existe pas")
+    @GetMapping("/{idanime}/season/{idseason}")
+    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
+        responseService.SuccessF(res,"les épisodes ont été trouvé", episodeList);
+    }
+
+    @Operation(summary = "Récupère 20 animés au hasard (se sert de la pagination de l'api)")
+    @GetMapping("/discover")
+    public void DiscoverAnimed(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        int randomPageDiscovery = new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION);
+        List<Anime> animeList = animeService.getDiscoverAnime(randomPageDiscovery);
+        if(animeList == null){
+            responseService.ErrorF(res,"Aucun animé n'a été trouvé à la page " + randomPageDiscovery, HttpServletResponse.SC_BAD_GATEWAY,false);
+        }
+        responseService.SuccessF(res,"Une liste d'animé à découvrir a été trouvé", animeList);
+    }
+
+
+    @PostMapping("/searchbyname")
+    public void SearchAnimedByName(@RequestBody Map<String, String> payload , HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        //https://api.themoviedb.org/3/discover/tv?
+        String query = payload.get("query");
+
+        if(query == null)
+        {
+            responseService.ErrorF(res,"Le paramètre n'est pas celui attendu ou ne possède pas de la valeur", HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
-        responseService.SuccessF(res,"Un animé à été trouvé", anime);
-    }
 
-    @PreAuthorize("#req.isUserInRole('ADMIN')")
-    @GetMapping(path = "/all")
-    public void GetAll(HttpServletRequest req,HttpServletResponse res) throws IOException {
-        List<Anime> animeList = animeService.getAll();
-
-        if(animeList == null || animeList.size() == 0){
-            responseService.ErrorF(res, Constantes.ErrorMessage.ANIME_NOT_FOUND,HttpServletResponse.SC_NOT_FOUND, null);
+        List<Anime> animeList = animeService.SearchAnimeByName(query);
+        if(animeList.size() == 0)
+        {
+            responseService.SuccessF(res,"Aucun animé n'a été trouvé...", null);
             return;
         }
-
-        responseService.SuccessF(res,"Des animés ont été trouvés", animeList);
+        responseService.SuccessF(res,animeList.size() + " ont été trouvé(s)", animeList);
     }
 
-    @GetMapping("/{id}")
-    public void GetById(@PathVariable long id){
-        Anime anime = animeService.getById(id);
+    @PostMapping("/searchbyinfo")
+    public void SearchAnimedByOtherInfo(HttpServletRequest req){
+        //https://api.themoviedb.org/3/discover/tv?
+
     }
+
+
+
+
+
 }

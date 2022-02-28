@@ -3,7 +3,6 @@ package com.jfam.subarashii.entities;
 import com.github.uzrnem.verify.Validator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -13,24 +12,34 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_User;
+    private long idUser;
 
-    @Column(unique = true) @NotBlank @NotNull
+    @Column(unique = true) @NotNull
     private String email;
 
-    @Column @NotBlank @NotNull
+    @Column @NotNull
     private String password;
 
-    @Column(columnDefinition = "varchar(255) default 'USER'") @NotBlank @NotNull
+    @Column(columnDefinition = "varchar(255) default 'USER'") @NotNull
     private String role = Role.USER.toString();
 
-    @OneToMany
-    @JoinColumn( name = "user_id")
+    @OneToMany(mappedBy = "user")
     private List<UserList> lists;
 
-    @OneToMany
-    @JoinColumn( name = "anime_id")
-    private List<UserListAnime> animesId;
+    public User(){}
+
+    public User(String name, String role){
+        this.email = name;
+        this.role = role;
+    }
+
+
+    public static Validator<User> validatorSignUp = Validator.stream(User.class)
+            .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
+            .add(User::getPassword, Validator.REQUIRED , "Aucun password n'a été renseigné")
+            .min(User::getPassword, 5, "Le password doit contenir au minimum 5 caractères");
+
+    //region  === getter-setter ===
 
     public String getRole() {
         return role;
@@ -48,13 +57,6 @@ public class User {
         this.lists = lists;
     }
 
-    public long getId_User() {
-        return id_User;
-    }
-
-    public void setId_User(long id_User) {
-        this.id_User = id_User;
-    }
 
     public String getEmail() {
         return email;
@@ -72,15 +74,16 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                ", email='" + email + '\'' +
-                '}';
+    public long getIdUser() {
+        return idUser;
     }
 
-    public static Validator<User> validatorSignUp = Validator.stream(User.class)
-            .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
-            .add(User::getPassword, Validator.REQUIRED , "Aucun password n'a été renseigné")
-            .min(User::getPassword, 5, "Le password doit contenir au minimum 5 caractères");
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
+    }
+
+
+
+//endregion
+
 }

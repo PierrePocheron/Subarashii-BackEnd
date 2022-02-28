@@ -1,13 +1,24 @@
 package com.jfam.subarashii.services;
 
-import com.jfam.subarashii.utils.HttpClient;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
+import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.repositories.AnimeRepository;
+import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
+import com.jfam.subarashii.utils.HttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class AnimeService {
@@ -18,26 +29,101 @@ public class AnimeService {
     @Autowired
     HttpClient httpClient;
 
+    @Autowired
+    GenreService genreService;
 
-    public Anime getOne(){
-        return new Anime("Dragon ball Z" , "DBZ", "Akira Toriyama", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
+    private static final Logger logger = LoggerFactory.getLogger(AnimeService.class);
+
+    public Anime getByIdApi(long id) throws ResourceApiNotFoundException {
+
+        Anime anime  = animeRepository.findByIdApi(id);
+
+        // if isn't on database fetch to api
+        if(anime == null){
+            String route = String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID,id);
+            JsonObject jsonObject = httpClient.GetQuery(route);
+            Anime animeApi = new Anime(jsonObject);
+
+            List<Genre> genresList = genreService.convertJsonObjectGenreToListGenre(jsonObject,"genres");
+            animeApi.setGenres(genresList);
+            anime = animeRepository.save(animeApi);
+        }
+
+        return anime;
     }
 
-    public List<Anime> getAll(){
+    /**
+     * Recherche un animé par son nom :
+     * le nom
+     * @return
+     */
+    public List<Anime> SearchAnimeByName(String name) throws ResourceApiNotFoundException {
+        JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SEARCH_ANIME_BY_NAME, name));
+        JsonArray jsonArrayAnime =  checkAllSerieFetch(jsonObject);
 
         List<Anime> animeList = new ArrayList<>();
-        Anime anime =  new Anime("Dragon ball Z" , "DBZ", "Akira Toriyama", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
-        Anime anime2 =  new Anime("Naruto" , "Naruto", "Masashi Kishimoto", "https://www.kamehashop.fr/24711-large_default/poster-dragon-ball-z-all-stars.jpg");
-        Anime anime3 =  new Anime("One piece" , "One piece", "Eiichirō Oda", "https://media.ouest-france.fr/v1/pictures/MjAyMDEyOWZlNzlmZTlmM2VmNzMxM2IzYjBlZDM4MjYxM2Y4OTg?width=1260&height=708&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=87704e84993984ab6724c7852fa13b7ace4e91171f4c20adf921e675597b59de");
-        animeList.add(anime);
-        animeList.add(anime2);
-        animeList.add(anime3);
+        jsonArrayAnime.forEach((anim)->{
+            Long id = anim.getAsJsonObject().get("id").getAsLong();
+            Anime anime = null;
+            try {
+                anime = this.getByIdApi(id);
+            } catch (ResourceApiNotFoundException e) {
+                e.printStackTrace();
+            }
+            animeList.add(anime);
+        });
+
+
         return animeList;
     }
 
-    public Anime getById(long id){
+    public List<Anime> getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
 
-        //var object =  httpClient.GetQuery("http://localhost:8080/animes");
-        return animeRepository.findById(id).orElse(null);
+        JsonObject jsonObject =  httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME,Page));
+        JsonArray jsonArrayResult = getjsonArrayResultDiscovery(jsonObject);
+
+        List<Anime> animeList = new ArrayList<>();
+
+        jsonArrayResult.forEach((result)->{
+            Long idApiAnime = result.getAsJsonObject().get("id").getAsLong();
+            try {
+                logger.info(String.format("id api anime : %d , dans la page %d", idApiAnime, Page));
+                Anime anime =  getByIdApi(idApiAnime);
+                animeList.add(anime);
+
+            } catch (ResourceApiNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return animeList;
     }
+
+
+    //region === PRIVATE METHOD ===
+
+    private JsonArray getjsonArrayResultDiscovery(JsonObject jsonObject){
+        return jsonObject.get("results").getAsJsonArray();
+    }
+
+    private JsonArray checkAllSerieFetch(JsonObject jsonObject){
+
+        JsonArray arrayResult = jsonObject.get("results").getAsJsonArray();
+        JsonArray jsonArrayAnime = new JsonArray();
+
+        // boucle sur chaque série récupérée
+        arrayResult.forEach((result)-> {
+            JsonArray arrayIdGenre = result.getAsJsonObject().get("genre_ids").getAsJsonArray();
+            List<Genre> genresList = genreService.convertJsonArrayIdGenreToListGenre(arrayIdGenre);
+            if(genresList.stream().anyMatch(x->x.getIdApi() == 16)){
+                jsonArrayAnime.add(result);
+                return;
+            }
+        });
+
+        return jsonArrayAnime;
+    }
+
+    //endregion
+
 }
