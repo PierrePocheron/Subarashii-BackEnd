@@ -5,6 +5,7 @@ public class Constantes {
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
+    public static String ADRESS_FRONT;
     public final static String URL_IMAGE_NOT_FOUND = "https://image.shutterstock.com/image-vector/no-image-available-vector-hand-600w-745639717.jpg";
 
     public static class Claims{
@@ -54,7 +55,7 @@ public class Constantes {
         /**
          * genre 16 = animation , original_language=ja = japan
          */
-        public final static String ROUTE_SERIES_DISCOVER_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr";
+        public final static String ROUTE_SERIES_DISCOVER_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
         public final static String ROUTE_SEARCH_ANIME_BY_NAME= "https://api.themoviedb.org/3/search/tv?language=fr-FR&page=1&include_adult=false&query=%s";
         public final static String ROUTE_GENRE_ANIME= "https://api.themoviedb.org/3/genre/tv/list?language=fr-Fr";
 
