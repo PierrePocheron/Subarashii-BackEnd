@@ -1,17 +1,15 @@
 package com.jfam.subarashii.controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Episode;
+import com.jfam.subarashii.entities.api.Discover;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,14 +51,16 @@ public class AnimeController {
     }
 
     @Operation(summary = "Récupère 20 animés au hasard (se sert de la pagination de l'api)")
-    @GetMapping("/discover")
-    public void DiscoverAnimed(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-        int randomPageDiscovery = new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION);
-        List<Anime> animeList = animeService.getDiscoverAnime(randomPageDiscovery);
-        if(animeList == null){
-            responseService.ErrorF(res,"Aucun animé n'a été trouvé à la page " + randomPageDiscovery, HttpServletResponse.SC_BAD_GATEWAY,false);
+    @GetMapping(value = {"/discover","/discover/{idPage}"})
+    public void DiscoverAnimed(@PathVariable(required = false) Integer idPage, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        if(idPage == null)
+            idPage = new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION);
+
+        Discover discover = animeService.getDiscoverAnime(idPage);
+        if(discover == null){
+            responseService.ErrorF(res,"Aucun animé n'a été trouvé à la page " + idPage, HttpServletResponse.SC_BAD_GATEWAY,false);
         }
-        responseService.SuccessF(res,"Une liste d'animé à découvrir a été trouvé", animeList);
+        responseService.SuccessF(res,"Une liste d'animé à découvrir a été trouvé", discover);
     }
 
 
