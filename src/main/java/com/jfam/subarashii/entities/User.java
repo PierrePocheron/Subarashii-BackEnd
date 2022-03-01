@@ -26,6 +26,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserList> lists;
 
+    @NotNull
+    private String username;
+
     public User(){}
 
     public User(String name, String role){
@@ -82,7 +85,13 @@ public class User {
         this.idUser = idUser;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
 //endregion
 
