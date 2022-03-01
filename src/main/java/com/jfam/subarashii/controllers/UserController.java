@@ -1,5 +1,6 @@
 package com.jfam.subarashii.controllers;
 
+import com.google.gson.Gson;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.dto.UserDto;
 import com.jfam.subarashii.services.JwtService;
@@ -8,6 +9,7 @@ import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kong.unirest.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,9 +69,12 @@ public class UserController {
 
         String token = jwtService.CreateToken(userFetching.getEmail(),userFetching.getRole());
         res.setHeader(Constantes.Token_value.AUTHORIZATION_HEADER, Constantes.Token_value.TOKEN_PREFIX + token);
-
-        UserDto userDto = new UserDto(userFetching);
-        responseService.SuccessF(res,Constantes.SuccessMessage.CONNECTION_OK,userDto);
+        
+        JSONObject result = new JSONObject();
+        result.put("token" , token );
+        result.put("username" , userFetching.getEmail());
+        result.put("email" , userFetching.getUsername());
+        responseService.SuccessF(res,Constantes.SuccessMessage.CONNECTION_OK,result.toMap());
     }
 
 
