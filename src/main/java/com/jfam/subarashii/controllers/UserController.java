@@ -69,7 +69,7 @@ public class UserController {
 
         String token = jwtService.CreateToken(userFetching.getEmail(),userFetching.getRole());
         res.setHeader(Constantes.Token_value.AUTHORIZATION_HEADER, Constantes.Token_value.TOKEN_PREFIX + token);
-        
+
         JSONObject result = new JSONObject();
         result.put("token" , token );
         result.put("username" , userFetching.getEmail());
