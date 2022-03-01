@@ -50,17 +50,6 @@ public class AnimeController {
         responseService.SuccessF(res,"les épisodes ont été trouvé", episodeList);
     }
 
-/*    @Operation(summary = "Récupère 20 animés au hasard (se sert de la pagination de l'api)")
-    @GetMapping("/discover")
-    public void DiscoverAnimed(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-        int randomPageDiscovery = new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION);
-        List<Anime> animeList = animeService.getDiscoverAnime(randomPageDiscovery);
-        if(animeList == null){
-            responseService.ErrorF(res,"Aucun animé n'a été trouvé à la page " + randomPageDiscovery, HttpServletResponse.SC_BAD_GATEWAY,false);
-        }
-        responseService.SuccessF(res,"Une liste d'animé à découvrir a été trouvé", animeList);
-    }
-    */
     @Operation(summary = "Récupère 20 animés au hasard (se sert de la pagination de l'api)")
     @GetMapping(value = {"/discover","/discover/{idPage}"})
     public void DiscoverAnimed(@PathVariable(required = false) Integer idPage, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
