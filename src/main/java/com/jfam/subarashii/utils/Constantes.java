@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constantes {
+    public final static String USER_KEY = "user";
     public final static String ENCODE = "UTF-8";
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
@@ -35,6 +36,8 @@ public class Constantes {
         public final static String CONSTRAINT_FIELD_NOT_OK= "Une contrainte n'a pas été respecté sur une ou plusieurs valeurs";
         public final static String NOT_UNIQUE_RESULT = "La requête a retourné plusieurs résultats alors qu'un seul était attentdu";
         public final static String ANY_PARAMETER_PROVIDED = "Aucun paramètre n'a été fournis";
+        public final static String ERROR_ADD_ANIME_TO_USER_LIST = "La liste dans laquel vous souhaité ajouter l'animé n'existe pas ou n'appartient pas à l'utilisateur";
+        public final static String ERROR_ADD_ANIME_ALSO_EXIST = "L'animé est déjà présent dans la liste";
     }
 
     public static class SuccessMessage {
@@ -47,6 +50,8 @@ public class Constantes {
         public final static String SEARCH_ANIME_FIND= "%d animé(s) ont été trouvé(s)";
         public final static String GENRE_HAS_FETCH= "Tout les genres ont été récupérés";
         public final static String COMPLEXE_SEARCH_OK= "La recherche complexe de l'animé est ok";
+        public final static String USER_LIST_GET_CURRENT_LIST= "La liste de l'utilisateur a correctement été récupéré";
+        public final static String USER_LIST_CREATE_OK= "La liste custom a correctement été crée";
     }
 
     public static class Token_value{
@@ -80,6 +85,9 @@ public class Constantes {
         public final static String SUMMARY_ANIME_GET_BY_ID_API ="Récupère un anime par son id api, s'il n'existe pas en bdd l'ajoute.";
         public final static String SUMMARY_GET_SEASON_BY_ID_API ="Récupère la saison d'un anime grâce à l'id api de l'anime et du numéro de la saison, ajoute en bdd les épisodes et l'anime s'il n'existe pas";
         public final static String SUMMARY_DISCOVER_ANIME="Récupère 20 animés au hasard (se sert de la pagination de l'api)";
+        public final static String SUMMARY_USER_LIST_GET_MY_LIST="Retourne tous les listes de l'utilisateur courant";
+        public final static String SUMMARY_USER_LIST_CREATE_LIST= "Permets de créer une liste personnalisé pour l'utilisateur courant";
+        public final static String SUMMARY_USER_LIST_ADD_ANIME= "Ajoute un animé (grâce à son idapi) à la liste (int envoyé en paramètre) de l'utilisateur courant";
     }
 
     public final static List<String> LIST_QUERY_PARAMS_FOR_FULL_SEARCH = Arrays.asList(
