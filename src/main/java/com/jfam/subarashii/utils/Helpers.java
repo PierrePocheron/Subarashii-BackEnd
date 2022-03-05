@@ -2,7 +2,7 @@ package com.jfam.subarashii.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -34,8 +34,9 @@ public class Helpers {
                 .collect(Collectors.toList());
     }
 
-    public static Map<String, Object> ConvertJsonElementToMap(JsonElement jsonElement){
+    public static Map<String, Object> convertJsonObjectToMap(JsonObject jsonObject){
         Gson gson = new Gson();
-        return gson.fromJson(jsonElement.toString(), Map.class);
+        return gson.fromJson(jsonObject.toString(), Map.class);
     }
+
 }

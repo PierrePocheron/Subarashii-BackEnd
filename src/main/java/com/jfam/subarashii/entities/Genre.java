@@ -1,7 +1,6 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.JsonObject;
 
 import javax.persistence.*;
@@ -24,9 +23,10 @@ public class Genre {
     @JsonBackReference
     private List<Anime> animes;
 
-    public Genre(){}
+    public Genre() {
+    }
 
-    public Genre(JsonObject jsonObject){
+    public Genre(JsonObject jsonObject) {
         this.idApi = jsonObject.get("id").getAsLong();
         this.nom = jsonObject.get("name").getAsString();
     }
