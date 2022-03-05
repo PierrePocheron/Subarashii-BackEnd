@@ -3,7 +3,7 @@ package com.jfam.subarashii.controllers;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Episode;
-import com.jfam.subarashii.entities.api.Discover;
+import com.jfam.subarashii.entities.api.ApiPaginationResults;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -56,36 +55,52 @@ public class AnimeController {
     @GetMapping(value = "/discover")
     public void DiscoverAnimed(@RequestParam Optional<Integer> page, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         Integer pageNb = page.isEmpty() ? new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION) : page.get();
-        Discover discover = animeService.getDiscoverAnime(pageNb);
-        if(discover == null){
-            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND_ON_PAGE + pageNb, HttpServletResponse.SC_BAD_GATEWAY,false);
+        ApiPaginationResults resultSearch = animeService.getDiscoverAnime(pageNb);
+
+        if(resultSearch == null || resultSearch.results == null || resultSearch.results.size() == 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
+            return;
         }
-        responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_DISCOVER_OK, discover);
+
+        responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_DISCOVER_OK, resultSearch);
     }
 
-
-
-    @PostMapping("/search")
+    @GetMapping("/search")
     public void simpleSearchAnimed(@RequestParam Map<String,String> allParams, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+
+        // clear les params envoyé avec une valeur vide ou avec des espaces blancs
+        allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
 
         if(allParams.size() ==0){
             responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
 
-        Map<String,Object> result = animeService.simpleSearchAnime(allParams);
-        if(result.size() == 0)
+        List<String> UnauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH);
+        if(UnauthorizedParams.size() != 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
+            return;
+        }
+
+        ApiPaginationResults resultSearch = animeService.simpleSearchAnime(allParams);
+        if(resultSearch.results == null || resultSearch.results.size() == 0)
         {
             responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
         }
 
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  result.size()), result);
+
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.size()), resultSearch);
     }
 
 
-    @PostMapping("/fullsearch")
+    @GetMapping("/fullsearch")
     public void fullSearchAnimed(@RequestParam Map<String,String> allParams, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        // clear les params envoyé avec une valeur vide ou avec des espaces blancs
+        allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
+
         if(allParams.size() ==0){
             responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
@@ -97,7 +112,12 @@ public class AnimeController {
             return;
         }
 
-        Map<String, Object> resultSearch = animeService.searchComplexeAnime(allParams);
+        ApiPaginationResults resultSearch  = animeService.complexeSearchAnime(allParams);
+        if(resultSearch.results == null || resultSearch.results.size() == 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
+            return;
+        }
         responseService.SuccessF(res,Constantes.SuccessMessage.COMPLEXE_SEARCH_OK,resultSearch);
 
     }

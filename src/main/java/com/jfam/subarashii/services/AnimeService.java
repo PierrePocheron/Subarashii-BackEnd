@@ -6,21 +6,18 @@ import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Genre;
-import com.jfam.subarashii.entities.api.Discover;
+import com.jfam.subarashii.entities.api.ApiPaginationResults;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.utils.Constantes;
-import com.jfam.subarashii.utils.Helpers;
 import com.jfam.subarashii.utils.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.jfam.subarashii.utils.Constantes.ApiMovie.PARAMS_QUESTION_MARK;
 
 @Service
 public class AnimeService {
@@ -66,36 +63,37 @@ public class AnimeService {
      * donc un tri par genre (animation) est réalisé manuellement
      * @return une liste d'animé correspondant à la recherche
      */
-    public Map<String, Object> simpleSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
-
+    public ApiPaginationResults simpleSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
         String query = getQueryFromMap(allParams);
-        JsonObject queryResult = httpClient.GetQuery(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
-        JsonArray jsonArrayAnime = getAnimeOnSeriesFetchAfterSearch(queryResult);
 
-        var map =  Helpers.ConvertJsonElementToMap(jsonArrayAnime);
-        return map;
+        // récupère des série de tout genre :
+        ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
+
+        if(apiPaginationResults.results != null && apiPaginationResults.results.size() > 0)
+            // du coup je ne veux que les animés:
+            apiPaginationResults.results.removeIf(result ->  !result.genre_ids.contains(16.0));
+
+        return apiPaginationResults;
     }
 
     /**
      * Recherche un complexe animé:
      * @return map with all result
      */
-    public Map<String, Object> searchComplexeAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
+    public ApiPaginationResults complexeSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
         String query = getQueryFromMap(allParams);
-        JsonObject queryResult = httpClient.GetQuery(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
-        return new Gson().fromJson(queryResult.toString(), Map.class);
+        return httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
     }
 
     /**
-     * Fetch anime and convert to Discover result
+     * Fetch anime and convert to ApiPaginationResults result
      * @param Page
-     * @return Discover object (api objet with page and other infos)
+     * @return ApiPaginationResults object (api objet with page and other infos)
      * @throws ResourceApiNotFoundException
      */
-    public Discover getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
-        JsonObject queryResult = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, Page));
-        Gson gson = new Gson();
-        return gson.fromJson(queryResult.toString(), Discover.class);
+    public ApiPaginationResults getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
+        ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, Page));
+        return apiPaginationResults;
     }
 
     //region === PRIVATE METHOD ===
@@ -108,14 +106,8 @@ public class AnimeService {
     private String getQueryFromMap(Map<String, String> allParams) {
         StringBuilder queryBuilder = new StringBuilder();
         allParams.forEach((k, v) -> {
-            // si je suis le premier paramètre de la query, je n'ai pas d'esperluette
-            if (queryBuilder.toString().isEmpty()) {
-                queryBuilder.append(String.format(Constantes.ApiMovie.FIRST_QUERY_PARAMS_SYNTAX_, k, v));
-                return;
-            }
             queryBuilder.append(String.format(Constantes.ApiMovie.OTHER_QUERY_PARAMS_SYNTAX, k, v));
         });
-        queryBuilder.insert(0, PARAMS_QUESTION_MARK);
         return queryBuilder.toString();
     }
 

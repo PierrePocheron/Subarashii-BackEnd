@@ -45,6 +45,7 @@ public class Constantes {
         public final static String ERROR_ADD_ANIME_TO_USER_LIST = "La liste dans laquel vous souhaité ajouter l'animé n'existe pas ou n'appartient pas à l'utilisateur";
         public final static String ERROR_ADD_ANIME_ALSO_EXIST = "L'animé est déjà présent dans la liste";
         public final static String SIGN_UP_NOT_VALID = "Inscription incorrecte";
+        public final static String RESOURCE_NOT_FOUND = "La ressource recherché n'a pas pu être trouvé";
     }
 
     public static class SuccessMessage {
@@ -78,25 +79,14 @@ public class Constantes {
         /**
          * genre 16 = animation , original_language=ja = japan
          */
-        public final static String ROUTE_SERIES_DISCOVER_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
+        public final static String ROUTE_SERIES_DISCOVER_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc&original_language=ja";
         public final static String ROUTE_GENRE_ANIME= "https://api.themoviedb.org/3/genre/tv/list?language=fr-Fr";
 
 
-        public final static String ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/discover/tv";
-        public final static String ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/search/tv";
+        public final static String ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/discover/tv?language=fr-FR&with_genres=16&sort_by=original_title.asc";
+        public final static String ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/search/tv?language=fr-FR";
 
-
-        public final static String DEFAULT_ROUTE_SIMPLE_SEARCH_ANIME= "https://api.themoviedb.org/3/search/tv?language=fr-FR&page=1&include_adult=false&query=%s";
-        public final static String DEFAULT_ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
-
-
-
-
-
-        public final static String FIRST_QUERY_PARAMS_SYNTAX_= "%s=%s";
         public final static String OTHER_QUERY_PARAMS_SYNTAX = "&%s=%s";
-        public final static String PARAMS_QUESTION_MARK = "?";
-
 
         public final static String JSON_KEY_RESULT = "results";
         public final static String JSON_KEY_GENRE_IDS = "genre_ids";
@@ -115,8 +105,16 @@ public class Constantes {
     }
 
 
+    public final static List<String> LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH = Arrays.asList(
+            "first_air_date_year",
+            "include_adult",
+            "query",
+            "page",
+            "language");
+
 
     public final static List<String> LIST_QUERY_PARAMS_FOR_FULL_SEARCH = Arrays.asList(
+            "language",
             "region",
             "sort_by",
             "certification_country",
