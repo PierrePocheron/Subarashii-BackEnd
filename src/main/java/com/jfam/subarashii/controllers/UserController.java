@@ -38,13 +38,13 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Operation(summary = "Créer un utilisateur")
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CREATE)
     @PostMapping(value = "sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void SignUpUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         boolean isValidateUser = User.validatorSignUp.test(user);
 
         if (!isValidateUser) {
-            responseService.ErrorF(res, "Inscription incorrecte", HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, User.validatorSignUp.getErrors());
+            responseService.ErrorF(res, Constantes.ErrorMessage.SIGN_UP_NOT_VALID, HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, User.validatorSignUp.getErrors());
             return;
         }
 
@@ -54,7 +54,7 @@ public class UserController {
         responseService.SuccessF(res, Constantes.SuccessMessage.INSCRIPTION_OK, userDto);
     }
 
-    @Operation(summary = "Connexion d'un utilisateur")
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_SIGN_IN )
     @PostMapping(value = "/sign-in", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void SignInUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         if (user == null)
@@ -70,11 +70,9 @@ public class UserController {
         res.setHeader(Constantes.Token_value.AUTHORIZATION_HEADER, Constantes.Token_value.TOKEN_PREFIX + token);
 
         Map<String, String> result = new HashMap<>();
-        result.put("token", token);
-        result.put("username", userFetching.getUsername());
-        result.put("email", userFetching.getEmail());
+        result.put(Constantes.Keys.USER_TOKEN, token);
+        result.put(Constantes.Keys.USER_USERNAME, userFetching.getUsername());
+        result.put(Constantes.Keys.USER_EMAIL, userFetching.getEmail());
         responseService.SuccessF(res, Constantes.SuccessMessage.CONNECTION_OK, result);
     }
-
-
 }

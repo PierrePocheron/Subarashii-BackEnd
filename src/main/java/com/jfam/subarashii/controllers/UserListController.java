@@ -41,7 +41,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_GET_MY_LIST)
     @GetMapping("/mylist")
     public void getCurrentUserList(HttpServletRequest req,HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.USER_KEY);
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER_KEY);
         List<UserList> listUserLists=  userListService.getCurrentUserList(currentUser);
         responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST,listUserLists);
     }
@@ -49,7 +49,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_CREATE_LIST)
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public void createCustomList(@RequestBody  UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.USER_KEY);
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER_KEY);
         UserList customUserList =  userListService.createCustomList(currentUser,userList.getNom());
         responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK,customUserList);
     }
@@ -57,32 +57,21 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_ADD_ANIME)
     @PutMapping("/addanime")
     public void addAnimeToUserList(@RequestBody UserListAnimeDTO userListAnimeDTO, HttpServletRequest req, HttpServletResponse res ) throws IOException, ResourceApiNotFoundException {
-        User currentUser = (User) req.getAttribute(Constantes.USER_KEY);
-
-        UserList theUserListCurrentUser = userListService.GetOneUserListForUser(userListAnimeDTO.idUserList, currentUser);
-
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER_KEY);
+        UserList theUserListCurrentUser = userListService.getOneUserListByIdForCurrentUser(userListAnimeDTO.idUserList, currentUser);
         if(theUserListCurrentUser == null){
             responseService.ErrorF(res,Constantes.ErrorMessage.ERROR_ADD_ANIME_TO_USER_LIST,HttpServletResponse.SC_NOT_FOUND,false);
             return;
         }
 
         Anime animeToAdd =  animeService.getByIdApi(userListAnimeDTO.IdApiAnime);
-
-        // récupération des animés dans la liste :
-        List<Anime> animeList= theUserListCurrentUser.getAnimes();
-
-        // si l'animé est déjà présent :
+        List<Anime> animeList= theUserListCurrentUser.getAnimes(); // récupération les animés dans la liste de l'utilisateur
         if (animeList.contains(animeToAdd))
         {
             responseService.ErrorF(res,Constantes.ErrorMessage.ERROR_ADD_ANIME_ALSO_EXIST,404,false);
             return;
         }
-
-        // j'ajoute l'anime dans la liste
-        // je modifie la liste des animés dans la liste
-        animeList.add(animeToAdd);
-        theUserListCurrentUser.setAnimes(animeList);
-        userListService.updateUserList(theUserListCurrentUser);
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNom(), theUserListCurrentUser.getNom()),true);
+        UserList ul = userListService.addAnimeToUserList(animeToAdd, animeList,theUserListCurrentUser);
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNom(), theUserListCurrentUser.getNom()),ul);
     }
 }

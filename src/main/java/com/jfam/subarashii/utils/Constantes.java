@@ -4,13 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constantes {
-    public final static String USER_KEY = "user";
     public final static String ENCODE = "UTF-8";
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
     public static String ADRESS_FRONT;
     public final static String URL_IMAGE_NOT_FOUND = "https://image.shutterstock.com/image-vector/no-image-available-vector-hand-600w-745639717.jpg";
+
+    public static class Keys{
+        public final static String USER_KEY= "user";
+        public final static String USER_TOKEN= "token";
+        public final static String USER_USERNAME= "username";
+        public final static String USER_EMAIL= "email";
+    }
 
     public static class Claims{
         public final static String EMAIL= "email";
@@ -24,7 +30,6 @@ public class Constantes {
         public final static String TOKEN_NOT_EXIST = "Veuillez vous identifier";
         public final static String TOKEN_INVALIDE = "Le token est invalide";
         public final static String AUTHENTIFICATION_NOT_OK = "Email ou mots de passe incorrect";
-        public final static String EMPTY_EMAIL_OR_PASSWORD = "Le mot de passe ou le mots de passe incorrect";
         public final static String ANIME_NOT_FOUND = "Aucun animé a été trouvé ...";
         public final static String ERROR_UNIQUE_CONTRAINT_DATABASE = "L'information existe déjà dans la base de donnée";
         public final static String ANIME_NOT_FOUND_ON_PAGE = "Aucun animé n'a été trouvé à la page ";
@@ -38,6 +43,7 @@ public class Constantes {
         public final static String ANY_PARAMETER_PROVIDED = "Aucun paramètre n'a été fournis";
         public final static String ERROR_ADD_ANIME_TO_USER_LIST = "La liste dans laquel vous souhaité ajouter l'animé n'existe pas ou n'appartient pas à l'utilisateur";
         public final static String ERROR_ADD_ANIME_ALSO_EXIST = "L'animé est déjà présent dans la liste";
+        public final static String SIGN_UP_NOT_VALID = "Inscription incorrecte";
     }
 
     public static class SuccessMessage {
@@ -88,6 +94,8 @@ public class Constantes {
         public final static String SUMMARY_USER_LIST_GET_MY_LIST="Retourne tous les listes de l'utilisateur courant";
         public final static String SUMMARY_USER_LIST_CREATE_LIST= "Permets de créer une liste personnalisé pour l'utilisateur courant";
         public final static String SUMMARY_USER_LIST_ADD_ANIME= "Ajoute un animé (grâce à son idapi) à la liste (int envoyé en paramètre) de l'utilisateur courant";
+        public final static String SUMMARY_USER_CREATE= "Créer un utilisateur";
+        public final static String SUMMARY_USER_SIGN_IN= "Connexion d'un utilisateur";
     }
 
     public final static List<String> LIST_QUERY_PARAMS_FOR_FULL_SEARCH = Arrays.asList(

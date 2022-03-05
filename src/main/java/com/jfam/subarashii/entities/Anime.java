@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -42,6 +43,7 @@ public class Anime {
 
 
     @ManyToMany(mappedBy = "animes")
+    @JsonBackReference
     private List<UserList> userLists;
 
 
