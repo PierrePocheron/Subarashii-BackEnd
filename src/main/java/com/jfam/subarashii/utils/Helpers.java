@@ -3,10 +3,8 @@ package com.jfam.subarashii.utils;
 import com.google.gson.JsonArray;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Helpers {
 
@@ -28,4 +26,10 @@ public class Helpers {
         return StringUtils.substringBefore(sentence, word);
     }
 
+
+    public static List<String> GetElementInListNotInMapParams(Map<String,String> mapParams, List<String>  listParamsAuthorize ){
+        return mapParams.keySet().stream()
+                .filter(element -> !listParamsAuthorize.contains(element))
+                .collect(Collectors.toList());
+    }
 }

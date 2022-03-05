@@ -1,5 +1,8 @@
 package com.jfam.subarashii.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constantes {
     public final static String ENCODE = "UTF-8";
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
@@ -31,6 +34,7 @@ public class Constantes {
         public final static String REQUEST_REFUSED= "La requête n'a pas pu être accepté car elle ne corresponds pas au attente";
         public final static String CONSTRAINT_FIELD_NOT_OK= "Une contrainte n'a pas été respecté sur une ou plusieurs valeurs";
         public final static String NOT_UNIQUE_RESULT = "La requête a retourné plusieurs résultats alors qu'un seul était attentdu";
+        public final static String ANY_PARAMETER_PROVIDED = "Aucun paramètre n'a été fournis";
     }
 
     public static class SuccessMessage {
@@ -42,6 +46,7 @@ public class Constantes {
         public final static String ANIME_DISCOVER_OK= "La liste d'animé à découvrir a été trouvé";
         public final static String SEARCH_ANIME_FIND= "%d animé(s) ont été trouvé(s)";
         public final static String GENRE_HAS_FETCH= "Tout les genres ont été récupérés";
+        public final static String COMPLEXE_SEARCH_OK= "La recherche complexe de l'animé est ok";
     }
 
     public static class Token_value{
@@ -60,11 +65,15 @@ public class Constantes {
          * genre 16 = animation , original_language=ja = japan
          */
         public final static String ROUTE_SERIES_DISCOVER_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
-        public final static String ROUTE_SEARCH_ANIME_BY_NAME= "https://api.themoviedb.org/3/search/tv?language=fr-FR&page=1&include_adult=false&query=%s";
+        public final static String ROUTE_SEARCH_SIMPLE_SEARCH_ANIME= "https://api.themoviedb.org/3/search/tv?language=fr-FR&page=1&include_adult=false&query=%s";
         public final static String ROUTE_GENRE_ANIME= "https://api.themoviedb.org/3/genre/tv/list?language=fr-Fr";
-
         public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION= 458;
+        public final static String ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
+        public final static String ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/discover/tv";
 
+        public final static String QUERY_PARAMS_SYNTAX = "&%s=%s";
+        public final static String QUERY_PARAMS_SYNTAX_FIRST_PARAMS = "%s=%s";
+        public final static String PARAMS_QUESTION_MARK = "?";
     }
 
     public static class Swagger{
@@ -73,5 +82,41 @@ public class Constantes {
         public final static String SUMMARY_DISCOVER_ANIME="Récupère 20 animés au hasard (se sert de la pagination de l'api)";
     }
 
-
+    public final static List<String> LIST_QUERY_PARAMS_FOR_FULL_SEARCH = Arrays.asList(
+            "region",
+            "sort_by",
+            "certification_country",
+            "certification",
+            "certification.lte",
+            "certification.gte",
+            "include_adult",
+            "include_video",
+            "page",
+            "primary_release_year",
+            "primary_release_date.gte",
+            "primary_release_date.gte",
+            "release_date.gte",
+            "release_date.lte",
+            "with_release_type",
+            "year",
+            "vote_count.gte",
+            "vote_count.lte",
+            "vote_average.gte",
+            "vote_average.lte",
+            "with_cast",
+            "with_crew",
+            "with_people",
+            "with_companies",
+            "with_genres",
+            "without_genres",
+            "with_keywords",
+            "without_keywords",
+            "with_runtime.gte",
+            "with_runtime.lte",
+            "with_original_language",
+            "with_watch_providers",
+            "watch_region",
+            "with_watch_monetization_types",
+            "without_companies"
+    );
 }

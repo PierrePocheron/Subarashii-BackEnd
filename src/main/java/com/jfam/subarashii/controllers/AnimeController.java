@@ -8,6 +8,7 @@ import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,7 @@ public class AnimeController {
     @Operation(summary = Constantes.Swagger.SUMMARY_DISCOVER_ANIME)
     @GetMapping(value = "/discover")
     public void DiscoverAnimed(@RequestParam Optional<Integer> page, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-
         Integer pageNb = page.isEmpty() ? new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION) : page.get();
-
         Discover discover = animeService.getDiscoverAnime(pageNb);
         if(discover == null){
             responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND_ON_PAGE + pageNb, HttpServletResponse.SC_BAD_GATEWAY,false);
@@ -68,35 +67,40 @@ public class AnimeController {
 
     //TODO : a modifier pour passer en /search?query=oooo&page=1&include_adult=false&
     // bases on : https://developers.themoviedb.org/3/search/search-tv-shows
-    @PostMapping("/searchbyname")
-    public void SearchAnimedByName(@RequestBody Map<String, String> payload , HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-        String query = payload.get("query");
-
-        if(query == null)
+    @PostMapping("/search")
+    public void SearchAnimedByName(@RequestParam Optional<String> query , HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        if(query.isEmpty())
         {
             responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED, HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
 
-        List<Anime> animeList = animeService.SearchAnimeByName(query);
+        List<Anime> animeList = animeService.simpleSearchAnime(query.get());
         if(animeList.size() == 0)
         {
-            responseService.SuccessF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, null);
+            responseService.SuccessF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, true);
             return;
         }
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  animeList.size()), animeList);
     }
 
 
-    //TODO : a modifier pour en /fullsearch?....
-    //based on https://developers.themoviedb.org/3/discover/movie-discover
-    @PostMapping("/searchbyinfo")
-    public void SearchAnimedByOtherInfo(HttpServletRequest req){
+    @PostMapping("/fullsearch")
+    public void fullSearchAnimed(@RequestParam Map<String,String> allParams, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        if(allParams.size() ==0){
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
+            return;
+        }
+        List<String> UnauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_FULL_SEARCH);
+        if(UnauthorizedParams.size() != 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
+            return;
+        }
+
+        Map<String, Object> resultSearch = animeService.searchComplexeAnime(allParams);
+        responseService.SuccessF(res,Constantes.SuccessMessage.COMPLEXE_SEARCH_OK,resultSearch);
 
     }
-
-
-
-
 
 }
