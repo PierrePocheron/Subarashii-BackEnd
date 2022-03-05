@@ -47,10 +47,10 @@ public class Anime {
     private List<UserList> userLists;
 
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "anime_genres",
             joinColumns = @JoinColumn(name = "animeId"),
-            inverseJoinColumns = @JoinColumn(name = "genreId")
+            inverseJoinColumns = {@JoinColumn(name = "genreId")}
     )
     private List<Genre> genres;
 

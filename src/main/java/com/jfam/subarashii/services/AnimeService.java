@@ -9,6 +9,7 @@ import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.api.Discover;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import com.jfam.subarashii.utils.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +48,7 @@ public class AnimeService {
         Anime anime = animeRepository.findByIdApi(idApi);
 
         if (anime == null) {
-            String route = String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID, idApi);
-            JsonObject jsonObject = httpClient.GetQuery(route);
+            JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID, idApi));
             Anime animeApi = new Anime(jsonObject);
 
             // récupère les genres associés à l'animé avant de le sauvegarder
@@ -66,53 +66,54 @@ public class AnimeService {
      * donc un tri par genre (animation) est réalisé manuellement
      * @return une liste d'animé correspondant à la recherche
      */
-    public List<Anime> simpleSearchAnime(String name) throws ResourceApiNotFoundException {
+    public Map<String, Object> simpleSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
 
-        JsonObject queryResult = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SEARCH_SIMPLE_SEARCH_ANIME, name));
+        String query = getQueryFromMap(allParams);
+        JsonObject queryResult = httpClient.GetQuery(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
         JsonArray jsonArrayAnime = getAnimeOnSeriesFetchAfterSearch(queryResult);
 
-        List<Anime> animeList = new ArrayList<>();
-        jsonArrayAnime.forEach((anim) -> {
-            Long id = anim.getAsJsonObject().get(Constantes.ApiMovie.JSON_KEY_ID).getAsLong();
-            Anime anime = null;
-            try {
-                anime = this.getByIdApi(id);
-            } catch (ResourceApiNotFoundException e) {
-                e.printStackTrace();
-            }
-            animeList.add(anime);
-        });
-        return animeList;
+        var map =  Helpers.ConvertJsonElementToMap(jsonArrayAnime);
+        return map;
     }
 
     /**
-     * Recherche un animé complexe:
-     *
-     * @return
+     * Recherche un complexe animé:
+     * @return map with all result
      */
     public Map<String, Object> searchComplexeAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
         String query = getQueryFromMap(allParams);
-        JsonObject jsonObject = httpClient.GetQuery(Constantes.ApiMovie.ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
-        return new Gson().fromJson(jsonObject.toString(), Map.class);
+        JsonObject queryResult = httpClient.GetQuery(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
+        return new Gson().fromJson(queryResult.toString(), Map.class);
     }
 
+    /**
+     * Fetch anime and convert to Discover result
+     * @param Page
+     * @return Discover object (api objet with page and other infos)
+     * @throws ResourceApiNotFoundException
+     */
     public Discover getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
-        JsonObject response = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, Page));
-
+        JsonObject queryResult = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, Page));
         Gson gson = new Gson();
-        Discover discover = gson.fromJson(response.toString(), Discover.class);
-        return discover;
+        return gson.fromJson(queryResult.toString(), Discover.class);
     }
 
     //region === PRIVATE METHOD ===
+
+    /**
+     * Créer à partir d'un map un string représentant les paramètres d'une query
+     * @param allParams
+     * @return
+     */
     private String getQueryFromMap(Map<String, String> allParams) {
         StringBuilder queryBuilder = new StringBuilder();
         allParams.forEach((k, v) -> {
+            // si je suis le premier paramètre de la query, je n'ai pas d'esperluette
             if (queryBuilder.toString().isEmpty()) {
-                queryBuilder.append(String.format(Constantes.ApiMovie.QUERY_PARAMS_SYNTAX_FIRST_PARAMS, k, v));
+                queryBuilder.append(String.format(Constantes.ApiMovie.FIRST_QUERY_PARAMS_SYNTAX_, k, v));
                 return;
             }
-            queryBuilder.append(String.format(Constantes.ApiMovie.QUERY_PARAMS_SYNTAX, k, v));
+            queryBuilder.append(String.format(Constantes.ApiMovie.OTHER_QUERY_PARAMS_SYNTAX, k, v));
         });
         queryBuilder.insert(0, PARAMS_QUESTION_MARK);
         return queryBuilder.toString();
