@@ -1,5 +1,6 @@
 package com.jfam.subarashii.services;
 
+import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.UserListRepository;
@@ -43,7 +44,7 @@ public class UserListService {
      * @param user l'utilisateur courant
      * @return si null la liste n'existe pas ou n'appartient pas à l'utilisateur
      */
-    public UserList GetOneUserListForUser(Long idUserList , User user){
+    public UserList getOneUserListByIdForCurrentUser(Long idUserList , User user){
 
         // check si existe grace à l'id user list and anime
         UserList userList = userListRepository.findByIdAndUser(idUserList, user);
@@ -53,7 +54,16 @@ public class UserListService {
         return userList;
     }
 
-    public UserList updateUserList(UserList userList){
+
+    public UserList addAnimeToUserList(Anime animeToAdd, List<Anime>  animeListInUserList, UserList currentUserList){
+        animeListInUserList.add(animeToAdd);
+        currentUserList.setAnimes(animeListInUserList);
+        return userListRepository.save(currentUserList);
+    }
+
+
+    public UserList saveUserList(UserList userList){
         return userListRepository.save(userList);
     }
+
 }
