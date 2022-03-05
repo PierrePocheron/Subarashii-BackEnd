@@ -20,7 +20,7 @@ public class Genre {
     private String nom;
 
 
-    @ManyToMany(mappedBy = "genres", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "genres", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Anime> animes;
 
