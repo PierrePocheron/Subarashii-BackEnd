@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static com.jfam.subarashii.utils.Constantes.ApiMovie.PARAMS_QUESTION_MARK;
 
 @Service
 public class AnimeService {
@@ -55,8 +58,8 @@ public class AnimeService {
      * le nom
      * @return
      */
-    public List<Anime> SearchAnimeByName(String name) throws ResourceApiNotFoundException {
-        JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SEARCH_ANIME_BY_NAME, name));
+    public List<Anime> simpleSearchAnime(String name) throws ResourceApiNotFoundException {
+        JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SEARCH_SIMPLE_SEARCH_ANIME, name));
         JsonArray jsonArrayAnime =  checkAllSerieFetch(jsonObject);
 
         List<Anime> animeList = new ArrayList<>();
@@ -70,9 +73,17 @@ public class AnimeService {
             }
             animeList.add(anime);
         });
-
-
         return animeList;
+    }
+
+    /**
+     * Recherche un animé complexe:
+     * @return
+     */
+    public Map<String, Object> searchComplexeAnime(Map<String,String> allParams) throws ResourceApiNotFoundException {
+        String query = getQueryFromMap(allParams);
+        JsonObject jsonObject = httpClient.GetQuery(Constantes.ApiMovie.ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
+        return new Gson().fromJson(jsonObject.toString(), Map.class);
     }
 
     public Discover getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
@@ -82,7 +93,20 @@ public class AnimeService {
         Discover discover = gson.fromJson(response.toString(), Discover.class);
         return discover;
     }
+
     //region === PRIVATE METHOD ===
+    private String getQueryFromMap(Map<String,String> allParams){
+        StringBuilder queryBuilder = new StringBuilder();
+        allParams.forEach((k,v)->{
+            if (queryBuilder.toString().isEmpty()){
+                queryBuilder.append(String.format(Constantes.ApiMovie.QUERY_PARAMS_SYNTAX_FIRST_PARAMS, k ,v));
+                return;
+            }
+            queryBuilder.append(String.format(Constantes.ApiMovie.QUERY_PARAMS_SYNTAX,k,v));
+        });
+        queryBuilder.insert(0,PARAMS_QUESTION_MARK);
+        return queryBuilder.toString();
+    }
 
     private JsonArray getjsonArrayResultDiscovery(JsonObject jsonObject){
         return jsonObject.get("results").getAsJsonArray();
@@ -105,7 +129,5 @@ public class AnimeService {
 
         return jsonArrayAnime;
     }
-
     //endregion
-
 }
