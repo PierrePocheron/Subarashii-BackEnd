@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constantes {
-    public final static String ENCODE = "UTF-8";
+
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
@@ -16,6 +16,7 @@ public class Constantes {
         public final static String USER_TOKEN= "token";
         public final static String USER_USERNAME= "username";
         public final static String USER_EMAIL= "email";
+        public final static String USER_GENRES= "genres";
     }
 
     public static class Claims{
@@ -69,6 +70,7 @@ public class Constantes {
 
     public static class ApiMovie{
         public static String TOKEN_SECRET ;
+        public final static int ANIMATION_ID_GENRE = 16;
         public final static String URL_IMAGE="https://image.tmdb.org/t/p/w500";
         public final static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
         public final static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
@@ -85,6 +87,11 @@ public class Constantes {
         public final static String QUERY_PARAMS_SYNTAX = "&%s=%s";
         public final static String QUERY_PARAMS_SYNTAX_FIRST_PARAMS = "%s=%s";
         public final static String PARAMS_QUESTION_MARK = "?";
+
+
+        public final static String JSON_KEY_RESULT = "results";
+        public final static String JSON_KEY_GENRE_IDS = "genre_ids";
+        public final static String JSON_KEY_ID = "id";
     }
 
     public static class Swagger{
