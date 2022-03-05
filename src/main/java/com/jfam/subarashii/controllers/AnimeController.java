@@ -65,23 +65,22 @@ public class AnimeController {
 
 
 
-    //TODO : a modifier pour passer en /search?query=oooo&page=1&include_adult=false&
-    // bases on : https://developers.themoviedb.org/3/search/search-tv-shows
     @PostMapping("/search")
-    public void SearchAnimedByName(@RequestParam Optional<String> query , HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-        if(query.isEmpty())
-        {
-            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED, HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+    public void simpleSearchAnimed(@RequestParam Map<String,String> allParams, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+
+        if(allParams.size() ==0){
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
 
-        List<Anime> animeList = animeService.simpleSearchAnime(query.get());
-        if(animeList.size() == 0)
+        Map<String,Object> result = animeService.simpleSearchAnime(allParams);
+        if(result.size() == 0)
         {
-            responseService.SuccessF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, true);
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
         }
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  animeList.size()), animeList);
+
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  result.size()), result);
     }
 
 

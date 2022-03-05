@@ -58,7 +58,9 @@ public class UserListController {
     @PutMapping("/addanime")
     public void addAnimeToUserList(@RequestBody UserListAnimeDTO userListAnimeDTO, HttpServletRequest req, HttpServletResponse res ) throws IOException, ResourceApiNotFoundException {
         User currentUser = (User) req.getAttribute(Constantes.Keys.USER_KEY);
+
         UserList theUserListCurrentUser = userListService.getOneUserListByIdForCurrentUser(userListAnimeDTO.idUserList, currentUser);
+
         if(theUserListCurrentUser == null){
             responseService.ErrorF(res,Constantes.ErrorMessage.ERROR_ADD_ANIME_TO_USER_LIST,HttpServletResponse.SC_NOT_FOUND,false);
             return;

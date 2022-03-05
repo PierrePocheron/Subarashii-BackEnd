@@ -70,6 +70,7 @@ public class Constantes {
 
     public static class ApiMovie{
         public static String TOKEN_SECRET ;
+        public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION= 458;
         public final static int ANIMATION_ID_GENRE = 16;
         public final static String URL_IMAGE="https://image.tmdb.org/t/p/w500";
         public final static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
@@ -78,14 +79,22 @@ public class Constantes {
          * genre 16 = animation , original_language=ja = japan
          */
         public final static String ROUTE_SERIES_DISCOVER_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
-        public final static String ROUTE_SEARCH_SIMPLE_SEARCH_ANIME= "https://api.themoviedb.org/3/search/tv?language=fr-FR&page=1&include_adult=false&query=%s";
         public final static String ROUTE_GENRE_ANIME= "https://api.themoviedb.org/3/genre/tv/list?language=fr-Fr";
-        public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION= 458;
-        public final static String ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
-        public final static String ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/discover/tv";
 
-        public final static String QUERY_PARAMS_SYNTAX = "&%s=%s";
-        public final static String QUERY_PARAMS_SYNTAX_FIRST_PARAMS = "%s=%s";
+
+        public final static String ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/discover/tv";
+        public final static String ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS= "https://api.themoviedb.org/3/search/tv";
+
+
+        public final static String DEFAULT_ROUTE_SIMPLE_SEARCH_ANIME= "https://api.themoviedb.org/3/search/tv?language=fr-FR&page=1&include_adult=false&query=%s";
+        public final static String DEFAULT_ROUTE_SEARCH_COMPLEXE_SEARCH_ANIME= "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc";
+
+
+
+
+
+        public final static String FIRST_QUERY_PARAMS_SYNTAX_= "%s=%s";
+        public final static String OTHER_QUERY_PARAMS_SYNTAX = "&%s=%s";
         public final static String PARAMS_QUESTION_MARK = "?";
 
 
@@ -104,6 +113,8 @@ public class Constantes {
         public final static String SUMMARY_USER_CREATE= "Créer un utilisateur";
         public final static String SUMMARY_USER_SIGN_IN= "Connexion d'un utilisateur";
     }
+
+
 
     public final static List<String> LIST_QUERY_PARAMS_FOR_FULL_SEARCH = Arrays.asList(
             "region",
@@ -140,6 +151,5 @@ public class Constantes {
             "with_watch_providers",
             "watch_region",
             "with_watch_monetization_types",
-            "without_companies"
-    );
+            "without_companies");
 }
