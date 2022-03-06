@@ -1,10 +1,13 @@
 package com.jfam.subarashii.configs;
 
+import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +35,9 @@ public class RequestFilter extends OncePerRequestFilter {
 
     @Autowired
     UserService userService;
+
+    private static final Logger logger = LoggerFactory.getLogger(RequestFilter.class);
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
@@ -68,8 +74,10 @@ public class RequestFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        String path = request.getRequestURI();
+        logger.info("Entre dans ShouldNotFilter");
 
+        String path = request.getRequestURI();
+        logger.info("Chemin courant" + path);
 
         if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
 
