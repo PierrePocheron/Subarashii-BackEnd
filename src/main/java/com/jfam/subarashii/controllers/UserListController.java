@@ -38,54 +38,42 @@ public class UserListController {
     AnimeService animeService;
 
 
-    @Operation(summary = "Retourne tous les listes de l'utilisateur courant")
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_GET_MY_LIST)
     @GetMapping("/mylist")
     public void getCurrentUserList(HttpServletRequest req,HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute("user");
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
         List<UserList> listUserLists=  userListService.getCurrentUserList(currentUser);
-        responseService.SuccessF(res, "La liste de l'utilisateur a correctement été récupéré",listUserLists);
+        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST,listUserLists);
     }
 
-    @Operation(summary = "Permet de créer uen liste personnalisé pour l'utilsiateur courant")
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_CREATE_LIST)
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public void createCustomList(@RequestBody  UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute("user");
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
         UserList customUserList =  userListService.createCustomList(currentUser,userList.getNom());
-        responseService.SuccessF(res, "La liste custom a correctement été crée",customUserList);
+        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK,customUserList);
     }
 
-    @Operation(summary = "Ajoute un animé (grâce à son idapi) à la liste (int envoyé en paramètre) de l'utilisateur courant")
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_ADD_ANIME)
     @PutMapping("/addanime")
     public void addAnimeToUserList(@RequestBody UserListAnimeDTO userListAnimeDTO, HttpServletRequest req, HttpServletResponse res ) throws IOException, ResourceApiNotFoundException {
-        User currentUser = (User) req.getAttribute("user");
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
 
-        UserList theUserListCurrentUser = userListService.GetOneUserListForUser(userListAnimeDTO.idUserList, currentUser);
+        UserList theUserListCurrentUser = userListService.getOneUserListByIdForCurrentUser(userListAnimeDTO.idUserList, currentUser);
 
         if(theUserListCurrentUser == null){
-            responseService.ErrorF(res,"La liste dans laquel vous souhaité ajouter l'animé n'existe pas ou n'appartient pas à l'utilisateur",404,false);
+            responseService.ErrorF(res,Constantes.ErrorMessage.ERROR_ADD_ANIME_TO_USER_LIST,HttpServletResponse.SC_NOT_FOUND,false);
             return;
         }
 
         Anime animeToAdd =  animeService.getByIdApi(userListAnimeDTO.IdApiAnime);
-
-        // récupération des animés dans la liste :
-        List<Anime> animeList= theUserListCurrentUser.getAnimes();
-
-        // si l'animé est déjà présent :
+        List<Anime> animeList= theUserListCurrentUser.getAnimes(); // récupération les animés dans la liste de l'utilisateur
         if (animeList.contains(animeToAdd))
         {
-            responseService.ErrorF(res,"L'animé est déjà présent dans la liste",404,false);
+            responseService.ErrorF(res,Constantes.ErrorMessage.ERROR_ADD_ANIME_ALSO_EXIST,404,false);
             return;
         }
-
-        // j'ajoute l'anime dans la liste
-        animeList.add(animeToAdd);
-
-        // je modifie la liste des animés dans la liste
-        theUserListCurrentUser.setAnimes(animeList);
-
-        userListService.updateUserList(theUserListCurrentUser);
-
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNom(), theUserListCurrentUser.getNom()),true);
+        UserList ul = userListService.addAnimeToUserList(animeToAdd, animeList,theUserListCurrentUser);
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNom(), theUserListCurrentUser.getNom()),ul);
     }
 }

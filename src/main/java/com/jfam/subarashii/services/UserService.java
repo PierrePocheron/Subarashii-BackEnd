@@ -38,7 +38,7 @@ public class UserService {
         return usr;
     }
 
-    public User getUserForRequestByEmail(String email){
+    public User getUserForFilterByEmail(String email){
         User user = userRepository.findByEmail(email);
         if(user == null)
             return null;

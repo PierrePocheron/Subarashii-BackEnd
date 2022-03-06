@@ -1,6 +1,7 @@
 package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.services.ResponseService;
+import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,6 @@ public class GenreController {
 
     @GetMapping("/all")
     public void GetAllGenres(HttpServletResponse res) throws IOException {
-
-
-
-        responseService.SuccessF(res,"Les genres ont été récupérés", true);
+        responseService.SuccessF(res, Constantes.SuccessMessage.GENRE_HAS_FETCH, true);
     }
 }
