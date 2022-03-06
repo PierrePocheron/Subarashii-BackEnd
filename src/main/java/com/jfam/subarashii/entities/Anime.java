@@ -1,6 +1,8 @@
 package com.jfam.subarashii.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,9 +11,11 @@ import com.jfam.subarashii.utils.Helpers;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "animes")
+@JsonIgnoreProperties(value = { "episodes"},allowSetters = true)
 public class Anime {
 
     @Id
@@ -37,18 +41,19 @@ public class Anime {
     @JoinColumn( name = "anime")
     private List<Comment> comments;
 
+
     @OneToMany(mappedBy = "anime")
     private List<Episode> episodes;
 
 
     @ManyToMany(mappedBy = "animes")
+    @JsonBackReference
     private List<UserList> userLists;
 
-
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "anime_genres",
             joinColumns = @JoinColumn(name = "animeId"),
-            inverseJoinColumns = @JoinColumn(name = "genreId")
+            inverseJoinColumns = {@JoinColumn(name = "genreId")}
     )
     private List<Genre> genres;
 
@@ -64,8 +69,6 @@ public class Anime {
 
         JsonElement jsonElement = jsonObject.get("poster_path");
         this.image =  jsonElement == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
-
-
     }
 
     //region  === getter-setter ===

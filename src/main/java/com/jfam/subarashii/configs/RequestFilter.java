@@ -42,7 +42,7 @@ public class RequestFilter extends OncePerRequestFilter {
             responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
-        String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,"");
+        String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,Constantes.EMPTY_STRING);
         if (!jwtService.VerifyToken(token)) {
             responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
@@ -50,21 +50,19 @@ public class RequestFilter extends OncePerRequestFilter {
         // set user role for security
         String email = jwtService.getClaims(token,Constantes.Claims.EMAIL).asString();
 
-        User currrentUser = userService.getUserForRequestByEmail(email);
+        User currrentUser = userService.getUserForFilterByEmail(email);
         if(currrentUser == null){
-            responseService.ErrorF(res, "l'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée", HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_USER_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
 
         String role = jwtService.getClaims(token,Constantes.Claims.ROLE).asString();
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null,
-        AuthorityUtils.createAuthorityList("ROLE_"+ role));
+        AuthorityUtils.createAuthorityList(Constantes.Keys.ROLE + role));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // add user on request
-        req.setAttribute("user" , currrentUser);
-
-
+        req.setAttribute(Constantes.Keys.USER , currrentUser);
         chain.doFilter(req, res);
     }
 

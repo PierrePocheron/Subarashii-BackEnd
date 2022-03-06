@@ -34,10 +34,12 @@ public class Episode {
     @JoinColumn(name = "episodeId")
     private List<Comment> comments;
 
-    @ManyToOne @NotNull
-    @JoinColumn( name = "animeId")
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "animeId")
     @JsonBackReference
     private Anime anime;
+
 
     private Long IdApiAnime;
 
