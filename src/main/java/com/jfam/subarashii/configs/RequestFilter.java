@@ -81,10 +81,10 @@ public class RequestFilter extends OncePerRequestFilter {
 
         if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
 
-            return path.equals(Constantes.ROUTE_SIGN_UP) || path.equals(Constantes.ROUTE_SIGN_IN) ||
+            return path.contains(Constantes.ROUTE_SIGN_UP) || path.contains(Constantes.ROUTE_SIGN_IN) ||
                     path.startsWith("/swagger-ui/") || path.startsWith("/api");
         }
 
-        return path.equals(Constantes.ROUTE_SIGN_UP) || path.equals(Constantes.ROUTE_SIGN_IN);
+        return path.contains(Constantes.ROUTE_SIGN_UP) || path.contains(Constantes.ROUTE_SIGN_IN);
     }
 }
