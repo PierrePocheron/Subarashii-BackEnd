@@ -39,12 +39,9 @@ public class EpisodeService {
     public List<Episode> GetEpisodesAnimeBySaisonId(Long idApiAnime,Long idApiSaison) throws ResourceApiNotFoundException {
 
         Anime anime = animeService.getByIdApi(idApiAnime);
-
         List<Episode> episodeList = episodeRepository.findAllByAnimeIdApiAndSaison(idApiAnime, idApiSaison);
-
         if(episodeList.size() != 0)
             return episodeList;
-
         episodeList = fetchApi(idApiAnime,idApiSaison,anime);
         return episodeRepository.saveAll(episodeList);
     }
@@ -57,7 +54,7 @@ public class EpisodeService {
      */
     private List<Episode> fetchApi(Long idApiAnime,Long idApiSaison , Anime anime) throws ResourceApiNotFoundException {
         JsonObject result = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON,idApiAnime,idApiSaison ));
-        JsonArray jsonEpisodeArray = result.get("episodes").getAsJsonArray();
+        JsonArray jsonEpisodeArray = result.get(Constantes.ApiMovie.JSON_KEY_EPISODES).getAsJsonArray();
         List<Episode> episodeList = new ArrayList<>();
         jsonEpisodeArray.forEach((jsonEpisode) ->{
             Episode episode = new Episode(jsonEpisode.getAsJsonObject(), anime);

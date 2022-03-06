@@ -9,6 +9,7 @@ import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.api.ApiPaginationResults;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import com.jfam.subarashii.utils.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ public class AnimeService {
             Anime animeApi = new Anime(jsonObject);
 
             // récupère les genres associés à l'animé avant de le sauvegarder
-            List<Genre> genresList = genreService.convertJsonObjectGenreToListGenre(jsonObject, Constantes.Keys.USER_GENRES);
+            List<Genre> genresList = genreService.convertJsonObjectGenreToListGenre(jsonObject, Constantes.Keys.GENRES);
             animeApi.setGenres(genresList);
             anime = animeRepository.save(animeApi);
         }
@@ -64,12 +65,12 @@ public class AnimeService {
      * @return une liste d'animé correspondant à la recherche
      */
     public ApiPaginationResults simpleSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
-        String query = getQueryFromMap(allParams);
 
+        String query = Helpers.getQueryFromMap(allParams);
         // récupère des série de tout genre :
         ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
 
-        if(apiPaginationResults.results != null && apiPaginationResults.results.size() > 0)
+        if(apiPaginationResults.results != null)
             // du coup je ne veux que les animés:
             apiPaginationResults.results.removeIf(result ->  !result.genre_ids.contains(16.0));
 
@@ -81,7 +82,7 @@ public class AnimeService {
      * @return map with all result
      */
     public ApiPaginationResults complexeSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
-        String query = getQueryFromMap(allParams);
+        String query = Helpers.getQueryFromMap(allParams);
         return httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
     }
 
@@ -96,43 +97,5 @@ public class AnimeService {
         return apiPaginationResults;
     }
 
-    //region === PRIVATE METHOD ===
 
-    /**
-     * Créer à partir d'un map un string représentant les paramètres d'une query
-     * @param allParams
-     * @return
-     */
-    private String getQueryFromMap(Map<String, String> allParams) {
-        StringBuilder queryBuilder = new StringBuilder();
-        allParams.forEach((k, v) -> {
-            queryBuilder.append(String.format(Constantes.ApiMovie.OTHER_QUERY_PARAMS_SYNTAX, k, v));
-        });
-        return queryBuilder.toString();
-    }
-
-    /**
-     * Récupère après la recherche, seulement les série de type animé
-     * @param queryResult
-     */
-    private JsonArray getAnimeOnSeriesFetchAfterSearch(JsonObject queryResult) {
-
-        JsonArray arrayResult = queryResult.get(Constantes.ApiMovie.JSON_KEY_RESULT).getAsJsonArray();
-        JsonArray jsonArrayAnime = new JsonArray();
-
-        arrayResult.forEach((result) -> {
-            // me donne dans chaque animé la liste des genres :
-            JsonArray arrayIdGenre = result.getAsJsonObject().get(Constantes.ApiMovie.JSON_KEY_GENRE_IDS).getAsJsonArray();
-            List<Genre> genresList = genreService.convertJsonArrayIdGenreToListGenre(arrayIdGenre);
-
-            // donne moi toutes les série qui ont un id genre à 16
-            if (genresList.stream().anyMatch(x -> x.getIdApi() == Constantes.ApiMovie.ANIMATION_ID_GENRE)) {
-                jsonArrayAnime.add(result);
-                return;
-            }
-        });
-
-        return jsonArrayAnime;
-    }
-    //endregion
 }

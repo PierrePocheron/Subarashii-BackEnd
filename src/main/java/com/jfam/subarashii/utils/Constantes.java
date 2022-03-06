@@ -11,12 +11,15 @@ public class Constantes {
     public static String ADRESS_FRONT;
     public final static String URL_IMAGE_NOT_FOUND = "https://image.shutterstock.com/image-vector/no-image-available-vector-hand-600w-745639717.jpg";
 
+    public final static String EMPTY_STRING= "";
+
     public static class Keys{
-        public final static String USER_KEY= "user";
-        public final static String USER_TOKEN= "token";
-        public final static String USER_USERNAME= "username";
-        public final static String USER_EMAIL= "email";
-        public final static String USER_GENRES= "genres";
+        public final static String USER= "user";
+        public final static String TOKEN= "token";
+        public final static String USERNAME= "username";
+        public final static String EMAIL= "email";
+        public final static String GENRES= "genres";
+        public final static String ROLE= "ROLE_";
     }
 
     public static class Claims{
@@ -46,6 +49,7 @@ public class Constantes {
         public final static String ERROR_ADD_ANIME_ALSO_EXIST = "L'animé est déjà présent dans la liste";
         public final static String SIGN_UP_NOT_VALID = "Inscription incorrecte";
         public final static String RESOURCE_NOT_FOUND = "La ressource recherché n'a pas pu être trouvé";
+        public final static String TOKEN_USER_NOT_EXIST= "L'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée";
     }
 
     public static class SuccessMessage {
@@ -90,7 +94,9 @@ public class Constantes {
 
         public final static String JSON_KEY_RESULT = "results";
         public final static String JSON_KEY_GENRE_IDS = "genre_ids";
+        public final static String JSON_KEY_GENRES = "genres";
         public final static String JSON_KEY_ID = "id";
+        public final static String JSON_KEY_EPISODES= "episodes";
     }
 
     public static class Swagger{

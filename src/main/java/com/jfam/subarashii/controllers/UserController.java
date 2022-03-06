@@ -70,9 +70,9 @@ public class UserController {
         res.setHeader(Constantes.Token_value.AUTHORIZATION_HEADER, Constantes.Token_value.TOKEN_PREFIX + token);
 
         Map<String, String> result = new HashMap<>();
-        result.put(Constantes.Keys.USER_TOKEN, token);
-        result.put(Constantes.Keys.USER_USERNAME, userFetching.getUsername());
-        result.put(Constantes.Keys.USER_EMAIL, userFetching.getEmail());
+        result.put(Constantes.Keys.TOKEN, token);
+        result.put(Constantes.Keys.USERNAME, userFetching.getUsername());
+        result.put(Constantes.Keys.EMAIL, userFetching.getEmail());
         responseService.SuccessF(res, Constantes.SuccessMessage.CONNECTION_OK, result);
     }
 }

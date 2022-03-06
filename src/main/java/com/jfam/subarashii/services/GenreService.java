@@ -3,7 +3,6 @@ package com.jfam.subarashii.services;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
-import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.repositories.GenreRepository;
 import com.jfam.subarashii.utils.Constantes;
@@ -30,7 +29,7 @@ public class GenreService {
         List<Genre> genresList = genreRepository.findAll();
 
         if(genresList.size() == 0)
-            genresList = fetchApi();
+            genresList = fetchGenresFromApi();
 
         return genresList;
     }
@@ -50,33 +49,18 @@ public class GenreService {
         return genresList;
     }
 
-    public List<Genre> convertJsonArrayIdGenreToListGenre(JsonArray JsonArrayGenre){
-        List<Genre> genresList = new ArrayList<>();
-        JsonArrayGenre.forEach((jsonIdGenre)->{
-            Genre genre =  genreRepository.findByIdApi(jsonIdGenre.getAsLong());
-            genresList.add(genre);
-        });
-        return genresList;
-    }
-
-
     // region === PRIVATE METHOD ===
-
-    private List<Genre> fetchApi() throws ResourceApiNotFoundException {
-        JsonObject jsonObject = httpClient.GetQuery(ROUTE_GENRE_ANIME);
-        JsonArray jsonArray = jsonObject.get("genres").getAsJsonArray();
+    private List<Genre> fetchGenresFromApi() throws ResourceApiNotFoundException {
+        JsonObject genreResult = httpClient.GetQuery(ROUTE_GENRE_ANIME);
+        JsonArray jsonArrayGenre = genreResult.get(Constantes.ApiMovie.JSON_KEY_GENRES).getAsJsonArray();
         List<Genre> genresList = new ArrayList<>();
 
-        jsonArray.forEach((json_genre)->{
-            JsonObject genreJO = json_genre.getAsJsonObject();
+        jsonArrayGenre.forEach((jsonGenre)->{
+            JsonObject genreJO = jsonGenre.getAsJsonObject();
             Genre genre = new Genre(genreJO);
             genresList.add(genre);
         });
         return genreRepository.saveAll(genresList);
     }
-
-
-
-
     //endregion
 }
