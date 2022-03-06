@@ -4,7 +4,6 @@ import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.UserListRepository;
-import org.hibernate.query.criteria.internal.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +16,24 @@ public class UserListService {
     @Autowired
     UserListRepository userListRepository;
 
-    public List<UserList> createDefaultList(User user){
+    public List<UserList> createDefaultList(User user) {
 
-        List<UserList> defaultList = Arrays.asList (
-            new UserList("A voir", user, false),
-            new UserList("En cour", user, false),
-            new UserList("Terminer", user, false),
-            new UserList("En attente", user, false)
+        List<UserList> defaultList = Arrays.asList(
+                new UserList("A voir", user, false),
+                new UserList("En cour", user, false),
+                new UserList("Terminer", user, false),
+                new UserList("En attente", user, false)
         );
 
         return userListRepository.saveAll(defaultList);
     }
 
-    public UserList createCustomList(User user , String nameList){
-        UserList customList = new UserList(nameList, user,true);
+    public UserList createCustomList(User user, String nameList) {
+        UserList customList = new UserList(nameList, user, true);
         return userListRepository.save(customList);
     }
 
-    public List<UserList> getCurrentUserList(User user){
+    public List<UserList> getCurrentUserList(User user) {
         List<UserList> userList = userListRepository.findAllByUser(user);
         return userList;
     }
@@ -44,17 +43,17 @@ public class UserListService {
      * @param user l'utilisateur courant
      * @return si null la liste n'existe pas ou n'appartient pas à l'utilisateur
      */
-    public UserList getOneUserListByIdForCurrentUser(Long idUserList , User user){
+    public UserList getOneUserListByIdForCurrentUser(Long idUserList, User user) {
 
         // check si existe grace à l'id user list and anime
         UserList userList = userListRepository.findByIdAndUser(idUserList, user);
 
-        if(userList == null)
+        if (userList == null)
             return null;
         return userList;
     }
 
-    public UserList addAnimeToUserList(Anime animeToAdd, List<Anime>  animeListInUserList, UserList currentUserList){
+    public UserList addAnimeToUserList(Anime animeToAdd, List<Anime> animeListInUserList, UserList currentUserList) {
         animeListInUserList.add(animeToAdd);
         currentUserList.setAnimes(animeListInUserList);
         return userListRepository.save(currentUserList);
