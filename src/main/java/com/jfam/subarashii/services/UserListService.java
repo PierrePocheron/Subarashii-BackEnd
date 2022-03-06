@@ -54,16 +54,10 @@ public class UserListService {
         return userList;
     }
 
-
     public UserList addAnimeToUserList(Anime animeToAdd, List<Anime>  animeListInUserList, UserList currentUserList){
         animeListInUserList.add(animeToAdd);
         currentUserList.setAnimes(animeListInUserList);
         return userListRepository.save(currentUserList);
-    }
-
-
-    public UserList saveUserList(UserList userList){
-        return userListRepository.save(userList);
     }
 
 }

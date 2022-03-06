@@ -39,4 +39,17 @@ public class Helpers {
         return gson.fromJson(jsonObject.toString(), Map.class);
     }
 
+
+    /**
+     * Créer à partir d'un map un string représentant les paramètres d'une query
+     * @param allParams
+     * @return
+     */
+    public static String getQueryFromMap(Map<String, String> allParams) {
+        StringBuilder queryBuilder = new StringBuilder();
+        allParams.forEach((k, v) -> {
+            queryBuilder.append(String.format(Constantes.ApiMovie.OTHER_QUERY_PARAMS_SYNTAX, k, v));
+        });
+        return queryBuilder.toString();
+    }
 }

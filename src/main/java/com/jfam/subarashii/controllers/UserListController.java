@@ -41,7 +41,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_GET_MY_LIST)
     @GetMapping("/mylist")
     public void getCurrentUserList(HttpServletRequest req,HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER_KEY);
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
         List<UserList> listUserLists=  userListService.getCurrentUserList(currentUser);
         responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST,listUserLists);
     }
@@ -49,7 +49,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_CREATE_LIST)
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public void createCustomList(@RequestBody  UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER_KEY);
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
         UserList customUserList =  userListService.createCustomList(currentUser,userList.getNom());
         responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK,customUserList);
     }
@@ -57,7 +57,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_ADD_ANIME)
     @PutMapping("/addanime")
     public void addAnimeToUserList(@RequestBody UserListAnimeDTO userListAnimeDTO, HttpServletRequest req, HttpServletResponse res ) throws IOException, ResourceApiNotFoundException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER_KEY);
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
 
         UserList theUserListCurrentUser = userListService.getOneUserListByIdForCurrentUser(userListAnimeDTO.idUserList, currentUser);
 
