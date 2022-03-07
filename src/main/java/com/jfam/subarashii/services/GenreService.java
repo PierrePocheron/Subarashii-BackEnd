@@ -24,6 +24,16 @@ public class GenreService {
     @Autowired
     GenreRepository genreRepository;
 
+    public List<Genre> getAllStartApplication() throws ResourceApiNotFoundException {
+
+        List<Genre> genresList = genreRepository.findAll();
+
+        if(genresList.size() == 0)
+            genresList = fetchGenresFromApi();
+
+        return genresList;
+    }
+
     public List<Genre> getAll() throws ResourceApiNotFoundException {
 
         List<Genre> genresList = genreRepository.findAll();

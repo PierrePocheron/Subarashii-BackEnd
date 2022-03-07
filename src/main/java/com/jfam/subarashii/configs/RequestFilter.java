@@ -74,11 +74,7 @@ public class RequestFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        logger.info("Entre dans ShouldNotFilter");
-
         String path = request.getRequestURI();
-        logger.info("Chemin courant" + path);
-
         if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
 
             return path.contains(Constantes.ROUTE_SIGN_UP) || path.contains(Constantes.ROUTE_SIGN_IN) ||
