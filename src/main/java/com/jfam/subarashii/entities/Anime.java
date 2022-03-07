@@ -10,6 +10,8 @@ import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -24,7 +26,9 @@ public class Anime {
 
     private Long idApi;
 
-    private String nom;
+    private String nomTraduit;
+
+    private String originalName;
 
     private Long nbSaison;
 
@@ -59,21 +63,34 @@ public class Anime {
 
     private String backgroundPath;
 
+    private Boolean isAdult;
+
+    private String dateCommencement;
+
+    private String dateFin;
+
+    private Boolean enCours;
+
     public Anime(){}
 
-    public Anime(JsonObject jsonObject) {
+    public Anime(JsonObject jsonObject) throws ParseException {
         this.idApi = jsonObject.get("id").getAsLong();
-        this.nom = jsonObject.get("name").getAsString();
+        this.nomTraduit = jsonObject.get("name").getAsString();
         this.nbSaison = jsonObject.get("number_of_seasons").getAsLong();
         this.nbEpisodes = jsonObject.get("number_of_episodes").getAsLong();
         this.description = jsonObject.get("overview").getAsString();
         this.note = jsonObject.get("vote_average").getAsFloat();
+        this.isAdult = jsonObject.get("adult").getAsBoolean();
+        this.dateCommencement = jsonObject.get("first_air_date").getAsString();
+        this.dateFin = jsonObject.get("last_air_date").getAsString();
+        this.enCours = jsonObject.get("in_production").getAsBoolean();
+        this.originalName = jsonObject.get("original_name").getAsString();
 
         JsonElement jsonPosterPath = jsonObject.get("poster_path");
         this.image =  jsonPosterPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
 
         JsonElement jsonBackgroundPath= jsonObject.get("backdrop_path");
-        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("backdrop_path").getAsString();
+        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE_ORIGNE +  jsonObject.get("backdrop_path").getAsString();
     }
 
     //region  === getter-setter ===
@@ -94,12 +111,20 @@ public class Anime {
         this.idApi = idApi;
     }
 
-    public String getNom() {
-        return nom;
+    public String getNomTraduit() {
+        return nomTraduit;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNomTraduit(String nomTraduit) {
+        this.nomTraduit = nomTraduit;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
     public Long getNbSaison() {
@@ -142,20 +167,20 @@ public class Anime {
         this.note = note;
     }
 
-    public List<Episode> getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(List<Episode> episodes) {
-        this.episodes = episodes;
-    }
-
     public List<Comment> getComments() {
         return comments;
     }
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
 
     public List<UserList> getUserLists() {
@@ -182,5 +207,61 @@ public class Anime {
         this.backgroundPath = backgroundPath;
     }
 
-    //endregion
+    public Boolean getAdult() {
+        return isAdult;
+    }
+
+    public void setAdult(Boolean adult) {
+        isAdult = adult;
+    }
+
+    public String getDateCommencement() {
+        return dateCommencement;
+    }
+
+    public void setDateCommencement(String dateCommencement) {
+        this.dateCommencement = dateCommencement;
+    }
+
+    public String getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(String dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public Boolean getEnCours() {
+        return enCours;
+    }
+
+    public void setEnCours(Boolean enCours) {
+        this.enCours = enCours;
+    }
+
+    @Override
+    public String toString() {
+        return "Anime{" +
+                "id=" + id +
+                ", idApi=" + idApi +
+                ", nomTraduit='" + nomTraduit + '\'' +
+                ", originalName='" + originalName + '\'' +
+                ", nbSaison=" + nbSaison +
+                ", nbEpisodes=" + nbEpisodes +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", note=" + note +
+                ", comments=" + comments +
+                ", episodes=" + episodes +
+                ", userLists=" + userLists +
+                ", genres=" + genres +
+                ", backgroundPath='" + backgroundPath + '\'' +
+                ", isAdult=" + isAdult +
+                ", dateCommencement='" + dateCommencement + '\'' +
+                ", dateFin='" + dateFin + '\'' +
+                ", enCours=" + enCours +
+                '}';
+    }
+
+//endregion
 }
