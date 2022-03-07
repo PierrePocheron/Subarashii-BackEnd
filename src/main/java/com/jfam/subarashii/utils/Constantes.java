@@ -145,6 +145,7 @@ public class Constantes {
             "with_cast",
             "with_crew",
             "with_people",
+            "with_status",
             "with_companies",
             "with_genres",
             "without_genres",
