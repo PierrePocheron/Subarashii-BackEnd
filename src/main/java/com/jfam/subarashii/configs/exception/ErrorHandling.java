@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -79,6 +80,10 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public final void MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
         responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_TYPE_METHOD_MISMATCH,HttpServletResponse.SC_BAD_GATEWAY,false);
+    }
+    @ExceptionHandler(ParseException.class)
+    public final void ParseException(ParseException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_PARSE,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(RequestRejectedException.class)
