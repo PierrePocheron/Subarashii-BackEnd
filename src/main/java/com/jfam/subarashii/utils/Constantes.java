@@ -80,6 +80,7 @@ public class Constantes {
         public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION= 458;
         public final static int ANIMATION_ID_GENRE = 16;
         public final static String URL_IMAGE="https://image.tmdb.org/t/p/w500";
+        public final static String URL_IMAGE_ORIGNE="https://image.tmdb.org/t/p/original";
         public final static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
         public final static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
         /**
