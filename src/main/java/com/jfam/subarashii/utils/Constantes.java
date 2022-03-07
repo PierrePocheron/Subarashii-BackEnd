@@ -51,6 +51,7 @@ public class Constantes {
         public final static String RESOURCE_NOT_FOUND = "La ressource recherché n'a pas pu être trouvé";
         public final static String TOKEN_USER_NOT_EXIST= "L'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée";
         public final static String GENRE_NOT_FOUND= "Le genre recherché n'a pas été trouvé";
+        public final static String ERROR_PARSE= "Une erreur a eut lieu pendant le parcours de la méthode";
     }
 
     public static class SuccessMessage {
@@ -80,6 +81,7 @@ public class Constantes {
         public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION= 458;
         public final static int ANIMATION_ID_GENRE = 16;
         public final static String URL_IMAGE="https://image.tmdb.org/t/p/w500";
+        public final static String URL_IMAGE_ORIGNE="https://image.tmdb.org/t/p/original";
         public final static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
         public final static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
         /**

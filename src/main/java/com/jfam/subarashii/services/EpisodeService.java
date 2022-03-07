@@ -13,6 +13,7 @@ import com.jfam.subarashii.utils.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class EpisodeService {
      * @param idApiAnime
      * @return la liste d'épisode de l'animé
      */
-    public List<Episode> GetEpisodesAnimeBySaisonId(Long idApiAnime,Long idApiSaison) throws ResourceApiNotFoundException {
+    public List<Episode> GetEpisodesAnimeBySaisonId(Long idApiAnime,Long idApiSaison) throws ResourceApiNotFoundException, ParseException {
 
         Anime anime = animeService.getByIdApi(idApiAnime);
         List<Episode> episodeList = episodeRepository.findAllByAnimeIdApiAndSaison(idApiAnime, idApiSaison);
