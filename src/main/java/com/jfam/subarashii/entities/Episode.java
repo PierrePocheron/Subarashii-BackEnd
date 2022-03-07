@@ -30,9 +30,7 @@ public class Episode {
 
     private Long numeroEpisode;
 
-    @OneToMany
-    @JoinColumn(name = "episodeId")
-    private List<Comment> comments;
+
 
     @ManyToOne @NotNull
     @JoinColumn( name = "animeId")
@@ -94,13 +92,7 @@ public class Episode {
         this.note = note;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 
     public Anime getAnime() {
         return anime;
