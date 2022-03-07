@@ -50,6 +50,7 @@ public class Constantes {
         public final static String SIGN_UP_NOT_VALID = "Inscription incorrecte";
         public final static String RESOURCE_NOT_FOUND = "La ressource recherché n'a pas pu être trouvé";
         public final static String TOKEN_USER_NOT_EXIST= "L'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée";
+        public final static String GENRE_NOT_FOUND= "Le genre recherché n'a pas été trouvé";
     }
 
     public static class SuccessMessage {
