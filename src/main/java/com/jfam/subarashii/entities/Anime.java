@@ -1,11 +1,12 @@
 package com.jfam.subarashii.entities;
 
 
-import com.google.gson.JsonArray;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.utils.Constantes;
-import com.jfam.subarashii.utils.Helpers;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,9 +34,7 @@ public class Anime {
 
     private Float note;
 
-    @OneToMany
-    @JoinColumn( name = "anime")
-    private List<Comment> comments;
+
 
     @OneToMany(mappedBy = "anime")
     private List<Episode> episodes;
@@ -43,6 +42,15 @@ public class Anime {
 
     @ManyToMany(mappedBy = "animes")
     private List<UserList> userLists;
+
+    @OneToMany(mappedBy = "anime")
+    @JsonIgnoreProperties
+    private List<AnimeComment> animeComments;
+
+
+    @OneToMany
+    @JoinColumn(name = "idEpisode")
+    private List<EpisodeComment> episodeComments;
 
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -142,13 +150,7 @@ public class Anime {
         this.episodes = episodes;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 
     public List<UserList> getUserLists() {
         return userLists;
@@ -164,6 +166,25 @@ public class Anime {
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
+    }
+
+
+
+
+    public List<AnimeComment> getAnimeComments() {
+        return animeComments;
+    }
+
+    public void setAnimeComments(List<AnimeComment> animeComments) {
+        this.animeComments = animeComments;
+    }
+
+    public List<EpisodeComment> getEpisodeComments() {
+        return episodeComments;
+    }
+
+    public void setEpisodeComments(List<EpisodeComment> episodeComments) {
+        this.episodeComments = episodeComments;
     }
 
     //endregion

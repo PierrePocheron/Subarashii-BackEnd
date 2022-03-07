@@ -2,9 +2,11 @@ package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
+import com.jfam.subarashii.entities.AnimeComment;
 import com.jfam.subarashii.entities.Episode;
 import com.jfam.subarashii.entities.api.Discover;
 import com.jfam.subarashii.services.AnimeService;
+import com.jfam.subarashii.services.AnimeCommentService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
@@ -28,6 +30,9 @@ public class AnimeController {
 
     @Autowired
     AnimeService animeService;
+
+    @Autowired
+    AnimeCommentService animeCommentService;
 
     @Autowired
     ResponseService responseService;
@@ -89,7 +94,22 @@ public class AnimeController {
         //https://api.themoviedb.org/3/discover/tv?
 
     }
+    @GetMapping("/{idanime}/comments")
+    public void GetAnimeComments(@PathVariable long idanime,HttpServletResponse res) throws IOException{
+           List<AnimeComment>  animeComment = animeCommentService.getCommentByIdAnime(idanime);
+            if(animeComment.size() == 0){
+                responseService.SuccessF(res,"commentaires inexistants", animeComment);
+                return;
+            }
+            responseService.SuccessF(res,"le commentaire a été trouvé", animeComment);
 
+
+
+
+
+
+
+    }
 
 
 
