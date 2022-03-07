@@ -47,7 +47,7 @@ public class UserListController {
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_CREATE_LIST)
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public void createCustomList(@RequestBody  UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
         UserList customUserList =  userListService.createCustomList(currentUser,userList.getNom());
