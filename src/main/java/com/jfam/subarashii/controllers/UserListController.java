@@ -66,7 +66,7 @@ public class UserListController {
             return;
         }
 
-        Anime animeToAdd =  animeService.getByIdApi(userListAnimeDTO.IdApiAnime);
+        Anime animeToAdd =  animeService.getByIdApi(userListAnimeDTO.idApiAnime);
         List<Anime> animeList= theUserListCurrentUser.getAnimes(); // récupération les animés dans la liste de l'utilisateur
         if (animeList.contains(animeToAdd))
         {
