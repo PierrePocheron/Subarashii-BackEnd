@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.JsonObject;
 
 import javax.persistence.*;
@@ -40,8 +41,11 @@ public class Episode {
     @JsonBackReference
     private Anime anime;
 
-
     private Long IdApiAnime;
+
+
+    @ManyToMany(mappedBy = "episodesSee",fetch=FetchType.EAGER)
+    private List<User> users;
 
     public Episode(){}
 
@@ -55,6 +59,14 @@ public class Episode {
         this.IdApiAnime = anime.getIdApi();
     }
     //region  === getter-setter ===
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public long getId() {
         return id;

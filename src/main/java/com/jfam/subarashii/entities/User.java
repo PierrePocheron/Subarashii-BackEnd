@@ -1,5 +1,6 @@
 package com.jfam.subarashii.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.github.uzrnem.verify.Validator;
 
 import javax.persistence.*;
@@ -26,6 +27,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserList> lists;
 
+    @ManyToMany
+    @JoinTable(name = "userEpisodeSee",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = {@JoinColumn(name = "episodeId")}
+    )
+    @JsonBackReference
+    private List<Episode> episodesSee;
+
     @NotNull
     private String username;
 
@@ -43,6 +52,14 @@ public class User {
             .min(User::getPassword, 5, "Le password doit contenir au minimum 5 caractères");
 
     //region  === getter-setter ===
+
+    public List<Episode> getEpisodesSee() {
+        return episodesSee;
+    }
+
+    public void setEpisodesSee(List<Episode> episodesSee) {
+        this.episodesSee = episodesSee;
+    }
 
     public String getRole() {
         return role;

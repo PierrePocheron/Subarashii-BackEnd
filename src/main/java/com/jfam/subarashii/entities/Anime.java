@@ -3,17 +3,13 @@ package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.utils.Constantes;
-import com.jfam.subarashii.utils.Helpers;
 
 import javax.persistence.*;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "animes")
@@ -90,7 +86,7 @@ public class Anime {
         this.image =  jsonPosterPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
 
         JsonElement jsonBackgroundPath= jsonObject.get("backdrop_path");
-        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE_ORIGNE +  jsonObject.get("backdrop_path").getAsString();
+        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE_ORIGINE +  jsonObject.get("backdrop_path").getAsString();
     }
 
     //region  === getter-setter ===
