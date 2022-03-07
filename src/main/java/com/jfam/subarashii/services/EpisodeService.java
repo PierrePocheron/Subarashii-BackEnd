@@ -51,21 +51,6 @@ public class EpisodeService {
         return episodeRepository.saveAll(episodeList);
     }
 
-    public Boolean UpdateUserEpisodeSeeByIdApi(User user , Long idApiEpisode){
-        Episode episode = episodeRepository.findByIdApi(idApiEpisode);
-
-        if (episode.getUsers().contains(user)){
-            episode.getUsers().remove(user);
-            episodeRepository.save(episode);
-            return false;
-        }
-        else{
-            episode.getUsers().add(user);
-            episodeRepository.save(episode);
-            return true;
-        }
-
-    }
 
 
     /*** Si je n'ai pas les épisodes en bases je les récupères de l'api

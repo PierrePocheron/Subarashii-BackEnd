@@ -52,6 +52,7 @@ public class Constantes {
         public final static String TOKEN_USER_NOT_EXIST= "L'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée";
         public final static String GENRE_NOT_FOUND= "Le genre recherché n'a pas été trouvé";
         public final static String ERROR_PARSE= "Une erreur a eut lieu pendant le parcours de la méthode";
+        public final static String EPISODE_NOT_FOUND= "Aucun épisode n'a été trouvé";
     }
 
     public static class SuccessMessage {
@@ -67,6 +68,8 @@ public class Constantes {
         public final static String USER_LIST_GET_CURRENT_LIST= "La liste de l'utilisateur a correctement été récupéré";
         public final static String USER_LIST_CREATE_OK= "La liste custom a correctement été crée";
         public final static String FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST= "récupération de tous les id api animés dans les listes de l'utilisateur: %d au total";
+        public final static String EPISODE_REMOVE_VIEW= "L'épisode a correctement été retiré aux vus";
+        public final static String EPISODE_ADD_VIEW= "L'épisode a correctement été ajouté aux vus";
     }
 
     public static class Token_value{

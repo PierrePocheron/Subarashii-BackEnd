@@ -44,9 +44,6 @@ public class Episode {
     private Long IdApiAnime;
 
 
-    @ManyToMany(mappedBy = "episodesSee",fetch=FetchType.EAGER)
-    private List<User> users;
-
     public Episode(){}
 
     public Episode(JsonObject jsonObject, Anime anime){
@@ -59,14 +56,6 @@ public class Episode {
         this.IdApiAnime = anime.getIdApi();
     }
     //region  === getter-setter ===
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 
     public long getId() {
         return id;

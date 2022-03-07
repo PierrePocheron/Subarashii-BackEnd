@@ -27,13 +27,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserList> lists;
 
-    @ManyToMany
-    @JoinTable(name = "userEpisodeSee",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = {@JoinColumn(name = "episodeId")}
-    )
-    @JsonBackReference
-    private List<Episode> episodesSee;
+
+    @OneToMany(mappedBy = "user")
+    private List<View> views;
 
     @NotNull
     private String username;
@@ -53,12 +49,12 @@ public class User {
 
     //region  === getter-setter ===
 
-    public List<Episode> getEpisodesSee() {
-        return episodesSee;
+    public List<View> getViews() {
+        return views;
     }
 
-    public void setEpisodesSee(List<Episode> episodesSee) {
-        this.episodesSee = episodesSee;
+    public void setViews(List<View> views) {
+        this.views = views;
     }
 
     public String getRole() {

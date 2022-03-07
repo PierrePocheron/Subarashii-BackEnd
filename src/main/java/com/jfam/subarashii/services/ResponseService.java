@@ -31,7 +31,7 @@ public class ResponseService {
     public void SuccessF(HttpServletResponse response, String successmessage, Object body) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
-        responsedto = new ResponseDTO(successmessage,HttpServletResponse.SC_ACCEPTED,body);
+        responsedto = new ResponseDTO(successmessage,HttpServletResponse.SC_OK,body);
         mapper = new ObjectMapper();
         String jsonResponse = mapper.writeValueAsString(responsedto);
         response.getOutputStream().write(jsonResponse.getBytes(StandardCharsets.UTF_8));
