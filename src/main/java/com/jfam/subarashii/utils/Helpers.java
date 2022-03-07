@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,7 +40,6 @@ public class Helpers {
         Gson gson = new Gson();
         return gson.fromJson(jsonObject.toString(), Map.class);
     }
-
 
     /**
      * Créer à partir d'un map un string représentant les paramètres d'une query

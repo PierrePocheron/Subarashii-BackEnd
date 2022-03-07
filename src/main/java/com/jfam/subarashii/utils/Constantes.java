@@ -51,6 +51,7 @@ public class Constantes {
         public final static String RESOURCE_NOT_FOUND = "La ressource recherché n'a pas pu être trouvé";
         public final static String TOKEN_USER_NOT_EXIST= "L'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée";
         public final static String GENRE_NOT_FOUND= "Le genre recherché n'a pas été trouvé";
+        public final static String ERROR_PARSE= "Une erreur a eut lieu pendant le parcours de la méthode";
     }
 
     public static class SuccessMessage {
