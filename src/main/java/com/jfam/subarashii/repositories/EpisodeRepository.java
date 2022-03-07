@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EpisodeRepository extends JpaRepository<Episode,Long> {
     List<Episode> findAllByAnimeIdApiAndSaison ( Long idAnime,Long idsaison);
+    Episode findByIdApi( Long idApiEpisode);
 }
