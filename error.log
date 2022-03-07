@@ -1,1 +1,8 @@
 07-03-2022 10:37:45.921 ERROR c.j.s.services.ResponseService.ErrorF - Email ou mots de passe incorrect
+07-03-2022 14:15:21.655 ERROR c.j.s.services.ResponseService.ErrorF - Le token est invalide
+07-03-2022 14:15:30.471 ERROR c.j.s.services.ResponseService.ErrorF - Le token est invalide
+07-03-2022 14:15:48.249 ERROR c.j.s.services.ResponseService.ErrorF - Le token est invalide
+07-03-2022 14:16:04.648 ERROR o.h.e.jdbc.spi.SqlExceptionHelper.logExceptions - Duplicate entry 'test@test.fr' for key 'UK_6dotkott2kjsp8vw4d0m25fb7'
+07-03-2022 14:16:04.664 ERROR c.j.s.services.ResponseService.ErrorF - L'information existe déjà dans la base de donnée
+07-03-2022 14:16:37.097 ERROR c.j.s.services.ResponseService.ErrorF - L'animé est déjà présent dans la liste
+07-03-2022 14:16:41.888 ERROR c.j.s.services.ResponseService.ErrorF - L'animé est déjà présent dans la liste

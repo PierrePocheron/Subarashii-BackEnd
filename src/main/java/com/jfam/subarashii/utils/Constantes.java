@@ -65,6 +65,7 @@ public class Constantes {
         public final static String COMPLEXE_SEARCH_OK= "La recherche complexe de l'animé est ok";
         public final static String USER_LIST_GET_CURRENT_LIST= "La liste de l'utilisateur a correctement été récupéré";
         public final static String USER_LIST_CREATE_OK= "La liste custom a correctement été crée";
+        public final static String FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST= "récupération de tous les id api animés dans les listes de l'utilisateur: %d au total";
     }
 
     public static class Token_value{
