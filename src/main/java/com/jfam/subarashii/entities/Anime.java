@@ -57,6 +57,8 @@ public class Anime {
     )
     private List<Genre> genres;
 
+    private String backgroundPath;
+
     public Anime(){}
 
     public Anime(JsonObject jsonObject) {
@@ -67,8 +69,11 @@ public class Anime {
         this.description = jsonObject.get("overview").getAsString();
         this.note = jsonObject.get("vote_average").getAsFloat();
 
-        JsonElement jsonElement = jsonObject.get("poster_path");
-        this.image =  jsonElement == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
+        JsonElement jsonPosterPath = jsonObject.get("poster_path");
+        this.image =  jsonPosterPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
+
+        JsonElement jsonBackgroundPath= jsonObject.get("backdrop_path");
+        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("backdrop_path").getAsString();
     }
 
     //region  === getter-setter ===
@@ -167,6 +172,14 @@ public class Anime {
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
+    }
+
+    public String getBackgroundPath() {
+        return backgroundPath;
+    }
+
+    public void setBackgroundPath(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
     }
 
     //endregion
