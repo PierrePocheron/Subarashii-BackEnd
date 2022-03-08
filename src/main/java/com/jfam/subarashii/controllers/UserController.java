@@ -6,6 +6,7 @@ import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ public class UserController {
 
     @GetMapping(value = "/idapianimes")
     public void GetAllAnimeOnAllUserLists(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
         List<Long> idApiAnimeList = userService.getAllIdApiAnimeOnUserList(currentUser);
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST,idApiAnimeList.size()), idApiAnimeList);
     }
