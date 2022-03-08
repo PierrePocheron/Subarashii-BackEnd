@@ -72,7 +72,7 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     }
     @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
     public final void InvalidDataAccessResourceUsageExceptionException(InvalidDataAccessResourceUsageException ex, HttpServletResponse res) throws IOException {
-        logger.error("InvalidDataAccessResourceUsageException: " + ex.getMessage());
+        logger.error("InvalidDataAccessResourceUsageException: " + ex.toString());
         responseService.ErrorF(res,Constantes.ErrorMessage.DATABASE_ACCESS_RESSOURCE_USAGE_NOT_OK,HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
 
