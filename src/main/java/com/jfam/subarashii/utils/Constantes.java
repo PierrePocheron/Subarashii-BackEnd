@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constantes {
-
+    public static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
@@ -25,9 +25,17 @@ public class Constantes {
 
     public static class Claims{
         public final static String EMAIL= "email";
-        public final static String ROLE= "pseudo";
+        public final static String USERNAME= "username";
+        public final static String ROLE= "role";
     }
 
+    public static class DefaultList{
+        public final static String A_VOIR= "A voir";
+        public final static String EN_COURS= "En cours";
+        public final static String TERMINEE= "Terminée";
+        public final static String EN_ATTENTE= "En attente";
+        public final static String FAVORIS= "Favoris";
+    }
     public static class ErrorMessage {
         public final static String TOKEN_EXPIRATION_DATE = "L'obtention de la date d'expiration n'a pas pû être effectué: ";
         public final static String TOKEN_CLAIMS = "L'obtention de la claim n'a pas pû être effectué: ";
@@ -54,6 +62,7 @@ public class Constantes {
         public final static String GENRE_NOT_FOUND= "Le genre recherché n'a pas été trouvé";
         public final static String ERROR_PARSE= "Une erreur a eut lieu pendant le parcours de la méthode";
         public final static String EPISODE_NOT_FOUND= "Aucun épisode n'a été trouvé";
+        public final static String ANY_ANIME_FETCH= "Aucune liste ne corresponds ou aucun animé n'a été trouvé";
     }
 
     public static class SuccessMessage {
@@ -72,7 +81,8 @@ public class Constantes {
         public final static String EPISODE_REMOVE_VIEW= "L'épisode a correctement été retiré aux vus";
         public final static String EPISODE_ADD_VIEW= "L'épisode a correctement été ajouté aux vus";
         public final static String FETCH_EPISODE_VIEW_BY_ID_ANIME= "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";
-
+        public final static String CREATE_ANIME_COMMENT= "Commentaire bien enregistré";
+        public final static String ALL_ANIME_ON_LIST= "Vous avez récupéré %d animé(s) dans la liste";
     }
 
     public static class Token_value{
@@ -167,4 +177,15 @@ public class Constantes {
             "watch_region",
             "with_watch_monetization_types",
             "without_companies");
+
+
+    public static String START_MESSAGE ="\n" +
+            "       ==================================== \n" +
+            "          ______________    ____  ______\n" +
+            "         / ___/_  __/   |  / __ \\/_  __/\n" +
+            "         \\__ \\ / / / /| | / /_/ / / /   \n" +
+            "        ___/ // / / ___ |/ _, _/ / /    \n" +
+            "       /____//_/ /_/  |_/_/ |_| /_/     \n" +
+            "       =================================== \n" +
+            "=== %s en mode: %s ===";
 }
