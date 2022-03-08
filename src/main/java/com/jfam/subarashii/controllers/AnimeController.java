@@ -1,11 +1,18 @@
 package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
-import com.jfam.subarashii.entities.*;
-import com.jfam.subarashii.entities.api.Discover;
+import com.jfam.subarashii.entities.Anime;
+import com.jfam.subarashii.entities.AnimeComment;
+import com.jfam.subarashii.entities.Episode;
+import com.jfam.subarashii.entities.User;
+import com.jfam.subarashii.entities.api.ApiPaginationResults;
 import com.jfam.subarashii.entities.dto.AnimeCommentDTO;
-import com.jfam.subarashii.services.*;
+import com.jfam.subarashii.services.AnimeCommentService;
+import com.jfam.subarashii.services.AnimeService;
+import com.jfam.subarashii.services.EpisodeService;
+import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +22,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -37,60 +46,62 @@ public class AnimeController {
     EpisodeService episodeService;
 
 
-
-
-    @Operation(summary = "Récupère un anime par son id api, s'il n'existe pas en bdd l'ajoute grâce à l'api")
+    @Operation(summary = Constantes.Swagger.SUMMARY_ANIME_GET_BY_ID_API)
     @GetMapping("/{idapi}")
-    public void GetById(@PathVariable long idapi,HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+    public void GetById(@PathVariable long idapi,HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         Anime anime = animeService.getByIdApi(idapi);
-        responseService.SuccessF(res,"l'animé a été trouvé", anime);
+        responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_FIND, anime);
     }
 
-    @Operation(summary = "Récupère la saison d'un anime grâce à l'id api de l'anime et du numéro de la saison, ajoute en bdd les épisodes et l'anime s'il n'existe pas")
+    @Operation(summary = Constantes.Swagger.SUMMARY_GET_SEASON_BY_ID_API)
     @GetMapping("/{idanime}/season/{idseason}")
-    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
-        responseService.SuccessF(res,"les épisodes ont été trouvé", episodeList);
+        responseService.SuccessF(res,Constantes.SuccessMessage.EPISODE_FIND, episodeList);
     }
 
-    @Operation(summary = "Récupère 20 animés au hasard (se sert de la pagination de l'api)")
-    @GetMapping(value = {"/discover","/discover/{idPage}"})
-    public void DiscoverAnimed(@PathVariable(required = false) Integer idPage, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-        if(idPage == null)
-            idPage = new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION);
+    @Operation(summary = Constantes.Swagger.SUMMARY_DISCOVER_ANIME)
+    @GetMapping(value = "/discover")
+    public void DiscoverAnimed(@RequestParam Optional<Integer> page, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        Integer pageNb = page.isEmpty() ? new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION) : page.get();
+        ApiPaginationResults resultSearch = animeService.getDiscoverAnime(pageNb);
 
-        Discover discover = animeService.getDiscoverAnime(idPage);
-        if(discover == null){
-            responseService.ErrorF(res,"Aucun animé n'a été trouvé à la page " + idPage, HttpServletResponse.SC_BAD_GATEWAY,false);
-        }
-        responseService.SuccessF(res,"Une liste d'animé à découvrir a été trouvé", discover);
-    }
-
-
-    @PostMapping("/searchbyname")
-    public void SearchAnimedByName(@RequestBody Map<String, String> payload , HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
-        //https://api.themoviedb.org/3/discover/tv?
-        String query = payload.get("query");
-
-        if(query == null)
+        if(resultSearch == null || resultSearch.results == null || resultSearch.results.size() == 0)
         {
-            responseService.ErrorF(res,"Le paramètre n'est pas celui attendu ou ne possède pas de la valeur", HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
         }
 
-        List<Anime> animeList = animeService.SearchAnimeByName(query);
-        if(animeList.size() == 0)
-        {
-            responseService.SuccessF(res,"Aucun animé n'a été trouvé...", null);
-            return;
-        }
-        responseService.SuccessF(res,animeList.size() + " ont été trouvé(s)", animeList);
+        responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_DISCOVER_OK, resultSearch);
     }
 
-    @PostMapping("/searchbyinfo")
-    public void SearchAnimedByOtherInfo(HttpServletRequest req){
-        //https://api.themoviedb.org/3/discover/tv?
+    @GetMapping("/search")
+    public void simpleSearchAnimed(@RequestParam Map<String,String> allParams, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
 
+        // clear les params envoyé avec une valeur vide ou avec des espaces blancs
+        allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
+
+        if(allParams.size() ==0){
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
+            return;
+        }
+
+        List<String> UnauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH);
+        if(UnauthorizedParams.size() != 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
+            return;
+        }
+
+        ApiPaginationResults resultSearch = animeService.simpleSearchAnime(allParams);
+        if(resultSearch.results == null || resultSearch.results.size() == 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
+            return;
+        }
+
+
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.size()), resultSearch);
     }
     @GetMapping("/{idanime}/comments")
     public void GetAnimeComments(@PathVariable long idanime,HttpServletResponse res) throws IOException{
@@ -104,7 +115,7 @@ public class AnimeController {
     }
 
     @PostMapping("/creationanimecomments")
-    public void CreateAnimeComments(@RequestBody AnimeComment animeComment, HttpServletResponse res,HttpServletRequest req) throws IOException {
+    public void CreateAnimeComments(@RequestBody AnimeComment animeComment, HttpServletResponse res, HttpServletRequest req) throws IOException {
         User currentUser  = (User) req.getAttribute("user");
         
         AnimeCommentDTO animeCommentDTO = new AnimeCommentDTO();
@@ -113,7 +124,29 @@ public class AnimeController {
     }
 
 
+    @GetMapping("/fullsearch")
+    public void fullSearchAnimed(@RequestParam Map<String,String> allParams, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        // clear les params envoyé avec une valeur vide ou avec des espaces blancs
+        allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
 
+        if(allParams.size() ==0){
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
+            return;
+        }
+        List<String> UnauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_FULL_SEARCH);
+        if(UnauthorizedParams.size() != 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
+            return;
+        }
 
+        ApiPaginationResults resultSearch  = animeService.complexeSearchAnime(allParams);
+        if(resultSearch.results == null || resultSearch.results.size() == 0)
+        {
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
+            return;
+        }
+        responseService.SuccessF(res,Constantes.SuccessMessage.COMPLEXE_SEARCH_OK,resultSearch);
 
+    }
 }

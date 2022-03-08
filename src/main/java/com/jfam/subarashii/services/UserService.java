@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -38,12 +40,16 @@ public class UserService {
         return usr;
     }
 
-    public User getUserForRequestByEmail(String email){
+    public User getUserForFilterByEmail(String email){
         User user = userRepository.findByEmail(email);
         if(user == null)
             return null;
         user.setPassword(null);
         return user;
+    }
+
+    public List<Long> getAllIdApiAnimeOnUserList(User user){
+        return userRepository.getAllIdApiAnimeOnAllUserList(user.getIdUser());
     }
 }
 

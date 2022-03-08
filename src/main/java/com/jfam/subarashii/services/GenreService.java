@@ -3,9 +3,9 @@ package com.jfam.subarashii.services;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
-import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.repositories.GenreRepository;
+import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,60 +24,53 @@ public class GenreService {
     @Autowired
     GenreRepository genreRepository;
 
+    public List<Genre> getAllStartApplication() throws ResourceApiNotFoundException {
+
+        List<Genre> genresList = genreRepository.findAll();
+
+        if(genresList.size() == 0)
+            genresList = fetchGenresFromApi();
+
+        return genresList;
+    }
+
     public List<Genre> getAll() throws ResourceApiNotFoundException {
 
         List<Genre> genresList = genreRepository.findAll();
 
         if(genresList.size() == 0)
-            genresList = fetchApi();
+            genresList = fetchGenresFromApi();
 
         return genresList;
     }
 
+    public Genre getGenreByIdApi( Long idApi){
+        return genreRepository.findByIdApi(idApi);
+    }
 
-    public List<Genre> convertJsonObjectGenreToListGenre(JsonObject jsonObject,String keywordGenre){
-        JsonArray genresJsonArray = jsonObject.get(keywordGenre).getAsJsonArray();
+    public List<Genre> convertJsonObjectGenreToListGenre(JsonObject jsonResult,String keywordGenre){
+        JsonArray genresJsonArray = jsonResult.get(keywordGenre).getAsJsonArray();
         List<Genre> genresList = new ArrayList<>();
         genresJsonArray.forEach((JsonGenre)->{
-            Genre gen = new Genre(JsonGenre.getAsJsonObject());
+            Long idGenre = JsonGenre.getAsJsonObject().get(Constantes.ApiMovie.JSON_KEY_ID).getAsLong();
+            Genre gen = getGenreByIdApi(idGenre);
             genresList.add(gen);
         });
         return genresList;
     }
 
-
-    public List<Genre> convertJsonArrayIdGenreToListGenre(JsonArray jsonArray){
-        List<Genre> genresList = new ArrayList<>();
-        jsonArray.forEach((jsonIdGenre)->{
-            Genre genre =  genreRepository.findByIdApi(jsonIdGenre.getAsLong());
-            genresList.add(genre);
-        });
-        return genresList;
-    }
-
-
-
-    public List<Genre> getAllByIdAPi(List<Long> idApiGenreList){
-        return  genreRepository.findByIdApiIn(idApiGenreList);
-    }
-
     // region === PRIVATE METHOD ===
-
-    private List<Genre> fetchApi() throws ResourceApiNotFoundException {
-        JsonObject jsonObject = httpClient.GetQuery(ROUTE_GENRE_ANIME);
-        JsonArray jsonArray = jsonObject.get("genres").getAsJsonArray();
+    private List<Genre> fetchGenresFromApi() throws ResourceApiNotFoundException {
+        JsonObject genreResult = httpClient.GetQuery(ROUTE_GENRE_ANIME);
+        JsonArray jsonArrayGenre = genreResult.get(Constantes.ApiMovie.JSON_KEY_GENRES).getAsJsonArray();
         List<Genre> genresList = new ArrayList<>();
 
-        jsonArray.forEach((json_genre)->{
-            JsonObject genreJO = json_genre.getAsJsonObject();
+        jsonArrayGenre.forEach((jsonGenre)->{
+            JsonObject genreJO = jsonGenre.getAsJsonObject();
             Genre genre = new Genre(genreJO);
             genresList.add(genre);
         });
         return genreRepository.saveAll(genresList);
     }
-
-
-
-
     //endregion
 }
