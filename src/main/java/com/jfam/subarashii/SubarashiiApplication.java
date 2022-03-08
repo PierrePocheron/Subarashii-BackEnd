@@ -44,6 +44,12 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 	}
 
 
+	@Value("${build.version}")
+	public void getBuildVersion(String version) {
+		Constantes.BUILD_VERSION = version;
+	}
+
+
 /*	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(SubarashiiApplication.class);
