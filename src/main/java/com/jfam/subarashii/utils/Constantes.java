@@ -177,4 +177,15 @@ public class Constantes {
             "watch_region",
             "with_watch_monetization_types",
             "without_companies");
+
+
+    public static String START_MESSAGE ="\n" +
+            "       ==================================== \n" +
+            "          ______________    ____  ______\n" +
+            "         / ___/_  __/   |  / __ \\/_  __/\n" +
+            "         \\__ \\ / / / /| | / /_/ / / /   \n" +
+            "        ___/ // / / ___ |/ _, _/ / /    \n" +
+            "       /____//_/ /_/  |_/_/ |_| /_/     \n" +
+            "       =================================== \n" +
+            "=== %s en mode: %s ===";
 }
