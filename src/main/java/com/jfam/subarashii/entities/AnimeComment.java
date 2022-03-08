@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -17,9 +18,9 @@ public class AnimeComment {
     @Column @NotNull
     private String contenu;
 
-    //rajouter idUser
     @ManyToOne
     @JoinColumn(name = "IdUser")
+    @JsonBackReference(value="user-anime")
     private User user;
 
     @ManyToOne
@@ -27,6 +28,19 @@ public class AnimeComment {
     @JoinColumn(name = "IdApiAnime")
     private Anime anime;
 
+    private String date;
+
+
+    //#region === GETTER / SETTER
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Long getId() {
         return id;
@@ -69,4 +83,5 @@ public class AnimeComment {
                 ", anime=" + anime +
                 '}';
     }
+    //endregion
 }

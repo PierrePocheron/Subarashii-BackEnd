@@ -49,12 +49,8 @@ public class Anime {
     private List<UserList> userLists;
 
     @OneToMany(mappedBy = "anime")
-    @JsonIgnoreProperties
+    @JsonBackReference(value = "anime-comments")
     private List<AnimeComment> animeComments;
-
-
-
-
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "anime_genres",
