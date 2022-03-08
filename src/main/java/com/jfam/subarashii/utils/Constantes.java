@@ -62,6 +62,7 @@ public class Constantes {
         public final static String GENRE_NOT_FOUND= "Le genre recherché n'a pas été trouvé";
         public final static String ERROR_PARSE= "Une erreur a eut lieu pendant le parcours de la méthode";
         public final static String EPISODE_NOT_FOUND= "Aucun épisode n'a été trouvé";
+        public final static String ANY_ANIME_FETCH= "Aucune liste ne corresponds ou aucun animé n'a été trouvé";
     }
 
     public static class SuccessMessage {
@@ -81,6 +82,7 @@ public class Constantes {
         public final static String EPISODE_ADD_VIEW= "L'épisode a correctement été ajouté aux vus";
         public final static String FETCH_EPISODE_VIEW_BY_ID_ANIME= "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";
         public final static String CREATE_ANIME_COMMENT= "Commentaire bien enregistré";
+        public final static String ALL_ANIME_ON_LIST= "Vous avez récupéré %d animé(s) dans la liste";
     }
 
     public static class Token_value{
