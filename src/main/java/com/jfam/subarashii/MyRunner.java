@@ -22,6 +22,8 @@ public class MyRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         genreService.getAllStartApplication();
-        logger.info("Mon application à bien démarrée en mode :" + Constantes.ENVIRONNEMENT_TYPE );
+
+        logger.error(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
+        logger.info(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
     }
 }
