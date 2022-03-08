@@ -48,9 +48,6 @@ public class Anime {
     private List<AnimeComment> animeComments;
 
 
-    @OneToMany
-    @JoinColumn(name = "idEpisode")
-    private List<EpisodeComment> episodeComments;
 
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -179,13 +176,7 @@ public class Anime {
         this.animeComments = animeComments;
     }
 
-    public List<EpisodeComment> getEpisodeComments() {
-        return episodeComments;
-    }
 
-    public void setEpisodeComments(List<EpisodeComment> episodeComments) {
-        this.episodeComments = episodeComments;
-    }
 
     //endregion
 }

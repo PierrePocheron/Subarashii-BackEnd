@@ -1,14 +1,10 @@
 package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
-import com.jfam.subarashii.entities.Anime;
-import com.jfam.subarashii.entities.AnimeComment;
-import com.jfam.subarashii.entities.Episode;
+import com.jfam.subarashii.entities.*;
 import com.jfam.subarashii.entities.api.Discover;
-import com.jfam.subarashii.services.AnimeService;
-import com.jfam.subarashii.services.AnimeCommentService;
-import com.jfam.subarashii.services.EpisodeService;
-import com.jfam.subarashii.services.ResponseService;
+import com.jfam.subarashii.entities.dto.AnimeCommentDTO;
+import com.jfam.subarashii.services.*;
 import com.jfam.subarashii.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,6 +35,8 @@ public class AnimeController {
 
     @Autowired
     EpisodeService episodeService;
+
+
 
 
     @Operation(summary = "Récupère un anime par son id api, s'il n'existe pas en bdd l'ajoute grâce à l'api")
@@ -103,13 +101,17 @@ public class AnimeController {
             }
             responseService.SuccessF(res,"le commentaire a été trouvé", animeComment);
 
+    }
 
-
-
-
+    @PostMapping("/creationanimecomments")
+    public void CreateAnimeComments(@RequestBody AnimeComment animeComment, HttpServletResponse res,HttpServletRequest req) throws IOException {
+        User currentUser  = (User) req.getAttribute("user");
+        
+        AnimeCommentDTO animeCommentDTO = new AnimeCommentDTO();
 
 
     }
+
 
 
 

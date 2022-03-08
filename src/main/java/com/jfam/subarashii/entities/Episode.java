@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.JsonObject;
 
 import javax.persistence.*;
@@ -36,6 +37,10 @@ public class Episode {
     @JoinColumn( name = "animeId")
     @JsonBackReference
     private Anime anime;
+
+    @OneToMany(mappedBy = "episode")
+    @JsonIgnoreProperties
+    private List<EpisodeComment> episodeComments;
 
     private Long IdApiAnime;
 

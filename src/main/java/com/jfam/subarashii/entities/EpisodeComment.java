@@ -1,5 +1,7 @@
 package com.jfam.subarashii.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -15,8 +17,11 @@ public class EpisodeComment {
     private String contenu;
 
 
-    @Column @NotNull
-    private String statut;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "IdApiEpisode")
+    private Episode episode;
+
 
     public Long getId() {
         return id;
@@ -34,21 +39,20 @@ public class EpisodeComment {
         this.contenu = contenu;
     }
 
-    public String getStatut() {
-        return statut;
+    public Episode getEpisode() {
+        return episode;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
+    public void setEpisode(Episode episode) {
+        this.episode = episode;
     }
-
 
     @Override
     public String toString() {
         return "EpisodeComment{" +
                 "id=" + id +
                 ", contenu='" + contenu + '\'' +
-                ", statut='" + statut + '\'' +
+                ", episode=" + episode +
                 '}';
     }
 }
