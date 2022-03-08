@@ -6,6 +6,7 @@ import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.ViewService;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ViewController {
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
 
 
         Boolean isActiveSee = viewService.updateUserViewByIdApiEpisode(currentUser,idApiAnime, idApiEpisode);
@@ -51,7 +52,7 @@ public class ViewController {
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
 
         List<View> viewList =  viewService.getAllViewByIdApiAnime(currentUser,idApiAnime);
 
