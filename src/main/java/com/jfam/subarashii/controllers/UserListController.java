@@ -80,5 +80,15 @@ public class UserListController {
     }
 
 
+    @GetMapping("/{idList}/animes")
+    public void getAllAnimeOnUserList(@PathVariable Long idList ,HttpServletRequest req,HttpServletResponse res ) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
 
+        List<Anime> animeList=  userListService.getAllAnimeByUserList(currentUser, idList);
+        if(animeList == null){
+            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_ANIME_FETCH,404,false);
+            return;
+        }
+        responseService.SuccessF(res,String.format(Constantes.SuccessMessage.ALL_ANIME_ON_LIST, animeList.size()),animeList);
+    }
 }

@@ -61,4 +61,10 @@ public class UserListService {
         return userListRepository.save(currentUserList);
     }
 
+    public List<Anime> getAllAnimeByUserList(User user, Long idList){
+        UserList userList = userListRepository.findAllByUserAndId(user,idList);
+        if(userList == null)
+            return null;
+        return userList.getAnimes();
+    }
 }
