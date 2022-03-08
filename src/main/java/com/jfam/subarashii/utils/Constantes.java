@@ -24,7 +24,8 @@ public class Constantes {
 
     public static class Claims{
         public final static String EMAIL= "email";
-        public final static String ROLE= "pseudo";
+        public final static String USERNAME= "username";
+        public final static String ROLE= "role";
     }
 
     public static class ErrorMessage {
