@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.JsonObject;
 
 import javax.persistence.*;
@@ -40,8 +41,8 @@ public class Episode {
     @JsonBackReference
     private Anime anime;
 
-
     private Long IdApiAnime;
+
 
     public Episode(){}
 
