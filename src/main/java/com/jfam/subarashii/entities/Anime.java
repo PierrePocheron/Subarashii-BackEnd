@@ -37,9 +37,7 @@ public class Anime {
 
     private Float note;
 
-    @OneToMany
-    @JoinColumn( name = "anime")
-    private List<Comment> comments;
+
 
 
     @OneToMany(mappedBy = "anime")
@@ -50,6 +48,10 @@ public class Anime {
     @JsonBackReference
     private List<UserList> userLists;
 
+    @OneToMany(mappedBy = "anime")
+    @JsonBackReference(value = "anime-comments")
+    private List<AnimeComment> animeComments;
+    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "anime_genres",
             joinColumns = @JoinColumn(name = "animeId"),
@@ -90,6 +92,7 @@ public class Anime {
     }
 
     //region  === getter-setter ===
+
 
     public Long getId() {
         return id;
@@ -163,14 +166,6 @@ public class Anime {
         this.note = note;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
     public List<Episode> getEpisodes() {
         return episodes;
     }
@@ -185,6 +180,14 @@ public class Anime {
 
     public void setUserLists(List<UserList> userLists) {
         this.userLists = userLists;
+    }
+
+    public List<AnimeComment> getAnimeComments() {
+        return animeComments;
+    }
+
+    public void setAnimeComments(List<AnimeComment> animeComments) {
+        this.animeComments = animeComments;
     }
 
     public List<Genre> getGenres() {
@@ -247,7 +250,6 @@ public class Anime {
                 ", image='" + image + '\'' +
                 ", description='" + description + '\'' +
                 ", note=" + note +
-                ", comments=" + comments +
                 ", episodes=" + episodes +
                 ", userLists=" + userLists +
                 ", genres=" + genres +
