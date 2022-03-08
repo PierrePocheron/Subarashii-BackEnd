@@ -42,11 +42,6 @@ public class ViewService {
         return !has_see;
     }
 
-    public List<View> getAllView(User user){
-        return viewRepository.findAllByUserAndAndSeeIsTrue(user);
-    }
-
-
     public List<View> getAllViewByIdApiAnime(User user, Long idApiAnime){
         return viewRepository.findAllByUserAndIdApiAnimeAndSeeIsTrue(user, idApiAnime);
     }

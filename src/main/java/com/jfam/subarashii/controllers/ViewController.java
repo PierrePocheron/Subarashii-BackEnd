@@ -24,16 +24,6 @@ public class ViewController {
     @Autowired
     ViewService viewService;
 
-
-
-    @GetMapping("/all")
-    public void GetAllViewByCurrentUser(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
-
-        List<View> viewList = viewService.getAllView(currentUser);
-        responseService.SuccessF(res,"La liste des épisodes vu",viewList);
-    }
-
     @PutMapping("/animes/{idApiAnime}/episodes/{idApiEpisode}")
     public void PutEpisodeSeeByUser(@PathVariable Long idApiAnime ,@PathVariable Long idApiEpisode, HttpServletRequest req, HttpServletResponse res) throws IOException {
         if(idApiAnime == null || idApiAnime == 0 ||  idApiEpisode == null || idApiEpisode<0 ){

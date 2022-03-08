@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ViewRepository extends JpaRepository<View,Long> {
     View findByIdApiAnimeAndIdApiEpisodeAndUser(Long IdApiAnime,Long IdApiEpisode, User user);
-    List<View> findAllByUserAndAndSeeIsTrue(User user);
     List<View> findAllByUserAndIdApiAnimeAndSeeIsTrue(User user, Long IdApiAnime);
     void deleteById(Long idView);
 }
