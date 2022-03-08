@@ -36,8 +36,7 @@ public class AnimeController {
     @Autowired
     AnimeService animeService;
 
-    @Autowired
-    AnimeCommentService animeCommentService;
+
 
     @Autowired
     ResponseService responseService;
@@ -103,25 +102,7 @@ public class AnimeController {
 
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.size()), resultSearch);
     }
-    @GetMapping("/{idanime}/comments")
-    public void GetAnimeComments(@PathVariable long idanime,HttpServletResponse res) throws IOException{
-           List<AnimeComment>  animeComment = animeCommentService.getCommentByIdAnime(idanime);
-            if(animeComment.size() == 0){
-                responseService.SuccessF(res,"commentaires inexistants", animeComment);
-                return;
-            }
-            responseService.SuccessF(res,"le commentaire a été trouvé", animeComment);
 
-    }
-
-    @PostMapping("/creationanimecomments")
-    public void CreateAnimeComments(@RequestBody AnimeComment animeComment, HttpServletResponse res, HttpServletRequest req) throws IOException {
-        User currentUser  = (User) req.getAttribute("user");
-        
-        AnimeCommentDTO animeCommentDTO = new AnimeCommentDTO();
-
-
-    }
 
 
     @GetMapping("/fullsearch")
