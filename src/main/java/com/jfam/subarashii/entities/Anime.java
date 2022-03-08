@@ -3,16 +3,17 @@ package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.utils.Constantes;
 
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.List;
 
 @Entity
 @Table(name = "animes")
+@JsonIgnoreProperties(value = { "episodes"},allowSetters = true)
 public class Anime {
 
     @Id
@@ -21,7 +22,9 @@ public class Anime {
 
     private Long idApi;
 
-    private String nom;
+    private String nomTraduit;
+
+    private String originalName;
 
     private Long nbSaison;
 
@@ -36,11 +39,13 @@ public class Anime {
 
 
 
+
     @OneToMany(mappedBy = "anime")
     private List<Episode> episodes;
 
 
     @ManyToMany(mappedBy = "animes")
+    @JsonBackReference
     private List<UserList> userLists;
 
     @OneToMany(mappedBy = "anime")
@@ -50,30 +55,48 @@ public class Anime {
 
 
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "anime_genres",
             joinColumns = @JoinColumn(name = "animeId"),
-            inverseJoinColumns = @JoinColumn(name = "genreId")
+            inverseJoinColumns = {@JoinColumn(name = "genreId")}
     )
     private List<Genre> genres;
 
+    private String backgroundPath;
+
+    private Boolean isAdult;
+
+    private String dateCommencement;
+
+    private String dateFin;
+
+    private Boolean enCours;
+
     public Anime(){}
 
-    public Anime(JsonObject jsonObject) {
+    public Anime(JsonObject jsonObject) throws ParseException {
         this.idApi = jsonObject.get("id").getAsLong();
-        this.nom = jsonObject.get("name").getAsString();
+        this.nomTraduit = jsonObject.get("name").getAsString();
         this.nbSaison = jsonObject.get("number_of_seasons").getAsLong();
         this.nbEpisodes = jsonObject.get("number_of_episodes").getAsLong();
         this.description = jsonObject.get("overview").getAsString();
         this.note = jsonObject.get("vote_average").getAsFloat();
+        this.isAdult = jsonObject.get("adult").getAsBoolean();
+        this.dateCommencement = jsonObject.get("first_air_date").getAsString();
+        this.dateFin = jsonObject.get("last_air_date").getAsString();
+        this.enCours = jsonObject.get("in_production").getAsBoolean();
+        this.originalName = jsonObject.get("original_name").getAsString();
 
-        JsonElement jsonElement = jsonObject.get("poster_path");
-        this.image =  jsonElement == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
+        JsonElement jsonPosterPath = jsonObject.get("poster_path");
+        this.image =  jsonPosterPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
 
-
+        JsonElement jsonBackgroundPath= jsonObject.get("backdrop_path");
+        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE_ORIGINE +  jsonObject.get("backdrop_path").getAsString();
     }
 
     //region  === getter-setter ===
+
 
     public Long getId() {
         return id;
@@ -91,12 +114,20 @@ public class Anime {
         this.idApi = idApi;
     }
 
-    public String getNom() {
-        return nom;
+    public String getNomTraduit() {
+        return nomTraduit;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNomTraduit(String nomTraduit) {
+        this.nomTraduit = nomTraduit;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
     public Long getNbSaison() {
@@ -147,14 +178,20 @@ public class Anime {
         this.episodes = episodes;
     }
 
-
-
     public List<UserList> getUserLists() {
         return userLists;
     }
 
     public void setUserLists(List<UserList> userLists) {
         this.userLists = userLists;
+    }
+
+    public List<AnimeComment> getAnimeComments() {
+        return animeComments;
+    }
+
+    public void setAnimeComments(List<AnimeComment> animeComments) {
+        this.animeComments = animeComments;
     }
 
     public List<Genre> getGenres() {
@@ -165,18 +202,68 @@ public class Anime {
         this.genres = genres;
     }
 
-
-
-
-    public List<AnimeComment> getAnimeComments() {
-        return animeComments;
+    public String getBackgroundPath() {
+        return backgroundPath;
     }
 
-    public void setAnimeComments(List<AnimeComment> animeComments) {
-        this.animeComments = animeComments;
+    public void setBackgroundPath(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
     }
 
+    public Boolean getAdult() {
+        return isAdult;
+    }
 
+    public void setAdult(Boolean adult) {
+        isAdult = adult;
+    }
 
-    //endregion
+    public String getDateCommencement() {
+        return dateCommencement;
+    }
+
+    public void setDateCommencement(String dateCommencement) {
+        this.dateCommencement = dateCommencement;
+    }
+
+    public String getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(String dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public Boolean getEnCours() {
+        return enCours;
+    }
+
+    public void setEnCours(Boolean enCours) {
+        this.enCours = enCours;
+    }
+
+    @Override
+    public String toString() {
+        return "Anime{" +
+                "id=" + id +
+                ", idApi=" + idApi +
+                ", nomTraduit='" + nomTraduit + '\'' +
+                ", originalName='" + originalName + '\'' +
+                ", nbSaison=" + nbSaison +
+                ", nbEpisodes=" + nbEpisodes +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", note=" + note +
+                ", episodes=" + episodes +
+                ", userLists=" + userLists +
+                ", genres=" + genres +
+                ", backgroundPath='" + backgroundPath + '\'' +
+                ", isAdult=" + isAdult +
+                ", dateCommencement='" + dateCommencement + '\'' +
+                ", dateFin='" + dateFin + '\'' +
+                ", enCours=" + enCours +
+                '}';
+    }
+
+//endregion
 }

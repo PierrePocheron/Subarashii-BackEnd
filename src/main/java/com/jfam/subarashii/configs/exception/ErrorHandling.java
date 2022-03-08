@@ -3,8 +3,10 @@ package com.jfam.subarashii.configs.exception;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.firewall.RequestRejectedException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +23,17 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.NonUniqueResultException;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @ControllerAdvice
 @RestController
@@ -55,38 +65,61 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     }
     @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
     public final void InvalidDataAccessResourceUsageExceptionException(InvalidDataAccessResourceUsageException ex, HttpServletResponse res) throws IOException {
-        responseService.ErrorF(res,"L'utilisation de la ressource dans la base de donnée n'a pas pu être fait",HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
+        responseService.ErrorF(res,Constantes.ErrorMessage.DATABASE_ACCESS_RESSOURCE_USAGE_NOT_OK,HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
 
     @ExceptionHandler(ResourceApiNotFoundException.class)
-    public final void InvalidDataAccessResourceUsageExceptionException(ResourceApiNotFoundException ex, HttpServletResponse res) throws IOException {
+    public final void ResourceApiNotFoundException(ResourceApiNotFoundException ex, HttpServletResponse res) throws IOException {
         responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NumberFormatException.class)
-    public final void InvalidDataAccessResourceUsageExceptionException(NumberFormatException ex, HttpServletResponse res) throws IOException {
-        responseService.ErrorF(res,"le paramètre attendait un chiffre et n'a pas reçu le bon format",HttpServletResponse.SC_BAD_GATEWAY,false);
+    public final void NumberFormatException(NumberFormatException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res,Constantes.ErrorMessage.NUMBER_FORMAT_NOT_OK,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public final void InvalidDataAccessResourceUsageExceptionException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
-        responseService.ErrorF(res,"le paramètre fournit ne correponds pas au type du paramètre attendu",HttpServletResponse.SC_BAD_GATEWAY,false);
+    public final void MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_TYPE_METHOD_MISMATCH,HttpServletResponse.SC_BAD_GATEWAY,false);
+    }
+    @ExceptionHandler(ParseException.class)
+    public final void ParseException(ParseException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_PARSE,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(RequestRejectedException.class)
-    public final void InvalidDataAccessResourceUsageExceptionException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
-        responseService.ErrorF(res,"la requête n'a pas pu être accepté car elle ne corresponds pas au attente",HttpServletResponse.SC_BAD_GATEWAY,false);
+    public final void RequestRejectedException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res,Constantes.ErrorMessage.REQUEST_REFUSED,HttpServletResponse.SC_BAD_GATEWAY,false);
+    }
+    @ExceptionHandler(NonUniqueResultException.class)
+    public final void RequestRejectedException(NonUniqueResultException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res,Constantes.ErrorMessage.NOT_UNIQUE_RESULT,HttpServletResponse.SC_BAD_GATEWAY,false);
+    }
+    @ExceptionHandler(NullPointerException.class)
+    public final void NullPointerException(NullPointerException ex, HttpServletResponse res) throws IOException {
+        responseService.ErrorF(res,"Un élément s'est retrouvé non renseigner alors qu'il aurait du l'être" + ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
-/*    @ExceptionHandler(IllegalStateException.class)
-    public final void InvalidDataAccessResourceUsageExceptionException(IllegalStateException ex, HttpServletResponse res) throws IOException {
-        responseService.ErrorF(res,"une erreur a eu lieu pendant l'execution de la méthode",HttpServletResponse.SC_BAD_GATEWAY,false);
-    }*/
 
 
-    //region  === overrideSpring ===
-/*    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public final void HttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletResponse res) throws IOException {
-        responseService.ErrorF(res,"les valeurs du body sont manquants dans la requête",HttpServletResponse.SC_BAD_GATEWAY,false);
-    }*/
-    //endregion
+
+
+
+    @ExceptionHandler(javax.validation.ConstraintViolationException.class)
+    public final void ConstraintViolationException(javax.validation.ConstraintViolationException ex, HttpServletResponse res) throws IOException {
+
+        Set<ConstraintViolation<?>> violationExceptionSet =  ex.getConstraintViolations();
+
+        // récupère toutes les contraintes non respectés lors de l'action
+        // et les renvois dans le body
+        Map<String,String> ContraintMap = new HashMap<>();
+        violationExceptionSet.forEach(ves->{
+            String contraintField =  ves.getPropertyPath().toString();
+            String contraintText =  ves.getMessage();
+
+            ContraintMap.put(contraintField,contraintText);
+        });
+
+        responseService.ErrorF(res,Constantes.ErrorMessage.CONSTRAINT_FIELD_NOT_OK, HttpServletResponse.SC_BAD_GATEWAY,ContraintMap);
+    }
+
 }
