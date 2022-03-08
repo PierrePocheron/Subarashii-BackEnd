@@ -45,7 +45,7 @@ public class RequestFilter extends OncePerRequestFilter {
         String header = req.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER);
 
         if (header == null) {
-            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.ErrorF(res,String.format(Constantes.ErrorMessage.TOKEN_NOT_EXIST,Constantes.BUILD_VERSION), HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
         String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,Constantes.EMPTY_STRING);
@@ -74,11 +74,7 @@ public class RequestFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        logger.info("Entre dans ShouldNotFilter");
-
         String path = request.getRequestURI();
-        logger.info("Chemin courant" + path);
-
         if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
 
             return path.contains(Constantes.ROUTE_SIGN_UP) || path.contains(Constantes.ROUTE_SIGN_IN) ||

@@ -9,7 +9,8 @@ public class Constantes {
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
     public static String ADRESS_FRONT;
-    public final static String URL_IMAGE_NOT_FOUND = "https://image.shutterstock.com/image-vector/no-image-available-vector-hand-600w-745639717.jpg";
+    public static String BUILD_VERSION;
+    public final static String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
 
     public final static String EMPTY_STRING= "";
 
@@ -31,7 +32,7 @@ public class Constantes {
         public final static String TOKEN_EXPIRATION_DATE = "L'obtention de la date d'expiration n'a pas pû être effectué: ";
         public final static String TOKEN_CLAIMS = "L'obtention de la claim n'a pas pû être effectué: ";
         public final static String TOKEN_CREATE = "La création du token à échoué :";
-        public final static String TOKEN_NOT_EXIST = "Veuillez vous identifier";
+        public final static String TOKEN_NOT_EXIST = "%s - Veuillez vous identifier";
         public final static String TOKEN_INVALIDE = "Le token est invalide";
         public final static String AUTHENTIFICATION_NOT_OK = "Email ou mots de passe incorrect";
         public final static String ANIME_NOT_FOUND = "Aucun animé a été trouvé ...";
@@ -50,6 +51,9 @@ public class Constantes {
         public final static String SIGN_UP_NOT_VALID = "Inscription incorrecte";
         public final static String RESOURCE_NOT_FOUND = "La ressource recherché n'a pas pu être trouvé";
         public final static String TOKEN_USER_NOT_EXIST= "L'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée";
+        public final static String GENRE_NOT_FOUND= "Le genre recherché n'a pas été trouvé";
+        public final static String ERROR_PARSE= "Une erreur a eut lieu pendant le parcours de la méthode";
+        public final static String EPISODE_NOT_FOUND= "Aucun épisode n'a été trouvé";
     }
 
     public static class SuccessMessage {
@@ -64,6 +68,11 @@ public class Constantes {
         public final static String COMPLEXE_SEARCH_OK= "La recherche complexe de l'animé est ok";
         public final static String USER_LIST_GET_CURRENT_LIST= "La liste de l'utilisateur a correctement été récupéré";
         public final static String USER_LIST_CREATE_OK= "La liste custom a correctement été crée";
+        public final static String FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST= "récupération de tous les id api animés dans les listes de l'utilisateur: %d au total";
+        public final static String EPISODE_REMOVE_VIEW= "L'épisode a correctement été retiré aux vus";
+        public final static String EPISODE_ADD_VIEW= "L'épisode a correctement été ajouté aux vus";
+        public final static String FETCH_EPISODE_VIEW_BY_ID_ANIME= "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";
+
     }
 
     public static class Token_value{
@@ -78,6 +87,7 @@ public class Constantes {
         public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION= 458;
         public final static int ANIMATION_ID_GENRE = 16;
         public final static String URL_IMAGE="https://image.tmdb.org/t/p/w500";
+        public final static String URL_IMAGE_ORIGINE="https://image.tmdb.org/t/p/original";
         public final static String ROUTE_SERIES_DETAILS_BY_ID= "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
         public final static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON= "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
         /**
@@ -144,6 +154,7 @@ public class Constantes {
             "with_cast",
             "with_crew",
             "with_people",
+            "with_status",
             "with_companies",
             "with_genres",
             "without_genres",

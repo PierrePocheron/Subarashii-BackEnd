@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,14 +40,14 @@ public class AnimeController {
 
     @Operation(summary = Constantes.Swagger.SUMMARY_ANIME_GET_BY_ID_API)
     @GetMapping("/{idapi}")
-    public void GetById(@PathVariable long idapi,HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+    public void GetById(@PathVariable long idapi,HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         Anime anime = animeService.getByIdApi(idapi);
         responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_FIND, anime);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_GET_SEASON_BY_ID_API)
     @GetMapping("/{idanime}/season/{idseason}")
-    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
         responseService.SuccessF(res,Constantes.SuccessMessage.EPISODE_FIND, episodeList);
     }
