@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.uzrnem.verify.Validator;
 
 import javax.persistence.*;
@@ -30,6 +31,11 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<View> views;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties
+    private List<AnimeComment> animeComments;
+
 
     @NotNull
     private String username;
@@ -106,6 +112,13 @@ public class User {
         this.username = username;
     }
 
+    public List<AnimeComment> getAnimeComments() {
+        return animeComments;
+    }
+
+    public void setAnimeComments(List<AnimeComment> animeComments) {
+        this.animeComments = animeComments;
+    }
 //endregion
 
 }

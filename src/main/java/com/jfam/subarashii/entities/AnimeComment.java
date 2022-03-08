@@ -17,8 +17,10 @@ public class AnimeComment {
     @Column @NotNull
     private String contenu;
 
-
-
+    //rajouter idUser
+    @ManyToOne
+    @JoinColumn(name = "IdUser")
+    private User user;
 
     @ManyToOne
     @JsonBackReference
@@ -42,8 +44,6 @@ public class AnimeComment {
         this.contenu = contenu;
     }
 
-
-
     public Anime getAnime() {
         return anime;
     }
@@ -52,11 +52,20 @@ public class AnimeComment {
         this.anime = anime;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "AnimeComment{" +
                 "id=" + id +
                 ", contenu='" + contenu + '\'' +
+                ", user=" + user +
                 ", anime=" + anime +
                 '}';
     }

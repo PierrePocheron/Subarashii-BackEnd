@@ -9,17 +9,19 @@ public class AnimeCommentDTO {
 
 
 private String contenu;
-private Anime idApiAnime;
+private Long idApiAnime;
 
 public AnimeCommentDTO(){
 
 }
 
-public AnimeComment toEntity(User user){
+public AnimeComment toEntity(User user, Anime anime){
 
     AnimeComment animeComment = new AnimeComment();
     animeComment.setContenu(this.contenu);
-    animeComment.setAnime(this.idApiAnime);
+    animeComment.setUser(user);
+    animeComment.setAnime(anime);
+
 
     return animeComment;
 
@@ -33,11 +35,11 @@ public AnimeComment toEntity(User user){
         this.contenu = contenu;
     }
 
-    public Anime getIdApiAnime() {
+    public Long getIdApiAnime() {
         return idApiAnime;
     }
 
-    public void setIdApiAnime(Anime idApiAnime) {
+    public void setIdApiAnime(Long idApiAnime) {
         this.idApiAnime = idApiAnime;
     }
 }
