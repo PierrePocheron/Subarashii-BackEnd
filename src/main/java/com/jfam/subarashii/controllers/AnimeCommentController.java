@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -34,13 +35,19 @@ public class AnimeCommentController {
     ResponseService responseService;
 
     @GetMapping("/{idanime}")
-    public void GetAnimeComments(@PathVariable long idanime, HttpServletResponse res) throws IOException {
-        List<AnimeComment> animeComment = animeCommentService.getCommentByIdAnime(idanime);
-        if(animeComment.size() == 0){
-            responseService.SuccessF(res,"commentaires inexistants", animeComment);
+    public void GetAnimeComments(@PathVariable long idanime,HttpServletRequest req, HttpServletResponse res) throws IOException {
+        List<AnimeComment> animeCommentList = animeCommentService.getCommentByIdAnime(idanime);
+        if(animeCommentList.size() == 0){
+            responseService.SuccessF(res,"commentaires inexistants", animeCommentList);
             return;
         }
-        responseService.SuccessF(res,"le commentaire a été trouvé", animeComment);
+        User currentUser  = Helpers.getCurrentUser(req);
+        List<AnimeCommentDTO> animeCommentDTOList =  animeCommentList.stream().map(animeComment -> new AnimeCommentDTO(animeComment, currentUser)).collect(Collectors.toList());
+
+
+
+
+        responseService.SuccessF(res,"le commentaire a été trouvé", animeCommentDTOList);
 
     }
 

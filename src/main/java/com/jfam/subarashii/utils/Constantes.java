@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constantes {
-
+    public static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;

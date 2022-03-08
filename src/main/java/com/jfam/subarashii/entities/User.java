@@ -32,8 +32,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<View> views;
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference(value="user-anime")
     private List<AnimeComment> animeComments;
 
 
