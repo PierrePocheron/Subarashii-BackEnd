@@ -9,6 +9,7 @@ public class Constantes {
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
     public static String ADRESS_FRONT;
+    public static String BUILD_VERSION;
     public final static String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
 
     public final static String EMPTY_STRING= "";
@@ -31,7 +32,7 @@ public class Constantes {
         public final static String TOKEN_EXPIRATION_DATE = "L'obtention de la date d'expiration n'a pas pû être effectué: ";
         public final static String TOKEN_CLAIMS = "L'obtention de la claim n'a pas pû être effectué: ";
         public final static String TOKEN_CREATE = "La création du token à échoué :";
-        public final static String TOKEN_NOT_EXIST = "Veuillez vous identifier";
+        public final static String TOKEN_NOT_EXIST = "%s - Veuillez vous identifier";
         public final static String TOKEN_INVALIDE = "Le token est invalide";
         public final static String AUTHENTIFICATION_NOT_OK = "Email ou mots de passe incorrect";
         public final static String ANIME_NOT_FOUND = "Aucun animé a été trouvé ...";
