@@ -29,6 +29,13 @@ public class Constantes {
         public final static String ROLE= "role";
     }
 
+    public static class DefaultList{
+        public final static String A_VOIR= "A voir";
+        public final static String EN_COURS= "En cours";
+        public final static String TERMINEE= "Terminée";
+        public final static String EN_ATTENTE= "En attente";
+        public final static String FAVORIS= "Favoris";
+    }
     public static class ErrorMessage {
         public final static String TOKEN_EXPIRATION_DATE = "L'obtention de la date d'expiration n'a pas pû être effectué: ";
         public final static String TOKEN_CLAIMS = "L'obtention de la claim n'a pas pû être effectué: ";
