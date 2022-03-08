@@ -25,12 +25,13 @@ public class JwtService {
 
     Algorithm algorithm ;
 
-    public String CreateToken(String email, String role){
+    public String CreateToken(String email, String role, String username){
         role = role == null ? Role.USER.toString() : role;
         algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
         Map<String, Object> headerClaims = new HashMap();
         headerClaims.put(Constantes.Claims.EMAIL, email);
         headerClaims.put(Constantes.Claims.ROLE, role);
+        headerClaims.put(Constantes.Claims.USERNAME, username);
         try {
             return JWT.create()
                     .withHeader(headerClaims)
