@@ -6,11 +6,31 @@
         </encoder>
     </appender>
 
+
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>error.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %-5level %logger{36}.%M - %msg%n
+            </Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+
     <logger name="com.jfam.subarashii" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 
     <root level="WARN">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="ERROR_LOG" />
     </root>
+
+    <logger name="com.jfam.subarashii" level="info" additivity="false">
+        <appender-ref ref="ERROR_LOG" />
+        <appender-ref ref="STDOUT" />
+    </logger>
 </configuration>

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class AnimeService {
      * @return Retourne l'animé avec ses informations
      * @throws ResourceApiNotFoundException
      */
-    public Anime getByIdApi(long idApi) throws ResourceApiNotFoundException {
+    public Anime getByIdApi(long idApi) throws ResourceApiNotFoundException, ParseException {
 
         Anime anime = animeRepository.findByIdApi(idApi);
 

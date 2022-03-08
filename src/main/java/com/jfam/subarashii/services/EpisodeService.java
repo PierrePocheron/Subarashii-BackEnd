@@ -6,13 +6,16 @@ import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Episode;
+import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.EpisodeRepository;
+import com.jfam.subarashii.repositories.UserRepository;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +34,14 @@ public class EpisodeService {
     @Autowired
     EpisodeRepository episodeRepository;
 
+    @Autowired
+    UserRepository userRepository;
 
     /*** Je récupère l'anime et je retourne tous les épisodes associés dans la saison
      * @param idApiAnime
      * @return la liste d'épisode de l'animé
      */
-    public List<Episode> GetEpisodesAnimeBySaisonId(Long idApiAnime,Long idApiSaison) throws ResourceApiNotFoundException {
+    public List<Episode> GetEpisodesAnimeBySaisonId(Long idApiAnime,Long idApiSaison) throws ResourceApiNotFoundException, ParseException {
 
         Anime anime = animeService.getByIdApi(idApiAnime);
         List<Episode> episodeList = episodeRepository.findAllByAnimeIdApiAndSaison(idApiAnime, idApiSaison);
@@ -45,6 +50,8 @@ public class EpisodeService {
         episodeList = fetchApi(idApiAnime,idApiSaison,anime);
         return episodeRepository.saveAll(episodeList);
     }
+
+
 
     /*** Si je n'ai pas les épisodes en bases je les récupères de l'api
      * @param idApiAnime
@@ -62,4 +69,5 @@ public class EpisodeService {
         });
         return episodeRepository.saveAll(episodeList);
     }
+
 }

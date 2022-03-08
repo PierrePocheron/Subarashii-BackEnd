@@ -3,8 +3,12 @@ package com.jfam.subarashii.utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.jfam.subarashii.entities.User;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,7 +43,6 @@ public class Helpers {
         return gson.fromJson(jsonObject.toString(), Map.class);
     }
 
-
     /**
      * Créer à partir d'un map un string représentant les paramètres d'une query
      * @param allParams
@@ -51,5 +54,12 @@ public class Helpers {
             queryBuilder.append(String.format(Constantes.ApiMovie.OTHER_QUERY_PARAMS_SYNTAX, k, v));
         });
         return queryBuilder.toString();
+    }
+
+    /**
+     *
+     */
+    public static User getCurrentUser(HttpServletRequest req){
+        return (User) req.getAttribute(Constantes.Keys.USER);
     }
 }
