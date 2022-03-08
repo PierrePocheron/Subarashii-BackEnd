@@ -4,10 +4,12 @@ import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.UserListRepository;
+import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -19,10 +21,11 @@ public class UserListService {
     public List<UserList> createDefaultList(User user) {
 
         List<UserList> defaultList = Arrays.asList(
-                new UserList("A voir", user, false),
-                new UserList("En cour", user, false),
-                new UserList("Terminer", user, false),
-                new UserList("En attente", user, false)
+                new UserList(Constantes.DefaultList.A_VOIR, user, false),
+                new UserList(Constantes.DefaultList.EN_COURS,  user, false),
+                new UserList(Constantes.DefaultList.TERMINEE,  user, false),
+                new UserList(Constantes.DefaultList.EN_ATTENTE,  user, false),
+                new UserList(Constantes.DefaultList.FAVORIS,  user, false)
         );
 
         return userListRepository.saveAll(defaultList);
@@ -59,4 +62,12 @@ public class UserListService {
         return userListRepository.save(currentUserList);
     }
 
+    public List<Anime> getAllAnimeByUserList(User user, Long idList){
+        UserList userList = userListRepository.findAllByUserAndId(user,idList);
+        if(userList == null)
+            return null;
+        List<Anime> animeList= userList.getAnimes();
+        animeList.sort(Comparator.comparing(Anime::getOriginalName));
+        return animeList;
+    }
 }

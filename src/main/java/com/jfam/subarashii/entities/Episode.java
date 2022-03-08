@@ -1,6 +1,7 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.JsonObject;
 
@@ -31,15 +32,17 @@ public class Episode {
 
     private Long numeroEpisode;
 
-    @OneToMany
-    @JoinColumn(name = "episodeId")
-    private List<Comment> comments;
+
 
     @ManyToOne
     @NotNull
     @JoinColumn(name = "animeId")
     @JsonBackReference
     private Anime anime;
+
+    @OneToMany(mappedBy = "episode")
+    @JsonIgnoreProperties
+    private List<EpisodeComment> episodeComments;
 
     private Long IdApiAnime;
 
@@ -97,12 +100,12 @@ public class Episode {
         this.note = note;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public Long getNumeroEpisode() {
+        return numeroEpisode;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setNumeroEpisode(Long numeroEpisode) {
+        this.numeroEpisode = numeroEpisode;
     }
 
     public Anime getAnime() {
@@ -113,12 +116,12 @@ public class Episode {
         this.anime = anime;
     }
 
-    public Long getNumeroEpisode() {
-        return numeroEpisode;
+    public List<EpisodeComment> getEpisodeComments() {
+        return episodeComments;
     }
 
-    public void setNumeroEpisode(Long numeroEpisode) {
-        this.numeroEpisode = numeroEpisode;
+    public void setEpisodeComments(List<EpisodeComment> episodeComments) {
+        this.episodeComments = episodeComments;
     }
 
     public Long getIdApiAnime() {
@@ -128,6 +131,8 @@ public class Episode {
     public void setIdApiAnime(Long idApiAnime) {
         IdApiAnime = idApiAnime;
     }
+
+
 //endregion
 }
 

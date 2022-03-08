@@ -25,7 +25,7 @@ public class ResponseService {
         mapper = new ObjectMapper();
         String jsonResponse = mapper.writeValueAsString(responsedto);
         response.getOutputStream().write(jsonResponse.getBytes(StandardCharsets.UTF_8));
-        logger.error(errormessage);
+        logger.warn(errormessage);
     }
 
     public void SuccessF(HttpServletResponse response, String successmessage, Object body) throws IOException {
