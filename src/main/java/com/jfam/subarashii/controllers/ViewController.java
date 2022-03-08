@@ -34,13 +34,14 @@ public class ViewController {
         responseService.SuccessF(res,"La liste des épisodes vu",viewList);
     }
 
-    @PutMapping("{idApiAnime}/{idApiEpisode}/see")
+    @PutMapping("/animes/{idApiAnime}/episodes/{idApiEpisode}")
     public void PutEpisodeSeeByUser(@PathVariable Long idApiAnime ,@PathVariable Long idApiEpisode, HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
-
         if(idApiAnime == null || idApiAnime == 0 ||  idApiEpisode == null || idApiEpisode<0 ){
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+            return;
         }
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+
 
         Boolean isActiveSee = viewService.updateUserViewByIdApiEpisode(currentUser,idApiAnime, idApiEpisode);
 
@@ -51,5 +52,19 @@ public class ViewController {
 
         String message = isActiveSee ? Constantes.SuccessMessage.EPISODE_ADD_VIEW : Constantes.SuccessMessage.EPISODE_REMOVE_VIEW;
         responseService.SuccessF(res,message,isActiveSee);
+    }
+
+
+    @GetMapping("/animes/{idApiAnime}")
+    public void GetAllViewByAnime(@PathVariable Long idApiAnime , HttpServletRequest req, HttpServletResponse res) throws IOException {
+        if(idApiAnime == null || idApiAnime == 0){
+            responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+            return;
+        }
+        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+
+        List<View> viewList =  viewService.getAllViewByIdApiAnime(currentUser,idApiAnime);
+
+        responseService.SuccessF(res,String.format(Constantes.SuccessMessage.FETCH_EPISODE_VIEW_BY_ID_ANIME,viewList.size(),idApiAnime),viewList);
     }
 }
