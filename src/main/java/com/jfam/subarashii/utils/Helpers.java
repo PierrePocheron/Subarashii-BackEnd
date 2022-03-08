@@ -62,4 +62,12 @@ public class Helpers {
     public static User getCurrentUser(HttpServletRequest req){
         return (User) req.getAttribute(Constantes.Keys.USER);
     }
+
+
+
+    public static String getDateNow() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.DATE_FORMAT_NOW);
+        return sdf.format(cal.getTime());
+    }
 }
