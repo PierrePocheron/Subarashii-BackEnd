@@ -22,7 +22,8 @@ public class UserListService {
                 new UserList("A voir", user, false),
                 new UserList("En cour", user, false),
                 new UserList("Terminer", user, false),
-                new UserList("En attente", user, false)
+                new UserList("En attente", user, false),
+                new UserList("Favoris", user, false)
         );
 
         return userListRepository.saveAll(defaultList);
