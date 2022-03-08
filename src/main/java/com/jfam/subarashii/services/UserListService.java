@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -65,6 +66,8 @@ public class UserListService {
         UserList userList = userListRepository.findAllByUserAndId(user,idList);
         if(userList == null)
             return null;
-        return userList.getAnimes();
+        List<Anime> animeList= userList.getAnimes();
+        animeList.sort(Comparator.comparing(Anime::getOriginalName));
+        return animeList;
     }
 }

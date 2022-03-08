@@ -89,6 +89,7 @@ public class UserListController {
             responseService.ErrorF(res,Constantes.ErrorMessage.ANY_ANIME_FETCH,404,false);
             return;
         }
+
         responseService.SuccessF(res,String.format(Constantes.SuccessMessage.ALL_ANIME_ON_LIST, animeList.size()),animeList);
     }
 }
