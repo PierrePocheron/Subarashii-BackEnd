@@ -41,7 +41,7 @@ public class UserListController {
 
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_GET_MY_LIST)
-    @GetMapping("/mylist")
+    @GetMapping("/all")
     public void getCurrentUserList(HttpServletRequest req,HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
         List<UserList> listUserLists=  userListService.getCurrentUserList(currentUser);
@@ -78,4 +78,7 @@ public class UserListController {
         UserList ul = userListService.addAnimeToUserList(animeToAdd, animeList,theUserListCurrentUser);
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNomTraduit(), theUserListCurrentUser.getNom()),ul);
     }
+
+
+
 }
