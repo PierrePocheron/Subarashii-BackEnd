@@ -9,7 +9,7 @@ public class Constantes {
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
     public static String ENVIRONNEMENT_TYPE;
     public static String ADRESS_FRONT;
-    public final static String URL_IMAGE_NOT_FOUND = "https://image.shutterstock.com/image-vector/no-image-available-vector-hand-600w-745639717.jpg";
+    public final static String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
 
     public final static String EMPTY_STRING= "";
 
