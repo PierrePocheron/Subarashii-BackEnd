@@ -10,6 +10,7 @@ import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserListService;
 import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_GET_MY_LIST)
     @GetMapping("/mylist")
     public void getCurrentUserList(HttpServletRequest req,HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
         List<UserList> listUserLists=  userListService.getCurrentUserList(currentUser);
         responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST,listUserLists);
     }
@@ -50,7 +51,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_CREATE_LIST)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public void createCustomList(@RequestBody  UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
         UserList customUserList =  userListService.createCustomList(currentUser,userList.getNom());
         responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK,customUserList);
     }
@@ -58,7 +59,7 @@ public class UserListController {
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_ADD_ANIME)
     @PutMapping("/addanime")
     public void addAnimeToUserList(@RequestBody UserListAnimeDTO userListAnimeDTO, HttpServletRequest req, HttpServletResponse res ) throws IOException, ResourceApiNotFoundException, ParseException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
 
         UserList theUserListCurrentUser = userListService.getOneUserListByIdForCurrentUser(userListAnimeDTO.idUserList, currentUser);
 

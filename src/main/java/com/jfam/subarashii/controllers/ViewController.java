@@ -6,6 +6,7 @@ import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.ViewService;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,23 +25,13 @@ public class ViewController {
     @Autowired
     ViewService viewService;
 
-
-
-    @GetMapping("/all")
-    public void GetAllViewByCurrentUser(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
-
-        List<View> viewList = viewService.getAllView(currentUser);
-        responseService.SuccessF(res,"La liste des épisodes vu",viewList);
-    }
-
     @PutMapping("/animes/{idApiAnime}/episodes/{idApiEpisode}")
     public void PutEpisodeSeeByUser(@PathVariable Long idApiAnime ,@PathVariable Long idApiEpisode, HttpServletRequest req, HttpServletResponse res) throws IOException {
         if(idApiAnime == null || idApiAnime == 0 ||  idApiEpisode == null || idApiEpisode<0 ){
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
 
 
         Boolean isActiveSee = viewService.updateUserViewByIdApiEpisode(currentUser,idApiAnime, idApiEpisode);
@@ -61,7 +52,7 @@ public class ViewController {
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
-        User currentUser = (User) req.getAttribute(Constantes.Keys.USER);
+        User currentUser = Helpers.getCurrentUser(req);
 
         List<View> viewList =  viewService.getAllViewByIdApiAnime(currentUser,idApiAnime);
 
