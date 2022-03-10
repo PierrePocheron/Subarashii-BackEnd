@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -22,10 +23,10 @@ public class UserListService {
 
         List<UserList> defaultList = Arrays.asList(
                 new UserList(Constantes.DefaultList.A_VOIR, user, false),
-                new UserList(Constantes.DefaultList.EN_COURS,  user, false),
-                new UserList(Constantes.DefaultList.TERMINEE,  user, false),
-                new UserList(Constantes.DefaultList.EN_ATTENTE,  user, false),
-                new UserList(Constantes.DefaultList.FAVORIS,  user, false)
+                new UserList(Constantes.DefaultList.EN_COURS, user, false),
+                new UserList(Constantes.DefaultList.TERMINEE, user, false),
+                new UserList(Constantes.DefaultList.EN_ATTENTE, user, false),
+                new UserList(Constantes.DefaultList.FAVORIS, user, false)
         );
 
         return userListRepository.saveAll(defaultList);
@@ -62,11 +63,20 @@ public class UserListService {
         return userListRepository.save(currentUserList);
     }
 
-    public List<Anime> getAllAnimeByUserList(User user, Long idList){
-        UserList userList = userListRepository.findAllByUserAndId(user,idList);
-        if(userList == null)
+    public List<Anime> getAllAnimeByUserList(User user, Long idList) {
+        UserList userList = userListRepository.findAllByUserAndId(user, idList);
+        if (userList == null)
             return null;
-        return userList.getAnimes();
+        List<Anime> animeList = userList.getAnimes();
+        animeList.sort(Comparator.comparing(Anime::getOriginalName));
+        return animeList;
+    }
+
+    public boolean deleteListByIdList(Long idUserList, User user) {
+        UserList userList = userListRepository.findByIdAndUser(idUserList, user);
+        if (userList == null || !userList.isDeletable()) return false;
+        userListRepository.delete(userList);
+        return true;
     }
 
     public UserList deleteAnimeList(Long idanime, Long iduserlist,User currentUser){

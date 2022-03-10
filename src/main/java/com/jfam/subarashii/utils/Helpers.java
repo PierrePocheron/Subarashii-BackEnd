@@ -70,4 +70,5 @@ public class Helpers {
         SimpleDateFormat sdf = new SimpleDateFormat(Constantes.DATE_FORMAT_NOW);
         return sdf.format(cal.getTime());
     }
+
 }
