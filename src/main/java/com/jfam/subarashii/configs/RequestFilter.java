@@ -38,7 +38,6 @@ public class RequestFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestFilter.class);
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws ServletException, IOException, AuthenticationException {
