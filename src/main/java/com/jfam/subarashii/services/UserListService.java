@@ -1,5 +1,6 @@
 package com.jfam.subarashii.services;
 
+import com.jfam.subarashii.configs.exception.CustomErrorMessageException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
@@ -48,13 +49,7 @@ public class UserListService {
      * @return si null la liste n'existe pas ou n'appartient pas à l'utilisateur
      */
     public UserList getOneUserListByIdForCurrentUser(Long idUserList, User user) {
-
-        // check si existe grace à l'id user list and anime
-        UserList userList = userListRepository.findByIdAndUser(idUserList, user);
-
-        if (userList == null)
-            return null;
-        return userList;
+        return userListRepository.findByIdAndUser(idUserList, user);
     }
 
     public UserList addAnimeToUserList(Anime animeToAdd, List<Anime> animeListInUserList, UserList currentUserList) {
@@ -79,51 +74,27 @@ public class UserListService {
         return true;
     }
 
-    public UserList deleteAnimeList(Long iduserlist,Long idApiAnnime,User currentUser){
-        // recuperer userlist grace à user et idUserlist
+    public UserList deleteAnimeList(Long iduserlist, Long idApiAnnime, User currentUser) throws CustomErrorMessageException {
 
-      UserList userList =   getOneUserListByIdForCurrentUser(iduserlist,currentUser);
+        UserList userList = this.getOneUserListByIdForCurrentUser(iduserlist, currentUser);
 
-        //si userlist n'existe pas renvoyer null
-                //deja gerer dans la méthode
-        if (userList == null){
-            return null;
-        }
+        if (userList == null)
+            throw new CustomErrorMessageException(Constantes.ErrorMessage.USER_LIST_NOT_FOUND);
 
+        List<Anime> animeList = userList.getAnimes();
 
-        // userlist donne moi liste animés
-       List<Anime> animeList =  userList.getAnimes();
+        if (animeList.size() == 0)
+            throw new CustomErrorMessageException(Constantes.ErrorMessage.USER_LIST_NOT_CONTAIN_ANIME);
 
-       if(animeList.size() == 0 ){
-           return null;
-       }
-
-       //dans liste animé est ce que anime avec idAnime passer existe
-
-        Anime animeExist =   animeList.stream().filter(anime -> anime.getIdApi() == idApiAnnime).findFirst().orElse(null);
-
-        //si non return nul
-        if(animeExist == null){
-            return null;
-        }
-
-        //si oui delete
-
-      animeList.remove(animeExist);
+        Anime anime = animeList.stream().filter(anim -> anim.getIdApi().equals(idApiAnnime)).findFirst().orElse(null);
 
 
-        //set nouvelle liste d'anime dans userlist
+        if (anime == null)
+            throw new CustomErrorMessageException(Constantes.ErrorMessage.USER_LIST_ANIME_NOT_EXIST);
+
+        animeList.remove(anime);
         userList.setAnimes(animeList);
-
-
-        //save userlist
-     return  userListRepository.save(userList);
-
-       // return animeList;
-
-
-
-
+        return userListRepository.save(userList);
     }
 
 }
