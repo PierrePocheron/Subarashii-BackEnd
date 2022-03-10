@@ -20,7 +20,7 @@ private String nomUser;
 
 private boolean isMineComment;
 
-private Long idUser;
+private String idUser;
 
 public AnimeCommentDTO(){
 
@@ -33,7 +33,7 @@ public AnimeCommentDTO(AnimeComment animeComment, User userCurrent){
     this.date = animeComment.getDate();
     this.nomUser = animeComment.getUser().getUsername();
     this.isMineComment = userCurrent.getIdUser() == animeComment.getUser().getIdUser();
-    this.idUser = userCurrent.getIdUser();
+    this.idUser = animeComment.getId().toString();
 }
 
 public AnimeComment toEntity(User user, Anime anime){
@@ -49,11 +49,11 @@ public AnimeComment toEntity(User user, Anime anime){
 //#region === GETTER / SETTER
 
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
