@@ -67,7 +67,7 @@ public class UserController {
             return;
         }
 
-        String token = jwtService.CreateToken(userFetching.getEmail(), userFetching.getRole(), user.getUsername());
+        String token = jwtService.CreateToken(userFetching.getEmail(), userFetching.getRole(), userFetching.getUsername());
         res.setHeader(Constantes.Token_value.AUTHORIZATION_HEADER, Constantes.Token_value.TOKEN_PREFIX + token);
 
         Map<String, String> result = new HashMap<>();
