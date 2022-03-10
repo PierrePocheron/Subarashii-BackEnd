@@ -1,5 +1,6 @@
 package com.jfam.subarashii.controllers;
 
+import com.jfam.subarashii.configs.exception.CustomErrorMessageException;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
@@ -106,20 +107,21 @@ public class UserListController {
     }
 
     @DeleteMapping("/{iduserlist}/animes/{idanime}")
-    public void deleteAnimeList(@PathVariable Long iduserlist,@PathVariable Long idanime,HttpServletRequest req,HttpServletResponse res) throws IOException {
-    //verifier si deux valeurs pas null ou egal à 0
-        User currentUser = Helpers.getCurrentUser(req);
+    public void deleteAnimeList(@PathVariable Long iduserlist,@PathVariable Long idanime,HttpServletRequest req,HttpServletResponse res) throws IOException, CustomErrorMessageException {
 
-        UserList userList = userListService.deleteAnimeList(iduserlist,idanime,currentUser);
-
-        if(userList == null){
-            responseService.ErrorF(res,"la liste de l'utilisateur ou la liste d'animé est vide ou l'animé n'existe pas",404, false);
+        if(iduserlist == null || iduserlist<=0 || idanime == null || idanime <=0){
+            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_VALID,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
 
-        responseService.SuccessF(res,"l'animé a  été supprimé", userList);
+        User currentUser = Helpers.getCurrentUser(req);
+        UserList userList = userListService.deleteAnimeList(iduserlist,idanime,currentUser);
 
+        if(userList == null){
+            responseService.ErrorF(res,Constantes.ErrorMessage.USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME,HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false);
+            return;
+        }
 
+        responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_ANIME_ON_USERLIST_OK, userList);
     }
-
 }
