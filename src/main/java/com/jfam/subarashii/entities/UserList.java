@@ -14,7 +14,7 @@ public class UserList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column @NotNull
     private String nom;

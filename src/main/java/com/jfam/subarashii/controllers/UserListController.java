@@ -91,4 +91,22 @@ public class UserListController {
         }
         responseService.SuccessF(res,String.format(Constantes.SuccessMessage.ALL_ANIME_ON_LIST, animeList.size()),animeList);
     }
+
+    @DeleteMapping("/{iduserlist}/animes/{idanime}")
+    public void deleteAnimeList(@PathVariable Long idanime,@PathVariable Long iduserlist,HttpServletRequest req,HttpServletResponse res) throws IOException {
+    //verifier si deux valeurs pas null ou egal à 0
+        User currentUser = Helpers.getCurrentUser(req);
+
+        UserList userList = userListService.deleteAnimeList(idanime,iduserlist,currentUser);
+
+        if(userList == null){
+            responseService.ErrorF(res,"l'animé n'a été supprimé",404, false);
+            return;
+        }
+
+        responseService.SuccessF(res,"l'animé a  été supprimé", userList);
+
+
+    }
+
 }

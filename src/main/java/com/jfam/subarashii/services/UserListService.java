@@ -3,6 +3,7 @@ package com.jfam.subarashii.services;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
+import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.UserListRepository;
 import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +68,47 @@ public class UserListService {
             return null;
         return userList.getAnimes();
     }
+
+    public UserList deleteAnimeList(Long idanime, Long iduserlist,User currentUser){
+        // recuperer userlist grace à user et idUserlist
+
+      UserList userList =   getOneUserListByIdForCurrentUser(iduserlist,currentUser);
+
+        //si userlist n'existe pas renvoyer null
+                //deja gerer dans la méthode
+        if (userList == null){
+            return null;
+        }
+
+
+        // userlist donne moi liste animés
+       List<Anime> animeList =  userList.getAnimes();
+
+       if(animeList.size() == 0 ){
+           return null;
+       }
+
+        //dans liste animé est ce que anime avec idAnime passer existe
+
+      Anime animeExist =   animeList.stream().filter(anime -> anime.getId() == idanime).findFirst().orElse(null);
+    var  t = "null";
+        //si non return nul
+
+
+        //si oui delete
+
+
+        //set nouvelle liste d'anime dans userlist
+
+
+        //save userlist
+
+
+        //return userlist
+
+
+
+        return null ;
+    }
+
 }
