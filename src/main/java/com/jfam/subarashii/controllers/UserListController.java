@@ -42,54 +42,66 @@ public class UserListController {
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_GET_MY_LIST)
     @GetMapping("/all")
-    public void getCurrentUserList(HttpServletRequest req,HttpServletResponse res) throws IOException {
+    public void getCurrentUserList(HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
-        List<UserList> listUserLists=  userListService.getCurrentUserList(currentUser);
-        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST,listUserLists);
+        List<UserList> listUserLists = userListService.getCurrentUserList(currentUser);
+        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST, listUserLists);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_CREATE_LIST)
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public void createCustomList(@RequestBody  UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void createCustomList(@RequestBody UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
-        UserList customUserList =  userListService.createCustomList(currentUser,userList.getNom());
-        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK,customUserList);
+        UserList customUserList = userListService.createCustomList(currentUser, userList.getNom());
+        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK, customUserList);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_ADD_ANIME)
     @PutMapping("/addanime")
-    public void addAnimeToUserList(@RequestBody UserListAnimeDTO userListAnimeDTO, HttpServletRequest req, HttpServletResponse res ) throws IOException, ResourceApiNotFoundException, ParseException {
+    public void addAnimeToUserList(@RequestBody UserListAnimeDTO userListAnimeDTO, HttpServletRequest req, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         User currentUser = Helpers.getCurrentUser(req);
 
         UserList theUserListCurrentUser = userListService.getOneUserListByIdForCurrentUser(userListAnimeDTO.idUserList, currentUser);
 
-        if(theUserListCurrentUser == null){
-            responseService.ErrorF(res,Constantes.ErrorMessage.ERROR_ADD_ANIME_TO_USER_LIST,HttpServletResponse.SC_NOT_FOUND,false);
+        if (theUserListCurrentUser == null) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_ADD_ANIME_TO_USER_LIST, HttpServletResponse.SC_NOT_FOUND, false);
             return;
         }
 
-        Anime animeToAdd =  animeService.getByIdApi(userListAnimeDTO.idApiAnime);
-        List<Anime> animeList= theUserListCurrentUser.getAnimes(); // récupération les animés dans la liste de l'utilisateur
-        if (animeList.contains(animeToAdd))
-        {
-            responseService.ErrorF(res,Constantes.ErrorMessage.ERROR_ADD_ANIME_ALSO_EXIST,404,false);
+        Anime animeToAdd = animeService.getByIdApi(userListAnimeDTO.idApiAnime);
+        List<Anime> animeList = theUserListCurrentUser.getAnimes(); // récupération les animés dans la liste de l'utilisateur
+        if (animeList.contains(animeToAdd)) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_ADD_ANIME_ALSO_EXIST, 404, false);
             return;
         }
-        UserList ul = userListService.addAnimeToUserList(animeToAdd, animeList,theUserListCurrentUser);
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNomTraduit(), theUserListCurrentUser.getNom()),ul);
+        UserList ul = userListService.addAnimeToUserList(animeToAdd, animeList, theUserListCurrentUser);
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNomTraduit(), theUserListCurrentUser.getNom()), ul);
     }
 
-
     @GetMapping("/{idList}/animes")
-    public void getAllAnimeOnUserList(@PathVariable Long idList ,HttpServletRequest req,HttpServletResponse res ) throws IOException {
+    public void getAllAnimeOnUserList(@PathVariable Long idList, HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
 
-        List<Anime> animeList=  userListService.getAllAnimeByUserList(currentUser, idList);
-        if(animeList == null){
-            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_ANIME_FETCH,404,false);
+        List<Anime> animeList = userListService.getAllAnimeByUserList(currentUser, idList);
+        if (animeList == null) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANY_ANIME_FETCH, 404, false);
             return;
         }
 
-        responseService.SuccessF(res,String.format(Constantes.SuccessMessage.ALL_ANIME_ON_LIST, animeList.size()),animeList);
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ALL_ANIME_ON_LIST, animeList.size()), animeList);
+    }
+
+    @DeleteMapping("/{idList}")
+    public void deleteUserList(@PathVariable Long idList, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        boolean isDeletable = userListService.deleteListByIdList(idList,currentUser);
+
+        if (!isDeletable) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.LIST_USER_NOT_EXIST_OR_CANT_DELETABLE, HttpServletResponse.SC_UNAUTHORIZED, false);
+            return;
+        }
+
+        responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_USERLIST_OK, isDeletable);
     }
 }
