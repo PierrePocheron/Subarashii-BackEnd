@@ -22,11 +22,11 @@ public class HelpersTest {
     void TestSubstringBefore(String sentence , String wordKey, String result){
         // given
 
-        //when
+
+        // when
         String textSkip= Helpers.SubstringBefore(sentence, wordKey);
 
-        //then
-
+        // then
         Assertions.assertThat(textSkip).isEqualTo(result);
     }
 }
