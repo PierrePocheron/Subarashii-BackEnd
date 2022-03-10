@@ -5,6 +5,8 @@ import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.SQLGrammarException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
@@ -43,66 +45,80 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     @Autowired
     ResponseService responseService;
 
+    private static final Logger logger = LoggerFactory.getLogger(ErrorHandling.class);
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public final void SQLException(SQLIntegrityConstraintViolationException ex, HttpServletResponse res) throws IOException {
+        logger.error("SQLException: " + ex.getMessage());
         responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_UNIQUE_CONTRAINT_DATABASE,HttpServletResponse.SC_NOT_ACCEPTABLE, Helpers.SubstringBefore(ex.getMessage()," for"));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public final void handleAccessDeniedException(AccessDeniedException ex, HttpServletResponse res) throws IOException {
+        logger.error("handleAccessDeniedException: " + ex.getMessage());
         responseService.ErrorF(res,ex.getMessage(),401,false);
     }
 
     @ExceptionHandler(SQLSyntaxErrorException.class)
     public final void createSQLExceptionException(SQLSyntaxErrorException ex, HttpServletResponse res) throws IOException {
+        logger.error("SQLSyntaxErrorException: " + ex.getMessage());
         responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
 
     @ExceptionHandler(SQLGrammarException.class)
     public final void SQLGrammarExceptionException(SQLGrammarException ex, HttpServletResponse res) throws IOException {
+        logger.error("SQLGrammarExceptionException: " + ex.getMessage());
         responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
     @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
     public final void InvalidDataAccessResourceUsageExceptionException(InvalidDataAccessResourceUsageException ex, HttpServletResponse res) throws IOException {
+        logger.error("InvalidDataAccessResourceUsageException: " + ex.getMostSpecificCause());
         responseService.ErrorF(res,Constantes.ErrorMessage.DATABASE_ACCESS_RESSOURCE_USAGE_NOT_OK,HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
 
     @ExceptionHandler(ResourceApiNotFoundException.class)
     public final void ResourceApiNotFoundException(ResourceApiNotFoundException ex, HttpServletResponse res) throws IOException {
+        logger.error("ResourceApiNotFoundException: " + ex.getMessage());
+
         responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NumberFormatException.class)
     public final void NumberFormatException(NumberFormatException ex, HttpServletResponse res) throws IOException {
+        logger.error("NumberFormatException: " + ex.getMessage());
+
         responseService.ErrorF(res,Constantes.ErrorMessage.NUMBER_FORMAT_NOT_OK,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public final void MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
+        logger.error("MethodArgumentTypeMismatchException: " + ex.getMessage());
+
         responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_TYPE_METHOD_MISMATCH,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(ParseException.class)
     public final void ParseException(ParseException ex, HttpServletResponse res) throws IOException {
+        logger.error("ParseException: " + ex.getMessage());
+
         responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_PARSE,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(RequestRejectedException.class)
     public final void RequestRejectedException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
+        logger.error("RequestRejectedException: " + ex.getMessage());
+
         responseService.ErrorF(res,Constantes.ErrorMessage.REQUEST_REFUSED,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NonUniqueResultException.class)
     public final void RequestRejectedException(NonUniqueResultException ex, HttpServletResponse res) throws IOException {
+        logger.error("NonUniqueResultException: " + ex.getMessage());
+
         responseService.ErrorF(res,Constantes.ErrorMessage.NOT_UNIQUE_RESULT,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NullPointerException.class)
     public final void NullPointerException(NullPointerException ex, HttpServletResponse res) throws IOException {
+        logger.error("NullPointerException: " + ex.getMessage());
         responseService.ErrorF(res,"Un élément s'est retrouvé non renseigner alors qu'il aurait du l'être" + ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
-
-
-
-
-
 
     @ExceptionHandler(javax.validation.ConstraintViolationException.class)
     public final void ConstraintViolationException(javax.validation.ConstraintViolationException ex, HttpServletResponse res) throws IOException {
