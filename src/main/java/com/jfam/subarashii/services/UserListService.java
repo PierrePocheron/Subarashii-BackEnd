@@ -79,7 +79,7 @@ public class UserListService {
         return true;
     }
 
-    public UserList deleteAnimeList(Long idanime, Long iduserlist,User currentUser){
+    public UserList deleteAnimeList(Long iduserlist,Long idApiAnnime,User currentUser){
         // recuperer userlist grace à user et idUserlist
 
       UserList userList =   getOneUserListByIdForCurrentUser(iduserlist,currentUser);
@@ -98,27 +98,32 @@ public class UserListService {
            return null;
        }
 
-        //dans liste animé est ce que anime avec idAnime passer existe
+       //dans liste animé est ce que anime avec idAnime passer existe
 
-      Anime animeExist =   animeList.stream().filter(anime -> anime.getId() == idanime).findFirst().orElse(null);
-    var  t = "null";
+        Anime animeExist =   animeList.stream().filter(anime -> anime.getIdApi() == idApiAnnime).findFirst().orElse(null);
+
         //si non return nul
-
+        if(animeExist == null){
+            return null;
+        }
 
         //si oui delete
 
+      animeList.remove(animeExist);
+
 
         //set nouvelle liste d'anime dans userlist
+        userList.setAnimes(animeList);
 
 
         //save userlist
+     return  userListRepository.save(userList);
+
+       // return animeList;
 
 
-        //return userlist
 
 
-
-        return null ;
     }
 
 }
