@@ -106,14 +106,14 @@ public class UserListController {
     }
 
     @DeleteMapping("/{iduserlist}/animes/{idanime}")
-    public void deleteAnimeList(@PathVariable Long idanime,@PathVariable Long iduserlist,HttpServletRequest req,HttpServletResponse res) throws IOException {
+    public void deleteAnimeList(@PathVariable Long iduserlist,@PathVariable Long idanime,HttpServletRequest req,HttpServletResponse res) throws IOException {
     //verifier si deux valeurs pas null ou egal à 0
         User currentUser = Helpers.getCurrentUser(req);
 
-        UserList userList = userListService.deleteAnimeList(idanime,iduserlist,currentUser);
+        UserList userList = userListService.deleteAnimeList(iduserlist,idanime,currentUser);
 
         if(userList == null){
-            responseService.ErrorF(res,"l'animé n'a été supprimé",404, false);
+            responseService.ErrorF(res,"la liste de l'utilisateur ou la liste d'animé est vide ou l'animé n'existe pas",404, false);
             return;
         }
 
