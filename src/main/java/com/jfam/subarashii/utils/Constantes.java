@@ -50,6 +50,7 @@ public class Constantes {
         public final static String PARAMETER_NOT_EXPECTED = "Le paramètre n'est pas celui attendu ou ne possède pas de la valeur";
         public final static String NUMBER_FORMAT_NOT_OK = "Le paramètre attendait un nombre en entré et n'a pas reçu le bon format";
         public final static String PARAMETER_TYPE_METHOD_MISMATCH = "Le paramètre fournit ne corresponds pas au type du paramètre attendu";
+        public final static String PARAMETER_NOT_VALID = "Le ou les paramètre fournis ne répondent pas aux critères attendus";
         public final static String DATABASE_ACCESS_RESSOURCE_USAGE_NOT_OK = "L'accès à la ressource de la base de donnée n'a pas pu être réalisé";
         public final static String REQUEST_REFUSED = "La requête n'a pas pu être accepté car elle ne corresponds pas au attente";
         public final static String CONSTRAINT_FIELD_NOT_OK = "Une contrainte n'a pas été respecté sur une ou plusieurs valeurs";
@@ -65,6 +66,10 @@ public class Constantes {
         public final static String EPISODE_NOT_FOUND = "Aucun épisode n'a été trouvé";
         public final static String ANY_ANIME_FETCH = "Aucune liste ne corresponds ou aucun animé n'a été trouvé";
         public final static String LIST_USER_NOT_EXIST_OR_CANT_DELETABLE = "La liste que vous souhaité supprimer n'existe pas ou n'est pas supprimable.";
+        public final static String USER_LIST_NOT_FOUND = "La liste recherché n'existe pas ou n'appartient pas l'utilisateur";
+        public final static String USER_LIST_NOT_CONTAIN_ANIME = "La liste ne contient pas d'animé";
+        public final static String USER_LIST_ANIME_NOT_EXIST = "L'animé que vous souhaité supprimer n'existe pas dans la liste";
+        public final static String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
     }
 
     public static class SuccessMessage {
@@ -86,6 +91,7 @@ public class Constantes {
         public final static String CREATE_ANIME_COMMENT = "Commentaire bien enregistré";
         public final static String ALL_ANIME_ON_LIST = "Vous avez récupéré %d animé(s) dans la liste";
         public final static String DELETE_USERLIST_OK = "La liste a correctement été supprimé";
+        public final static String DELETE_ANIME_ON_USERLIST_OK = "L'animé a correctement été supprimé de la liste";
     }
 
     public static class Token_value {
