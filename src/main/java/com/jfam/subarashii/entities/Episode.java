@@ -40,9 +40,7 @@ public class Episode {
     @JsonBackReference
     private Anime anime;
 
-    @OneToMany(mappedBy = "episode")
-    @JsonIgnoreProperties
-    private List<EpisodeComment> episodeComments;
+
 
     private Long IdApiAnime;
 
@@ -116,13 +114,9 @@ public class Episode {
         this.anime = anime;
     }
 
-    public List<EpisodeComment> getEpisodeComments() {
-        return episodeComments;
-    }
 
-    public void setEpisodeComments(List<EpisodeComment> episodeComments) {
-        this.episodeComments = episodeComments;
-    }
+
+
 
     public Long getIdApiAnime() {
         return IdApiAnime;

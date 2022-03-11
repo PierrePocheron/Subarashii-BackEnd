@@ -1,9 +1,7 @@
 package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.entities.AnimeComment;
-import com.jfam.subarashii.entities.EpisodeComment;
 import com.jfam.subarashii.services.AnimeCommentService;
-import com.jfam.subarashii.services.EpisodeCommentService;
 import com.jfam.subarashii.services.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

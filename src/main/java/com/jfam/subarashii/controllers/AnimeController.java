@@ -130,4 +130,9 @@ public class AnimeController {
         responseService.SuccessF(res,Constantes.SuccessMessage.COMPLEXE_SEARCH_OK,resultSearch);
 
     }
+
+
+
+
+
 }
