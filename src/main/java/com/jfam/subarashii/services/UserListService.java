@@ -1,8 +1,10 @@
 package com.jfam.subarashii.services;
 
+import com.jfam.subarashii.configs.exception.CustomErrorMessageException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
+import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.UserListRepository;
 import com.jfam.subarashii.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +49,7 @@ public class UserListService {
      * @return si null la liste n'existe pas ou n'appartient pas à l'utilisateur
      */
     public UserList getOneUserListByIdForCurrentUser(Long idUserList, User user) {
-
-        // check si existe grace à l'id user list and anime
-        UserList userList = userListRepository.findByIdAndUser(idUserList, user);
-
-        if (userList == null)
-            return null;
-        return userList;
+        return userListRepository.findByIdAndUser(idUserList, user);
     }
 
     public UserList addAnimeToUserList(Anime animeToAdd, List<Anime> animeListInUserList, UserList currentUserList) {
@@ -77,4 +73,28 @@ public class UserListService {
         userListRepository.delete(userList);
         return true;
     }
+
+    public UserList deleteAnimeList(Long iduserlist, Long idApiAnnime, User currentUser) throws CustomErrorMessageException {
+
+        UserList userList = this.getOneUserListByIdForCurrentUser(iduserlist, currentUser);
+
+        if (userList == null)
+            throw new CustomErrorMessageException(Constantes.ErrorMessage.USER_LIST_NOT_FOUND);
+
+        List<Anime> animeList = userList.getAnimes();
+
+        if (animeList.size() == 0)
+            throw new CustomErrorMessageException(Constantes.ErrorMessage.USER_LIST_NOT_CONTAIN_ANIME);
+
+        Anime anime = animeList.stream().filter(anim -> anim.getIdApi().equals(idApiAnnime)).findFirst().orElse(null);
+
+
+        if (anime == null)
+            throw new CustomErrorMessageException(Constantes.ErrorMessage.USER_LIST_ANIME_NOT_EXIST);
+
+        animeList.remove(anime);
+        userList.setAnimes(animeList);
+        return userListRepository.save(userList);
+    }
+
 }

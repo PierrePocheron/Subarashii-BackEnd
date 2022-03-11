@@ -2,6 +2,7 @@ package com.jfam.subarashii.services;
 
 import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.User;
+import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,10 @@ public class UserService {
 
     public User create(User user) {
         User usr = userRepository.save(user);
-        userListService.createDefaultList(usr);
-        return usr;
+        List<UserList> userListList = userListService.createDefaultList(usr);
+        usr.setLists(userListList);
+        User usrT = userRepository.save(user);
+        return usrT;
     }
 
     public User getUserForFilterByEmail(String email){
