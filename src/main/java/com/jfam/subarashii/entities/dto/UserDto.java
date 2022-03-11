@@ -8,20 +8,20 @@ import java.util.List;
 public class UserDto {
 
     private String email;
-    private List<UserList> lists;
+
 
     public UserDto() {
     }
 
     public UserDto(User user) {
         this.email = user.getEmail();
-        this.lists = user.getLists();
+
     }
 
     public User toEntity(){
         User user = new User();
         user.setEmail(this.email);
-        user.setLists(this.lists);
+
         return user;
     }
 
@@ -33,19 +33,7 @@ public class UserDto {
         this.email = email;
     }
 
-    public List<UserList> getLists() {
-        return lists;
-    }
 
-    public void setLists(List<UserList> lists) {
-        this.lists = lists;
-    }
 
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "email='" + email + '\'' +
-                ", lists=" + lists +
-                '}';
-    }
+
 }

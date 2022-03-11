@@ -8,6 +8,7 @@ import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.api.ApiPaginationResults;
 import com.jfam.subarashii.repositories.AnimeRepository;
+import com.jfam.subarashii.repositories.UserListRepository;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 import com.jfam.subarashii.utils.HttpClient;
@@ -26,6 +27,9 @@ public class AnimeService {
 
     @Autowired
     AnimeRepository animeRepository;
+
+    @Autowired
+    UserListRepository userListRepository;
 
     @Autowired
     HttpClient httpClient;
@@ -97,6 +101,8 @@ public class AnimeService {
         ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, Page));
         return apiPaginationResults;
     }
+
+
 
 
 }

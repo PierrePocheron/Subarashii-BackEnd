@@ -114,16 +114,19 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
 
         responseService.ErrorF(res,Constantes.ErrorMessage.NOT_UNIQUE_RESULT,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
-    @ExceptionHandler(NullPointerException.class)
-    public final void NullPointerException(NullPointerException ex, HttpServletResponse res) throws IOException {
-        logger.error("NullPointerException: " + ex.getMessage());
-        responseService.ErrorF(res,"Un élément s'est retrouvé non renseigner alors qu'il aurait du l'être" + ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
+
+    @ExceptionHandler(CustomErrorMessageException.class)
+    public final void CustomErrorMessageException(CustomErrorMessageException ex, HttpServletResponse res) throws IOException {
+        logger.error("CustomErrorMessageException: " + ex.getMessage());
+        responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
 
-
-
-
+//    @ExceptionHandler(NullPointerException.class)
+//    public final void NullPointerException(NullPointerException ex, HttpServletResponse res) throws IOException {
+//        logger.error("NullPointerException: " + ex.getMessage());
+//        responseService.ErrorF(res,"Un élément s'est retrouvé non renseigner alors qu'il aurait du l'être" + ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
+//    }
 
     @ExceptionHandler(javax.validation.ConstraintViolationException.class)
     public final void ConstraintViolationException(javax.validation.ConstraintViolationException ex, HttpServletResponse res) throws IOException {

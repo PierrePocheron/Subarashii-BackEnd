@@ -14,7 +14,7 @@ public class UserList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column @NotNull
     private String nom;
@@ -47,11 +47,11 @@ public class UserList {
 
     //region  === getter-setter ===
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -86,6 +86,7 @@ public class UserList {
     public void setAnimes(List<Anime> animes) {
         this.animes = animes;
     }
+
 
     //endregion
 }
