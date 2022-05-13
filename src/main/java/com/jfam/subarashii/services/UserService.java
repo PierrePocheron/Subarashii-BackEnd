@@ -54,5 +54,18 @@ public class UserService {
     public List<Long> getAllIdApiAnimeOnUserList(User user){
         return userRepository.getAllIdApiAnimeOnAllUserList(user.getIdUser());
     }
+
+    public User patchUsernameUserConnected(User user) throws ResponseStatusException {
+        Optional<User> userOpt = userRepository.findById(user.getIdUser());
+
+        if (userOpt == null)
+            return null;
+
+        User userToPatch = userOpt.get();
+        userToPatch.setUsername(user.getUsername());
+        User userPatched = userRepository.save(userToPatch);
+
+        return userPatched;
+    }
 }
 
