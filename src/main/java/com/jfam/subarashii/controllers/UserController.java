@@ -97,4 +97,21 @@ public class UserController {
 
         responseService.SuccessF(res, Constantes.SuccessMessage.READ_USER_OK, user);
     }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
+    @PatchMapping(value = "/current/username")
+    public void patchUsernameUserConnected(@RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (currentUser == null) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANY_USER_FETCH, 404, false);
+            return;
+        }
+
+        user.setIdUser(currentUser.getIdUser());
+
+        User userPatched = userService.patchUsernameUserConnected(user);
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.READ_USER_OK, userPatched);
+    }
 }
