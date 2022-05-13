@@ -83,4 +83,18 @@ public class UserController {
         List<Long> idApiAnimeList = userService.getAllIdApiAnimeOnUserList(currentUser);
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST,idApiAnimeList.size()), idApiAnimeList);
     }
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
+    @GetMapping(value = "/current")
+    public void getUserConnected(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (currentUser == null) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANY_USER_FETCH, 404, false);
+            return;
+        }
+
+        User user = new User(currentUser.getIdUser(), currentUser.getEmail(), currentUser.getRole(), currentUser.getUsername());
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.READ_USER_OK, user);
+    }
 }

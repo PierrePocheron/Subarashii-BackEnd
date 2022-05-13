@@ -65,6 +65,7 @@ public class Constantes {
         public final static String ERROR_PARSE = "Une erreur a eut lieu pendant le parcours de la méthode";
         public final static String EPISODE_NOT_FOUND = "Aucun épisode n'a été trouvé";
         public final static String ANY_ANIME_FETCH = "Aucune liste ne corresponds ou aucun animé n'a été trouvé";
+        public final static String ANY_USER_FETCH = "Aucun utilisateur ne corresponds à l'utilisateur connecté";
         public final static String LIST_USER_NOT_EXIST_OR_CANT_DELETABLE = "La liste que vous souhaité supprimer n'existe pas ou n'est pas supprimable.";
         public final static String USER_LIST_NOT_FOUND = "La liste recherché n'existe pas ou n'appartient pas l'utilisateur";
         public final static String USER_LIST_NOT_CONTAIN_ANIME = "La liste ne contient pas d'animé";
@@ -82,6 +83,7 @@ public class Constantes {
         public final static String SEARCH_ANIME_FIND = "%d animé(s) ont été trouvé(s)";
         public final static String GENRE_HAS_FETCH = "Tout les genres ont été récupérés";
         public final static String COMPLEXE_SEARCH_OK = "La recherche complexe de l'animé est ok";
+        public final static String USER_FIND = "L'utilisateur à été trouvé";
         public final static String USER_LIST_GET_CURRENT_LIST = "La liste de l'utilisateur a correctement été récupéré";
         public final static String USER_LIST_CREATE_OK = "La liste custom a correctement été crée";
         public final static String FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST = "récupération de tous les id api animés dans les listes de l'utilisateur: %d au total";
@@ -90,6 +92,7 @@ public class Constantes {
         public final static String FETCH_EPISODE_VIEW_BY_ID_ANIME = "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";
         public final static String CREATE_ANIME_COMMENT = "Commentaire bien enregistré";
         public final static String ALL_ANIME_ON_LIST = "Vous avez récupéré %d animé(s) dans la liste";
+        public final static String READ_USER_OK = "L'utilisateur connecté a bien été récupérer";
         public final static String DELETE_USERLIST_OK = "La liste a correctement été supprimé";
         public final static String DELETE_ANIME_ON_USERLIST_OK = "L'animé a correctement été supprimé de la liste";
     }
@@ -136,6 +139,8 @@ public class Constantes {
         public final static String SUMMARY_USER_LIST_CREATE_LIST = "Permets de créer une liste personnalisé pour l'utilisateur courant";
         public final static String SUMMARY_USER_LIST_ADD_ANIME = "Ajoute un animé (grâce à son idapi) à la liste (int envoyé en paramètre) de l'utilisateur courant";
         public final static String SUMMARY_USER_CREATE = "Créer un utilisateur";
+        public final static String SUMMARY_USER_READ = "Lire un utilisateur";
+        public final static String SUMMARY_USER_CONNECTED_READ = "Lire l'utilisateur connecté";
         public final static String SUMMARY_USER_SIGN_IN = "Connexion d'un utilisateur";
     }
 
