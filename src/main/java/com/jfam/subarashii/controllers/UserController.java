@@ -83,6 +83,14 @@ public class UserController {
         List<Long> idApiAnimeList = userService.getAllIdApiAnimeOnUserList(currentUser);
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST,idApiAnimeList.size()), idApiAnimeList);
     }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_READ)
+    @GetMapping(value = "/{iduser}")
+    public void getUserById(@PathVariable long iduser, HttpServletResponse res) throws IOException {
+        User user = userService.getByIdUser(iduser);
+        responseService.SuccessF(res,Constantes.SuccessMessage.USER_FIND, user);
+    }
+
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
     @GetMapping(value = "/current")
     public void getUserConnected(HttpServletRequest req, HttpServletResponse res) throws IOException {

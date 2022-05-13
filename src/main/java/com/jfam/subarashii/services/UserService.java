@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -53,6 +55,18 @@ public class UserService {
 
     public List<Long> getAllIdApiAnimeOnUserList(User user){
         return userRepository.getAllIdApiAnimeOnAllUserList(user.getIdUser());
+    }
+
+
+    // Todo : add javadocs
+    public User getByIdUser(long idUser) throws ResponseStatusException {
+        Optional<User> userOpt = userRepository.findById(idUser);
+
+        if (userOpt == null)
+            return null;
+
+        User user = userOpt.get();
+        return user;
     }
 
     public User patchUsernameUserConnected(User user) throws ResponseStatusException {
