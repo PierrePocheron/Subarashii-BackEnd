@@ -81,5 +81,18 @@ public class UserService {
 
         return userPatched;
     }
+
+    public User patchPasswordUserConnected(User user) throws ResponseStatusException {
+        Optional<User> userOpt = userRepository.findById(user.getIdUser());
+
+        if (userOpt == null)
+            return null;
+
+        User userToPatch = userOpt.get();
+        userToPatch.setPassword(user.getPassword());
+        User userPatched = userRepository.save(userToPatch);
+
+        return userPatched;
+    }
 }
 
