@@ -91,6 +91,8 @@ public class Constantes {
         public final static String EPISODE_ADD_VIEW = "L'épisode a correctement été ajouté aux vus";
         public final static String FETCH_EPISODE_VIEW_BY_ID_ANIME = "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";
         public final static String CREATE_ANIME_COMMENT = "Commentaire bien enregistré";
+        public final static String UPDATE_USER_USERNAME_OK = "Username de l'utilisateur mis à jour";
+        public final static String UPDATE_USER_PASSWORD_OK = "Password de l'utilisateur mis à jour";
         public final static String ALL_ANIME_ON_LIST = "Vous avez récupéré %d animé(s) dans la liste";
         public final static String READ_USER_OK = "L'utilisateur connecté a bien été récupérer";
         public final static String DELETE_USERLIST_OK = "La liste a correctement été supprimé";
