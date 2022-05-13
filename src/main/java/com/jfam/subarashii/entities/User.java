@@ -47,6 +47,12 @@ public class User {
         this.role = role;
     }
 
+    public User(long idUser, String email, String role, String username) {
+        this.idUser = idUser;
+        this.email = email;
+        this.role = role;
+        this.username = username;
+    }
 
     public static Validator<User> validatorSignUp = Validator.stream(User.class)
             .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
