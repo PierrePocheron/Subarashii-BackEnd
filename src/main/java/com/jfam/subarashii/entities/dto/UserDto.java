@@ -1,13 +1,13 @@
 package com.jfam.subarashii.entities.dto;
 
 import com.jfam.subarashii.entities.User;
-import com.jfam.subarashii.entities.UserList;
 
-import java.util.List;
 
 public class UserDto {
 
     private String email;
+    private SecretQuestionDTO secretQuestion;
+    private String answerSecretQuestion;
 
 
     public UserDto() {
@@ -16,6 +16,12 @@ public class UserDto {
     public UserDto(User user) {
         this.email = user.getEmail();
 
+    }
+
+    public UserDto(String email, SecretQuestionDTO secretQuestion, String answerSecretQuestion) {
+        this.email = email;
+        this.secretQuestion = secretQuestion;
+        this.answerSecretQuestion = answerSecretQuestion;
     }
 
     public User toEntity(){
@@ -33,7 +39,19 @@ public class UserDto {
         this.email = email;
     }
 
+    public SecretQuestionDTO getSecretQuestion() {
+        return secretQuestion;
+    }
 
+    public void setSecretQuestion(SecretQuestionDTO secretQuestion) {
+        this.secretQuestion = secretQuestion;
+    }
 
+    public String getAnswerSecretQuestion() {
+        return answerSecretQuestion;
+    }
 
+    public void setAnswerSecretQuestion(String answerSecretQuestion) {
+        this.answerSecretQuestion = answerSecretQuestion;
+    }
 }
