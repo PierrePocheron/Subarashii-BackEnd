@@ -71,6 +71,9 @@ public class Constantes {
         public final static String USER_LIST_NOT_CONTAIN_ANIME = "La liste ne contient pas d'animé";
         public final static String USER_LIST_ANIME_NOT_EXIST = "L'animé que vous souhaité supprimer n'existe pas dans la liste";
         public final static String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
+        public final static String EXCEPTION_USER_DOESNT_RIGHTS_ADMIN = "L'utilisateur ne possède pas les droits d'administrateurs";
+        public final static String EXCEPTION_USER_DOESNT_EXISTS = "L'utilisateur n'existe pas";
+
     }
 
     public static class SuccessMessage {
@@ -98,6 +101,9 @@ public class Constantes {
         public final static String READ_USER_OK = "L'utilisateur connecté a bien été récupérer";
         public final static String DELETE_USERLIST_OK = "La liste a correctement été supprimé";
         public final static String DELETE_ANIME_ON_USERLIST_OK = "L'animé a correctement été supprimé de la liste";
+        public final static String GRANT_USER_ROLE_ADMIN_OK = "L'utilisateur a été gradé administrateur";
+        public final static String GRANT_USER_ROLE_USER_OK = "L'utilisateur a été rétrogradé";
+
     }
 
     public static class Token_value {
@@ -146,6 +152,8 @@ public class Constantes {
         public final static String SUMMARY_USER_CONNECTED_READ = "Lire l'utilisateur connecté";
         public final static String SUMMARY_USER_CONNECTED_PATCH_USERNAME = "Changer le nom d'utilisateur de l'utilisateur connecté";
         public final static String SUMMARY_USER_CONNECTED_PATCH_PASSWORD = "Changer le mot de passe de l'utilisateur connecté";
+        public final static String SUMMARY_USER_GRANT_ROLE_ADMIN = "Grader le role d'un utilisateur vers admin";
+        public final static String SUMMARY_USER_GRANT_ROLE_USER = "Retrograder le role d'un utilisateur";
         public final static String SUMMARY_USER_SIGN_IN = "Connexion d'un utilisateur";
     }
 
