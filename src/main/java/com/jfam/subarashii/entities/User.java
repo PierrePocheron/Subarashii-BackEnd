@@ -3,6 +3,7 @@ package com.jfam.subarashii.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.uzrnem.verify.Validator;
+import com.google.gson.JsonObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -40,6 +41,18 @@ public class User {
     @NotNull
     private String username;
 
+    @ManyToOne
+    //@NotNull
+    @JoinColumn(name = "secretQuestionId")
+    @JsonBackReference
+    private SecretQuestion secretQuestion;
+
+    @Column
+    private String answerSecretQuestion;
+
+
+
+
     public User(){}
 
     public User(String name, String role){
@@ -47,6 +60,35 @@ public class User {
         this.role = role;
     }
 
+
+    public User(long idUser, String email, String password, String role, String username, SecretQuestion secretQuestion, String answerSecretQuestion) {
+        this.idUser = idUser;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.username = username;
+        this.secretQuestion = secretQuestion;
+        this.answerSecretQuestion = answerSecretQuestion;
+    }
+
+
+    public User(User user){
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.role = user.getRole();
+        this.username = user.getUsername();
+        this.answerSecretQuestion = user.getAnswerSecretQuestion();
+        this.secretQuestion.setIdSecretQuestion(user.getSecretQuestion().getIdSecretQuestion());
+    }
+
+    public User(User user, SecretQuestion secretQuestion){
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.role = user.getRole();
+        this.username = user.getUsername();
+        this.answerSecretQuestion = user.getAnswerSecretQuestion();
+        this.secretQuestion = secretQuestion;
+    }
 
     public static Validator<User> validatorSignUp = Validator.stream(User.class)
             .add(User::getEmail, Validator.REQUIRED | Validator.EMAIL, "Un email est requis pour l'inscription")
@@ -119,6 +161,23 @@ public class User {
     public void setAnimeComments(List<AnimeComment> animeComments) {
         this.animeComments = animeComments;
     }
-//endregion
+
+    public SecretQuestion getSecretQuestion() {
+        return secretQuestion;
+    }
+
+    public void setSecretQuestion(SecretQuestion secretQuestion) {
+        this.secretQuestion = secretQuestion;
+    }
+
+    public String getAnswerSecretQuestion() {
+        return answerSecretQuestion;
+    }
+
+    public void setAnswerSecretQuestion(String answerSecretQuestion) {
+        this.answerSecretQuestion = answerSecretQuestion;
+    }
+
+    //endregion
 
 }

@@ -50,7 +50,16 @@ public class UserController {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User userFetching = userService.create(user);
+
+        User userFetching;
+
+        if (user.getSecretQuestion() != null) {
+            userFetching = userService.create(user, user.getSecretQuestion());
+        }
+        else {
+            userFetching = userService.create(user);
+        }
+
         UserDto userDto = new UserDto(userFetching);
         responseService.SuccessF(res, Constantes.SuccessMessage.INSCRIPTION_OK, userDto);
     }
