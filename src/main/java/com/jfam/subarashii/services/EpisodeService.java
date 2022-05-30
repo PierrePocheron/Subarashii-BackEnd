@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Episode;
+import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.EpisodeRepository;
 import com.jfam.subarashii.repositories.UserRepository;
