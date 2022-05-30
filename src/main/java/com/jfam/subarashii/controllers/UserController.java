@@ -106,7 +106,7 @@ public class UserController {
         responseService.SuccessF(res, Constantes.SuccessMessage.READ_USER_OK, user);
     }
 
-    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_PATCH_USERNAME)
     @PatchMapping(value = "/current/username")
     public void patchUsernameUserConnected(@RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
@@ -117,13 +117,12 @@ public class UserController {
         }
 
         user.setIdUser(currentUser.getIdUser());
-
         User userPatched = userService.patchUsernameUserConnected(user);
 
         responseService.SuccessF(res, Constantes.SuccessMessage.UPDATE_USER_USERNAME_OK, userPatched);
     }
 
-    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_PATCH_PASSWORD)
     @PatchMapping(value = "/current/password")
     public void patchPasswordUserConnected(@RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
@@ -134,7 +133,6 @@ public class UserController {
         }
 
         user.setIdUser(currentUser.getIdUser());
-
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User userFetching = userService.patchPasswordUserConnected(user);
