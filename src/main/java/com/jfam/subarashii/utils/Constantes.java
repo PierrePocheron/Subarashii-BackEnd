@@ -143,6 +143,8 @@ public class Constantes {
         public final static String SUMMARY_USER_CREATE = "Créer un utilisateur";
         public final static String SUMMARY_USER_READ = "Lire un utilisateur";
         public final static String SUMMARY_USER_CONNECTED_READ = "Lire l'utilisateur connecté";
+        public final static String SUMMARY_USER_CONNECTED_PATCH_USERNAME = "Changer le nom d'utilisateur de l'utilisateur connecté";
+        public final static String SUMMARY_USER_CONNECTED_PATCH_PASSWORD = "Changer le mot de passe de l'utilisateur connecté";
         public final static String SUMMARY_USER_SIGN_IN = "Connexion d'un utilisateur";
     }
 
