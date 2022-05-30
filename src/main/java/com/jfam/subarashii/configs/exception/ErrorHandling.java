@@ -38,7 +38,7 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     private static final Logger logger = LoggerFactory.getLogger(ErrorHandling.class);
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public final void SQLException(SQLIntegrityConstraintViolationException ex, HttpServletResponse res) throws IOException {
+    public final void sqlException(SQLIntegrityConstraintViolationException ex, HttpServletResponse res) throws IOException {
         logger.error("SQLException: " + ex.getMessage());
         responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_UNIQUE_CONTRAINT_DATABASE,HttpServletResponse.SC_NOT_ACCEPTABLE, Helpers.SubstringBefore(ex.getMessage()," for"));
     }
@@ -56,57 +56,57 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     }
 
     @ExceptionHandler(SQLGrammarException.class)
-    public final void SQLGrammarExceptionException(SQLGrammarException ex, HttpServletResponse res) throws IOException {
+    public final void sqlGrammarExceptionException(SQLGrammarException ex, HttpServletResponse res) throws IOException {
         logger.error("SQLGrammarExceptionException: " + ex.getMessage());
         responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
     @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
-    public final void InvalidDataAccessResourceUsageExceptionException(InvalidDataAccessResourceUsageException ex, HttpServletResponse res) throws IOException {
+    public final void invalidDataAccessResourceUsageExceptionException(InvalidDataAccessResourceUsageException ex, HttpServletResponse res) throws IOException {
         logger.error("InvalidDataAccessResourceUsageException: " + ex.getMostSpecificCause());
         responseService.ErrorF(res,Constantes.ErrorMessage.DATABASE_ACCESS_RESSOURCE_USAGE_NOT_OK,HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
 
     @ExceptionHandler(ResourceApiNotFoundException.class)
-    public final void ResourceApiNotFoundException(ResourceApiNotFoundException ex, HttpServletResponse res) throws IOException {
+    public final void resourceApiNotFoundException(ResourceApiNotFoundException ex, HttpServletResponse res) throws IOException {
         logger.error("ResourceApiNotFoundException: " + ex.getMessage());
 
         responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NumberFormatException.class)
-    public final void NumberFormatException(NumberFormatException ex, HttpServletResponse res) throws IOException {
+    public final void numberFormatException(NumberFormatException ex, HttpServletResponse res) throws IOException {
         logger.error("NumberFormatException: " + ex.getMessage());
 
         responseService.ErrorF(res,Constantes.ErrorMessage.NUMBER_FORMAT_NOT_OK,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public final void MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
+    public final void methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
         logger.error("MethodArgumentTypeMismatchException: " + ex.getMessage());
 
         responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_TYPE_METHOD_MISMATCH,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(ParseException.class)
-    public final void ParseException(ParseException ex, HttpServletResponse res) throws IOException {
+    public final void parseException(ParseException ex, HttpServletResponse res) throws IOException {
         logger.error("ParseException: " + ex.getMessage());
 
         responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_PARSE,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(RequestRejectedException.class)
-    public final void RequestRejectedException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
+    public final void requestRejectedException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
         logger.error("RequestRejectedException: " + ex.getMessage());
 
         responseService.ErrorF(res,Constantes.ErrorMessage.REQUEST_REFUSED,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NonUniqueResultException.class)
-    public final void RequestRejectedException(NonUniqueResultException ex, HttpServletResponse res) throws IOException {
+    public final void requestRejectedException(NonUniqueResultException ex, HttpServletResponse res) throws IOException {
         logger.error("NonUniqueResultException: " + ex.getMessage());
 
         responseService.ErrorF(res,Constantes.ErrorMessage.NOT_UNIQUE_RESULT,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(CustomErrorMessageException.class)
-    public final void CustomErrorMessageException(CustomErrorMessageException ex, HttpServletResponse res) throws IOException {
+    public final void customErrorMessageException(CustomErrorMessageException ex, HttpServletResponse res) throws IOException {
         logger.error("CustomErrorMessageException: " + ex.getMessage());
         responseService.ErrorF(res,ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
@@ -119,7 +119,7 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
 //    }
 
     @ExceptionHandler(javax.validation.ConstraintViolationException.class)
-    public final void ConstraintViolationException(javax.validation.ConstraintViolationException ex, HttpServletResponse res) throws IOException {
+    public final void constraintViolationException(javax.validation.ConstraintViolationException ex, HttpServletResponse res) throws IOException {
 
         Set<ConstraintViolation<?>> violationExceptionSet =  ex.getConstraintViolations();
 
