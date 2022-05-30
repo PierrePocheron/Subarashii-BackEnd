@@ -82,6 +82,11 @@ public class UserService {
         return user;
     }
 
+    public List<User> getAll() {
+        List<User> userList = userRepository.findAll();
+        return userList;
+    }
+
     public User patchUsernameUserConnected(User user) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(user.getIdUser());
 

@@ -79,12 +79,13 @@ public class Constantes {
     public static class SuccessMessage {
         public final static String CONNECTION_OK = "Authentification ok bienvenue !";
         public final static String INSCRIPTION_OK = "L'inscription à été réalisé avec succès, veuillez vous connecter !";
-        public static String ADD_ANIME_ON_USER_LIST = "L'animé %s a correctement été ajouté à la liste %s!";
+        public final static String ADD_ANIME_ON_USER_LIST = "L'animé %s a correctement été ajouté à la liste %s!";
         public final static String EPISODE_FIND = "Les épisodes ont été trouvé";
         public final static String ANIME_FIND = "L'animé a été trouvé";
         public final static String ANIME_DISCOVER_OK = "La liste d'animé à découvrir a été trouvé";
         public final static String SEARCH_ANIME_FIND = "%d animé(s) ont été trouvé(s)";
-        public final static String GENRE_HAS_FETCH = "Tout les genres ont été récupérés";
+        public final static String GENRE_HAS_FETCH = "Tous les genres ont été récupérés";
+        public final static String USER_HAS_FETCH = "Tous les utilisateurs ont été récupérés";
         public final static String COMPLEXE_SEARCH_OK = "La recherche complexe de l'animé est ok";
         public final static String USER_FIND = "L'utilisateur à été trouvé";
         public final static String USER_LIST_GET_CURRENT_LIST = "La liste de l'utilisateur a correctement été récupéré";

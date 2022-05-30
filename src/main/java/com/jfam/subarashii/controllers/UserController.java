@@ -100,6 +100,12 @@ public class UserController {
         responseService.SuccessF(res,Constantes.SuccessMessage.USER_FIND, user);
     }
 
+    @GetMapping("/all")
+    public void GetAllGenres(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        List<User> userList = userService.getAll();
+        responseService.SuccessF(res, Constantes.SuccessMessage.USER_HAS_FETCH, userList);
+    }
+
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
     @GetMapping(value = "/current")
     public void getUserConnected(HttpServletRequest req, HttpServletResponse res) throws IOException {
