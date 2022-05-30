@@ -149,4 +149,26 @@ public class UserController {
 
         responseService.SuccessF(res, Constantes.SuccessMessage.UPDATE_USER_PASSWORD_OK, userDto);
     }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_GRANT_ROLE_ADMIN)
+    @PatchMapping(value = "/{idUser}/role/admin")
+    public void patchRoleUserGrantAdmin(@PathVariable(name = "idUser") Long idUser, @RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        User userFetching = userService.patchRoleUserGrantAdmin(currentUser, idUser);
+        UserDto userDto = new UserDto(userFetching);
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_ADMIN_OK, userDto);
+    }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_GRANT_ROLE_USER)
+    @PatchMapping(value = "/{idUser}/role/user")
+    public void patchRoleUserGrantUser(@PathVariable(name = "idUser") Long idUser, @RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        User userFetching = userService.patchRoleUserGrantUser(currentUser, idUser);
+        UserDto userDto = new UserDto(userFetching);
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_USER_OK, userDto);
+    }
 }
