@@ -2,7 +2,6 @@ package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.View;
-import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.ViewService;
 import com.jfam.subarashii.utils.Constantes;
