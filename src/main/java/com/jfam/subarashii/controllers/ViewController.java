@@ -25,7 +25,7 @@ public class ViewController {
     ViewService viewService;
 
     @PutMapping("/animes/{idApiAnime}/episodes/{idApiEpisode}")
-    public void PutEpisodeSeeByUser(@PathVariable Long idApiAnime ,@PathVariable Long idApiEpisode, HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void putEpisodeSeeByUser(@PathVariable Long idApiAnime , @PathVariable Long idApiEpisode, HttpServletRequest req, HttpServletResponse res) throws IOException {
         if(idApiAnime == null || idApiAnime == 0 ||  idApiEpisode == null || idApiEpisode<0 ){
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
@@ -46,7 +46,7 @@ public class ViewController {
 
 
     @GetMapping("/animes/{idApiAnime}")
-    public void GetAllViewByAnime(@PathVariable Long idApiAnime , HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void getAllViewByAnime(@PathVariable Long idApiAnime , HttpServletRequest req, HttpServletResponse res) throws IOException {
         if(idApiAnime == null || idApiAnime == 0){
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;

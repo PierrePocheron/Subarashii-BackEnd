@@ -28,13 +28,13 @@ public class GenreController {
 
 
     @GetMapping("/all")
-    public void GetAllGenres(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+    public void getAllGenres(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         List<Genre> genreList = genreService.getAll();
         responseService.SuccessF(res, Constantes.SuccessMessage.GENRE_HAS_FETCH, genreList);
     }
 
     @GetMapping("/{idapi}")
-    public void GetGenreById(@PathVariable long idapi, HttpServletResponse res) throws IOException {
+    public void getGenreById(@PathVariable long idapi, HttpServletResponse res) throws IOException {
         Genre genre = genreService.getGenreByIdApi(idapi);
         if(genre == null) {
             responseService.ErrorF(res, Constantes.ErrorMessage.GENRE_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND, false);

@@ -41,21 +41,21 @@ public class AnimeController {
 
     @Operation(summary = Constantes.Swagger.SUMMARY_ANIME_GET_BY_ID_API)
     @GetMapping("/{idapi}")
-    public void GetById(@PathVariable long idapi,HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
+    public void getById(@PathVariable long idapi, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         Anime anime = animeService.getByIdApi(idapi);
         responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_FIND, anime);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_GET_SEASON_BY_ID_API)
     @GetMapping("/{idanime}/season/{idseason}")
-    public void GetByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime,@PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
+    public void getByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime, @PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
         responseService.SuccessF(res,Constantes.SuccessMessage.EPISODE_FIND, episodeList);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_DISCOVER_ANIME)
     @GetMapping(value = "/discover")
-    public void DiscoverAnimed(@RequestParam Optional<Integer> page, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+    public void discoverAnimed(@RequestParam Optional<Integer> page, HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         Integer pageNb = page.isEmpty() ? new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION) : page.get();
         ApiPaginationResults resultSearch = animeService.getDiscoverAnime(pageNb);
 
@@ -79,10 +79,10 @@ public class AnimeController {
             return;
         }
 
-        List<String> UnauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH);
-        if(UnauthorizedParams.size() != 0)
+        List<String> unauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH);
+        if(unauthorizedParams.size() != 0)
         {
-            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
+            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, unauthorizedParams);
             return;
         }
 
