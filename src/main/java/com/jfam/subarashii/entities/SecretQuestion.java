@@ -41,12 +41,4 @@ public class SecretQuestion {
     public void setQuestion(String question) {
         this.question = question;
     }
-
-    public List<User> getListUsers() {
-        return listUsers;
-    }
-
-    public void setListUsers(List<User> listUsers) {
-        this.listUsers = listUsers;
-    }
 }
