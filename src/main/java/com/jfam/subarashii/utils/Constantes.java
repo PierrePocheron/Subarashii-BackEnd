@@ -101,6 +101,7 @@ public class Constantes {
         public final static String ALL_ANIME_ON_LIST = "Vous avez récupéré %d animé(s) dans la liste";
         public final static String READ_USER_OK = "L'utilisateur connecté a bien été récupérer";
         public final static String DELETE_USERLIST_OK = "La liste a correctement été supprimé";
+        public final static String DELETE_USER_OK = "L'utilisateur a correctement été supprimé";
         public final static String DELETE_ANIME_ON_USERLIST_OK = "L'animé a correctement été supprimé de la liste";
         public final static String GRANT_USER_ROLE_ADMIN_OK = "L'utilisateur a été gradé administrateur";
         public final static String GRANT_USER_ROLE_USER_OK = "L'utilisateur a été rétrogradé";

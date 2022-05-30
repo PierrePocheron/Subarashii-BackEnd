@@ -1,5 +1,7 @@
 package com.jfam.subarashii.controllers;
 
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
+import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.dto.UserDto;
 import com.jfam.subarashii.services.JwtService;
@@ -38,6 +40,7 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_CREATE)
     @PostMapping(value = "sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -176,5 +179,12 @@ public class UserController {
         UserDto userDto = new UserDto(userFetching);
 
         responseService.SuccessF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_USER_OK, userDto);
+    }
+
+    @DeleteMapping("/{idUser}")
+    public void deleteUser(@PathVariable Long idUser, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        if (userService.deleteUserById(idUser)){
+            responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_USER_OK, true);
+        }
     }
 }
