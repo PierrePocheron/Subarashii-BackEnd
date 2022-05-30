@@ -2,12 +2,8 @@ package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
-import com.jfam.subarashii.entities.AnimeComment;
 import com.jfam.subarashii.entities.Episode;
-import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.api.ApiPaginationResults;
-import com.jfam.subarashii.entities.dto.AnimeCommentDTO;
-import com.jfam.subarashii.services.AnimeCommentService;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.EpisodeService;
 import com.jfam.subarashii.services.ResponseService;
@@ -18,8 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;

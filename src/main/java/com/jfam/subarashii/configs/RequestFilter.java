@@ -1,6 +1,5 @@
 package com.jfam.subarashii.configs;
 
-import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
