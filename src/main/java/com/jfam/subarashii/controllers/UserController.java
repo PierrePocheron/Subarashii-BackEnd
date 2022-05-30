@@ -92,4 +92,61 @@ public class UserController {
         List<Long> idApiAnimeList = userService.getAllIdApiAnimeOnUserList(currentUser);
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST,idApiAnimeList.size()), idApiAnimeList);
     }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_READ)
+    @GetMapping(value = "/{iduser}")
+    public void getUserById(@PathVariable long iduser, HttpServletResponse res) throws IOException {
+        User user = userService.getByIdUser(iduser);
+        responseService.SuccessF(res,Constantes.SuccessMessage.USER_FIND, user);
+    }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
+    @GetMapping(value = "/current")
+    public void getUserConnected(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (currentUser == null) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANY_USER_FETCH, 404, false);
+            return;
+        }
+
+        User user = new User(currentUser.getIdUser(), currentUser.getEmail(), currentUser.getRole(), currentUser.getUsername());
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.READ_USER_OK, user);
+    }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_PATCH_USERNAME)
+    @PatchMapping(value = "/current/username")
+    public void patchUsernameUserConnected(@RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (currentUser == null) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANY_USER_FETCH, 404, false);
+            return;
+        }
+
+        user.setIdUser(currentUser.getIdUser());
+        User userPatched = userService.patchUsernameUserConnected(user);
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.UPDATE_USER_USERNAME_OK, userPatched);
+    }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_PATCH_PASSWORD)
+    @PatchMapping(value = "/current/password")
+    public void patchPasswordUserConnected(@RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (currentUser == null) {
+            responseService.ErrorF(res, Constantes.ErrorMessage.ANY_USER_FETCH, 404, false);
+            return;
+        }
+
+        user.setIdUser(currentUser.getIdUser());
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User userFetching = userService.patchPasswordUserConnected(user);
+        UserDto userDto = new UserDto(userFetching);
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.UPDATE_USER_PASSWORD_OK, userDto);
+    }
 }

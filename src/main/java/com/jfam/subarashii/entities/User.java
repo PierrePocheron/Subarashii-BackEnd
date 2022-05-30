@@ -60,6 +60,12 @@ public class User {
         this.role = role;
     }
 
+    public User(long idUser, String email, String role, String username) {
+        this.idUser = idUser;
+        this.email = email;
+        this.role = role;
+        this.username = username;
+    }
 
     public User(long idUser, String email, String password, String role, String username, SecretQuestion secretQuestion, String answerSecretQuestion) {
         this.idUser = idUser;
