@@ -1,6 +1,7 @@
 package com.jfam.subarashii.services;
 
 import com.jfam.subarashii.MyRunner;
+import com.jfam.subarashii.entities.SecretQuestion;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.UserRepository;
@@ -35,11 +36,20 @@ public class UserService {
         return passOK ? userFetching : null;
     }
 
-    public User create(User user) {
-        User usr = userRepository.save(user);
+    public User create(User userToCreate) {
+        User usr = userRepository.save(userToCreate);
         List<UserList> userListList = userListService.createDefaultList(usr);
         usr.setLists(userListList);
-        User usrT = userRepository.save(user);
+        User usrT = userRepository.save(userToCreate);
+        return usrT;
+    }
+
+    public User create(User userToCreate, SecretQuestion secretQuestion) {
+        userToCreate.setSecretQuestion(secretQuestion);
+        User usr = userRepository.save(userToCreate);
+        List<UserList> userListList = userListService.createDefaultList(usr);
+        usr.setLists(userListList);
+        User usrT = userRepository.save(userToCreate);
         return usrT;
     }
 
