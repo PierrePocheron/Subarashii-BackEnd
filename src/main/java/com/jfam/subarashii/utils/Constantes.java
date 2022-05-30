@@ -7,6 +7,7 @@ public class Constantes {
     public static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
     public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
+    public final static String ROUTE_GET_ALL_SECRET_QUESTIONS = "/secretquestions";
     public static String ENVIRONNEMENT_TYPE;
     public static String ADRESS_FRONT;
     public static String BUILD_VERSION;
