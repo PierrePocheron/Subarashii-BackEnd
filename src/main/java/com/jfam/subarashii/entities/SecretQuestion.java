@@ -17,4 +17,36 @@ public class SecretQuestion {
 
     @OneToMany(mappedBy = "secretQuestion")
     private List<User> listUsers;
+
+    public SecretQuestion(long idSecretQuestion) {
+        this.idSecretQuestion = idSecretQuestion;
+    }
+
+    public SecretQuestion() {
+
+    }
+
+    public long getIdSecretQuestion() {
+        return idSecretQuestion;
+    }
+
+    public void setIdSecretQuestion(long idSecretQuestion) {
+        this.idSecretQuestion = idSecretQuestion;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public List<User> getListUsers() {
+        return listUsers;
+    }
+
+    public void setListUsers(List<User> listUsers) {
+        this.listUsers = listUsers;
+    }
 }

@@ -14,14 +14,11 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 		SpringApplication.run(SubarashiiApplication.class, args);
 	}
 
-
-
-
-
 	@Value("${spring.jwt.secret.key}")
 	public void setSecretKey(String secretKey) {
 		Constantes.Token_value.JWT_SECRET_KEY = secretKey;
 	}
+
 	@Value("${cors.authorize.adress.front}")
 	public void setFrontAdress(String adressFront) {
 		Constantes.ADRESS_FRONT = adressFront;

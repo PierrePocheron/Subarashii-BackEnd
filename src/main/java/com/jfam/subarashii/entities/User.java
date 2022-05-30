@@ -42,7 +42,7 @@ public class User {
     private String username;
 
     @ManyToOne
-    @NotNull
+    //@NotNull
     @JoinColumn(name = "secretQuestionId")
     @JsonBackReference
     private SecretQuestion secretQuestion;
@@ -69,6 +69,16 @@ public class User {
         this.username = username;
         this.secretQuestion = secretQuestion;
         this.answerSecretQuestion = answerSecretQuestion;
+    }
+
+
+    public User(User user){
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.role = user.getRole();
+        this.username = user.getUsername();
+        this.answerSecretQuestion = user.getAnswerSecretQuestion();
+        this.secretQuestion.setIdSecretQuestion(user.getSecretQuestion().getIdSecretQuestion());
     }
 
     public User(User user, SecretQuestion secretQuestion){
