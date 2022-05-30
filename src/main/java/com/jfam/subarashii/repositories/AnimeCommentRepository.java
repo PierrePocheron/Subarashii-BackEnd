@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AnimeCommentRepository extends JpaRepository<AnimeComment,Long> {
-    List<AnimeComment >findAllByAnime_IdApi(Long idApi);
+    List<AnimeComment > findAllByAnimeIdApi(Long idApi);
 
 
 }
