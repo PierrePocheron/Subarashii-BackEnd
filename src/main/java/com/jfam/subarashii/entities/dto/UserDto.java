@@ -1,9 +1,6 @@
 package com.jfam.subarashii.entities.dto;
 
 import com.jfam.subarashii.entities.User;
-import com.jfam.subarashii.entities.UserList;
-
-import java.util.List;
 
 public class UserDto {
 
