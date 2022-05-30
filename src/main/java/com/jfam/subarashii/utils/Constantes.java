@@ -85,6 +85,7 @@ public class Constantes {
         public final static String USER_LIST_GET_CURRENT_LIST = "La liste de l'utilisateur a correctement été récupéré";
         public final static String USER_LIST_CREATE_OK = "La liste custom a correctement été crée";
         public final static String FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST = "récupération de tous les id api animés dans les listes de l'utilisateur: %d au total";
+        public final static String GET_ALL_SECRET_QUESTIONS = "récupération de toutes les questions secretes: %d au total";
         public final static String EPISODE_REMOVE_VIEW = "L'épisode a correctement été retiré aux vus";
         public final static String EPISODE_ADD_VIEW = "L'épisode a correctement été ajouté aux vus";
         public final static String FETCH_EPISODE_VIEW_BY_ID_ANIME = "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";
