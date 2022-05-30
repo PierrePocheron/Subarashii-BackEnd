@@ -50,8 +50,5 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 	}
 
 
-/*	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(SubarashiiApplication.class);
-	}*/
+
 }
