@@ -1,7 +1,6 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.uzrnem.verify.Validator;
 import com.google.gson.JsonObject;
 

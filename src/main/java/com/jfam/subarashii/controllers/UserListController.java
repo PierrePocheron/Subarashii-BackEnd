@@ -9,7 +9,6 @@ import com.jfam.subarashii.entities.dto.UserListAnimeDTO;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserListService;
-import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,11 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/userlists")
