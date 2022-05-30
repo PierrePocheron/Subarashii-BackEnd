@@ -1,7 +1,5 @@
 package com.jfam.subarashii.services;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
@@ -77,7 +75,7 @@ public class AnimeService {
 
         if(apiPaginationResults.results != null)
             // du coup je ne veux que les animés:
-            apiPaginationResults.results.removeIf(result ->  !result.genre_ids.contains(16.0));
+            apiPaginationResults.results.removeIf(result ->  !result.genreIds.contains(16.0));
 
         return apiPaginationResults;
     }

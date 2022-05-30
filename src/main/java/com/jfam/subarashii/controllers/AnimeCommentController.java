@@ -34,7 +34,7 @@ public class AnimeCommentController {
     ResponseService responseService;
 
     @GetMapping("/{idanime}")
-    public void GetAnimeComments(@PathVariable long idanime,HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void getAnimeComments(@PathVariable long idanime, HttpServletRequest req, HttpServletResponse res) throws IOException {
         List<AnimeComment> animeCommentList = animeCommentService.getCommentByIdAnime(idanime);
         if(animeCommentList.size() == 0){
             responseService.SuccessF(res,"commentaires inexistants", animeCommentList);
@@ -51,7 +51,7 @@ public class AnimeCommentController {
     }
 
     @PostMapping
-    public void CreateAnimeComments(@RequestBody AnimeCommentDTO animeCommentDTO, HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {
+    public void createAnimeComments(@RequestBody AnimeCommentDTO animeCommentDTO, HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {
         if(animeCommentDTO == null || animeCommentDTO.getIdApiAnime() < 0 || animeCommentDTO.getContenu().isEmpty())
         {
             responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_BAD_REQUEST,false);

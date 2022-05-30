@@ -40,7 +40,7 @@ public class UserController {
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_CREATE)
     @PostMapping(value = "sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void SignUpUser(@RequestBody User user, HttpServletResponse res) throws IOException {
+    public void signUpUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         boolean isValidateUser = User.validatorSignUp.test(user);
 
         if (!isValidateUser) {
@@ -65,7 +65,7 @@ public class UserController {
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_SIGN_IN )
     @PostMapping(value = "/sign-in", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void SignInUser(@RequestBody User user, HttpServletResponse res) throws IOException {
+    public void signInUser(@RequestBody User user, HttpServletResponse res) throws IOException {
         if (user == null)
             return;
 
@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/idapianimes")
-    public void GetAllAnimeOnAllUserLists(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void getAllAnimeOnAllUserLists(HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
         List<Long> idApiAnimeList = userService.getAllIdApiAnimeOnUserList(currentUser);
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST,idApiAnimeList.size()), idApiAnimeList);
