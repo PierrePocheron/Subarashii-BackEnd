@@ -21,7 +21,7 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 
 	@Value("${cors.authorize.adress.front}")
 	public void setFrontAdress(String adressFront) {
-		Constantes.AdressFront = adressFront;
+		Constantes.ADRESS_FRONT = adressFront;
 	}
 
 	@Value("${token.minute.validation}")
@@ -37,13 +37,13 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 
 	@Value("${environnement.type}")
 	public void setEnvironementType(String environnementType) {
-		Constantes.EnvironnementType = environnementType;
+		Constantes.ENVIRONNEMENT_TYPE = environnementType;
 	}
 
 
 	@Value("${build.version}")
 	public void getBuildVersion(String version) {
-		Constantes.BuildVersion = version;
+		Constantes.BUILD_VERSION = version;
 	}
 
 

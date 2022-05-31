@@ -4,17 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constantes {
-    public static final String DateFormatNow = "dd-MM-yyyy HH:mm:ss";
-    public final static String RouteSignIn = "/users/sign-in";
+    public static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
+    public final static String ROUTE_SIGN_IN = "/users/sign-in";
     public final static String ROUTE_SIGN_UP = "/users/sign-up";
-    public final static String RouteGetAllSecretQuestions = "/secretquestions";
-    public static String EnvironnementType;
-    public static String AdressFront;
-    public static String BuildVersion;
+    public final static String ROUTE_GET_ALL_SECRET_QUESTIONS = "/secretquestions";
+    public static String ENVIRONNEMENT_TYPE;
+    public static String ADRESS_FRONT;
+    public static String BUILD_VERSION;
 
-    public final static String UrlImageNotFound = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
+    public final static String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
 
-    public final static String EmptyString = "";
+    public final static String EMPTY_STRING = "";
 
     public static class Keys {
         public final static String USER = "user";
@@ -32,10 +32,10 @@ public class Constantes {
     }
 
     public static class DefaultList {
-        public final static String AVoir = "A voir";
-        public final static String EnCours = "En cours";
+        public final static String A_VOIR = "A voir";
+        public final static String EN_COURS = "En cours";
         public final static String TERMINEE = "Terminée";
-        public final static String EnAttente = "En attente";
+        public final static String EN_ATTENTE = "En attente";
         public final static String FAVORIS = "Favoris";
     }
 
