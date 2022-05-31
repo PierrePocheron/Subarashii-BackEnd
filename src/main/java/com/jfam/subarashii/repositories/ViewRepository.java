@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ViewRepository extends JpaRepository<View,Long> {
-    View findByIdApiAnimeAndIdApiEpisodeAndUser(Long IdApiAnime,Long IdApiEpisode, User user);
-    List<View> findAllByUserAndIdApiAnimeAndSeeIsTrue(User user, Long IdApiAnime);
+    View findByIdApiAnimeAndIdApiEpisodeAndUser(Long idApiAnime,Long idApiEpisode, User user);
+    List<View> findAllByUserAndIdApiAnimeAndSeeIsTrue(User user, Long idApiAnime);
     void deleteById(Long idView);
 }

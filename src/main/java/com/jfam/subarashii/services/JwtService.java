@@ -25,7 +25,7 @@ public class JwtService {
 
     Algorithm algorithm ;
 
-    public String CreateToken(String email, String role, String username){
+    public String createToken(String email, String role, String username){
         role = role == null ? Role.USER.toString() : role;
         algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
         Map<String, Object> headerClaims = new HashMap();
@@ -35,7 +35,7 @@ public class JwtService {
         try {
             return JWT.create()
                     .withHeader(headerClaims)
-                    .withExpiresAt(Helpers.CurrentDatePlusMinutes(Constantes.Token_value.MINUTE_VALIDATION))
+                    .withExpiresAt(Helpers.currentDatePlusMinutes(Constantes.Token_value.MINUTE_VALIDATION))
                     .sign(algorithm);
         } catch (JWTCreationException exception){
             logger.warn(Constantes.ErrorMessage.TOKEN_CREATE + exception.getMessage());
@@ -43,7 +43,7 @@ public class JwtService {
         return null;
     }
 
-    public boolean VerifyToken(String token){
+    public boolean verifyToken(String token){
         try {
             algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
             JWTVerifier verifier = JWT.require(algorithm).build();

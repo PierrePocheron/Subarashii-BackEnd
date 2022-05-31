@@ -28,7 +28,7 @@ public class GenreService {
 
         List<Genre> genresList = genreRepository.findAll();
 
-        if(genresList.size() == 0)
+        if(genresList.isEmpty())
             genresList = fetchGenresFromApi();
 
         return genresList;
@@ -38,7 +38,7 @@ public class GenreService {
 
         List<Genre> genresList = genreRepository.findAll();
 
-        if(genresList.size() == 0)
+        if(genresList.isEmpty())
             genresList = fetchGenresFromApi();
 
         return genresList;
@@ -51,8 +51,8 @@ public class GenreService {
     public List<Genre> convertJsonObjectGenreToListGenre(JsonObject jsonResult,String keywordGenre){
         JsonArray genresJsonArray = jsonResult.get(keywordGenre).getAsJsonArray();
         List<Genre> genresList = new ArrayList<>();
-        genresJsonArray.forEach((JsonGenre)->{
-            Long idGenre = JsonGenre.getAsJsonObject().get(Constantes.ApiMovie.JSON_KEY_ID).getAsLong();
+        genresJsonArray.forEach((jsonGenre)->{
+            Long idGenre = jsonGenre.getAsJsonObject().get(Constantes.ApiMovie.JSON_KEY_ID).getAsLong();
             Genre gen = getGenreByIdApi(idGenre);
             genresList.add(gen);
         });
@@ -61,7 +61,7 @@ public class GenreService {
 
     // region === PRIVATE METHOD ===
     private List<Genre> fetchGenresFromApi() throws ResourceApiNotFoundException {
-        JsonObject genreResult = httpClient.GetQuery(ROUTE_GENRE_ANIME);
+        JsonObject genreResult = httpClient.getQuery(ROUTE_GENRE_ANIME);
         JsonArray jsonArrayGenre = genreResult.get(Constantes.ApiMovie.JSON_KEY_GENRES).getAsJsonArray();
         List<Genre> genresList = new ArrayList<>();
 
@@ -72,5 +72,5 @@ public class GenreService {
         });
         return genreRepository.saveAll(genresList);
     }
-    //endregion
+
 }

@@ -15,32 +15,32 @@ import org.springframework.stereotype.Service;
 public class HttpClient {
     Gson gson = new Gson();
 
-    public JsonObject GetQuery(String url) throws ResourceApiNotFoundException {
-        LinkedTreeMap LTM = (LinkedTreeMap) Unirest.get(url)
+    public JsonObject getQuery(String url) throws ResourceApiNotFoundException {
+        LinkedTreeMap ltm = (LinkedTreeMap) Unirest.get(url)
                 .header("Content-Type", "application/json;charset=utf-8")
                 .header("Authorization", Constantes.ApiMovie.TOKEN_SECRET)
                 .asObject(Object.class)
                 .getBody();
 
-        JsonObject jsonObject = gson.toJsonTree(LTM).getAsJsonObject();
+        JsonObject jsonObject = gson.toJsonTree(ltm).getAsJsonObject();
         if(jsonObject.has("status_code") && jsonObject.get("status_code").getAsInt() == 34){
            throw new ResourceApiNotFoundException(Constantes.ErrorMessage.RESOURCE_NOT_FOUND);
         }
-        return gson.toJsonTree(LTM).getAsJsonObject();
+        return gson.toJsonTree(ltm).getAsJsonObject();
     }
 
-    public ApiPaginationResults GetQueryPageableResult(String url) throws ResourceApiNotFoundException {
-        LinkedTreeMap LTM = (LinkedTreeMap) Unirest.get(url)
+    public ApiPaginationResults getQueryPageableResult(String url) throws ResourceApiNotFoundException {
+        LinkedTreeMap ltm = (LinkedTreeMap) Unirest.get(url)
                 .header("Content-Type", "application/json;charset=utf-8")
                 .header("Authorization", Constantes.ApiMovie.TOKEN_SECRET)
                 .asObject(Object.class)
                 .getBody();
 
-        JsonObject jsonObject = gson.toJsonTree(LTM).getAsJsonObject();
+        JsonObject jsonObject = gson.toJsonTree(ltm).getAsJsonObject();
         if(jsonObject.has("status_code") && jsonObject.get("status_code").getAsInt() == 34){
            throw new ResourceApiNotFoundException(Constantes.ErrorMessage.RESOURCE_NOT_FOUND);
         }
-        JsonObject jsonResult =  gson.toJsonTree(LTM).getAsJsonObject();
+        JsonObject jsonResult =  gson.toJsonTree(ltm).getAsJsonObject();
         Gson gson = new Gson();
         return gson.fromJson(jsonResult.toString(), ApiPaginationResults.class);
     }
