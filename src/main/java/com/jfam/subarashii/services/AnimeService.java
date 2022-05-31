@@ -49,7 +49,7 @@ public class AnimeService {
         Anime anime = animeRepository.findByIdApi(idApi);
 
         if (anime == null) {
-            JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID, idApi));
+            JsonObject jsonObject = httpClient.getQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID, idApi));
             Anime animeApi = new Anime(jsonObject);
 
             // récupère les genres associés à l'animé avant de le sauvegarder
