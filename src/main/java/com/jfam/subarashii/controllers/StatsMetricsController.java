@@ -30,36 +30,36 @@ public class StatsMetricsController {
     @GetMapping("/count/users/user")
     public void getCountUsersUser(HttpServletResponse res) throws IOException {
         Integer countUsers = statsMetricsService.getCountUsersByRole(Role.USER.name());
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_USERS_USER,countUsers), countUsers);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_USERS_USER,countUsers), countUsers);
     }
 
     @GetMapping("/count/users/admin")
     public void getCountUsersAdmin(HttpServletResponse res) throws IOException {
         Integer countUsers = statsMetricsService.getCountUsersByRole(Role.ADMIN.name());
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_USERS_ADMIN,countUsers), countUsers);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_USERS_ADMIN,countUsers), countUsers);
     }
 
     @GetMapping("/count/comments")
     public void getCountComments(HttpServletResponse res) throws IOException {
         Long countComments = statsMetricsService.getCountComments();
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_COMMENTS,countComments), countComments);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_COMMENTS,countComments), countComments);
     }
 
     @GetMapping("/count/animes")
     public void getCountAnimes(HttpServletResponse res) throws IOException {
         Long countAnimes = statsMetricsService.getCountAnimes();
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIMES,countAnimes), countAnimes);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIMES,countAnimes), countAnimes);
     }
 
     @GetMapping("/count/episodes")
     public void getCountEpisodes(HttpServletResponse res) throws IOException {
         Long countEpisodes = statsMetricsService.getCountEpisodes();
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_EPISODES,countEpisodes), countEpisodes);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_EPISODES,countEpisodes), countEpisodes);
     }
 
     @GetMapping("/count/genres")
     public void getCountGenres(HttpServletResponse res) throws IOException {
         Long countGenres = statsMetricsService.getCountGenres();
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_GENRES,countGenres), countGenres);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_GENRES,countGenres), countGenres);
     }
 }

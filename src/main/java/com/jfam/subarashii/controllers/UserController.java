@@ -105,7 +105,7 @@ public class UserController {
     @GetMapping("/all")
     public void GetAllGenres(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         List<User> userList = userService.getAll();
-        responseService.SuccessF(res, Constantes.SuccessMessage.USER_HAS_FETCH, userList);
+        responseService.successF(res, Constantes.SuccessMessage.USER_HAS_FETCH, userList);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
@@ -166,7 +166,7 @@ public class UserController {
         User userFetching = userService.patchRoleUserGrantAdmin(currentUser, idUser);
         UserDto userDto = new UserDto(userFetching);
 
-        responseService.SuccessF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_ADMIN_OK, userDto);
+        responseService.successF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_ADMIN_OK, userDto);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_GRANT_ROLE_USER)
@@ -177,7 +177,7 @@ public class UserController {
         User userFetching = userService.patchRoleUserGrantUser(currentUser, idUser);
         UserDto userDto = new UserDto(userFetching);
 
-        responseService.SuccessF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_USER_OK, userDto);
+        responseService.successF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_USER_OK, userDto);
     }
 
     @DeleteMapping("/{idUser}")
@@ -185,7 +185,7 @@ public class UserController {
         User currentUser = Helpers.getCurrentUser(req);
 
         if (userService.deleteUserById(currentUser, idUser)){
-            responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_USER_OK, true);
+            responseService.successF(res,Constantes.SuccessMessage.DELETE_USER_OK, true);
         }
     }
 }

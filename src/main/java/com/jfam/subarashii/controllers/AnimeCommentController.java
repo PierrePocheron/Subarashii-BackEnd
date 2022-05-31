@@ -44,7 +44,7 @@ public class AnimeCommentController {
         User currentUser  = Helpers.getCurrentUser(req);
         List<AnimeCommentDTO> animeCommentDTOList =  animeCommentList.stream().map(animeComment -> new AnimeCommentDTO(animeComment, currentUser)).collect(Collectors.toList());
 
-        responseService.SuccessF(res,"le commentaire a été trouvé", animeCommentDTOList);
+        responseService.successF(res,"le commentaire a été trouvé", animeCommentDTOList);
     }
 
     @GetMapping()
@@ -52,13 +52,13 @@ public class AnimeCommentController {
         // Todo : admin
         List<AnimeComment> animeCommentList = animeCommentService.getAll();
         if (animeCommentList.size() == 0){
-            responseService.SuccessF(res,"commentaires inexistants", animeCommentList);
+            responseService.successF(res,"commentaires inexistants", animeCommentList);
             return;
         }
         User currentUser  = Helpers.getCurrentUser(req);
         List<AnimeCommentDTO> animeCommentDTOList =  animeCommentList.stream().map(animeComment -> new AnimeCommentDTO(animeComment, currentUser)).collect(Collectors.toList());
 
-        responseService.SuccessF(res,"les commentaires ont été trouvés", animeCommentDTOList);
+        responseService.successF(res,"les commentaires ont été trouvés", animeCommentDTOList);
     }
 
     @PostMapping
@@ -75,14 +75,14 @@ public class AnimeCommentController {
             return;
         }
 
-        responseService.SuccessF(res,"le commentaire a été ajouté", resultAnimeComment);
+        responseService.successF(res,"le commentaire a été ajouté", resultAnimeComment);
     }
 
 
     @DeleteMapping("/{idAnimeComment}")
     public void deleteAnimeCommentById(@PathVariable long idAnimeComment,HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {
         if (animeCommentService.deleteAnimeCommentById(idAnimeComment)){
-            responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_ANIMECOMMENT_OK, true);
+            responseService.successF(res,Constantes.SuccessMessage.DELETE_ANIMECOMMENT_OK, true);
         }
     }
 }
