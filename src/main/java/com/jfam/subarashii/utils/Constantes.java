@@ -99,6 +99,7 @@ public class Constantes {
         public final static String GET_COUNT_COMMENTS = "Récupération du nombre de commentaires : %d au total";
         public final static String GET_COUNT_ANIMES = "Récupération du nombre d'animés : %d au total";
         public final static String GET_COUNT_EPISODES = "Récupération du nombre d'épisodes : %d au total";
+        public final static String GET_COUNT_GENRES = "Récupération du nombre de genre : %d au total";
         public final static String EPISODE_REMOVE_VIEW = "L'épisode a correctement été retiré aux vus";
         public final static String EPISODE_ADD_VIEW = "L'épisode a correctement été ajouté aux vus";
         public final static String FETCH_EPISODE_VIEW_BY_ID_ANIME = "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";

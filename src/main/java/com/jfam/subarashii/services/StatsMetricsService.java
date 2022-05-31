@@ -22,6 +22,10 @@ public class StatsMetricsService {
 
     @Autowired
     private EpisodeRepository episodeRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
+
     public Integer getCountUsersByRole(String role){
         return userRepository.countByRole(role);
     }
@@ -32,5 +36,13 @@ public class StatsMetricsService {
 
     public Long getCountAnimes(){
         return animeRepository.count();
+    }
+
+    public Long getCountEpisodes(){
+        return episodeRepository.count();
+    }
+
+    public Long getCountGenres(){
+        return genreRepository.count();
     }
 }
