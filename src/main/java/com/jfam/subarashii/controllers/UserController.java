@@ -1,5 +1,7 @@
 package com.jfam.subarashii.controllers;
 
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
+import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.dto.UserDto;
 import com.jfam.subarashii.services.JwtService;
@@ -37,6 +39,7 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_CREATE)
     @PostMapping(value = "sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -99,6 +102,12 @@ public class UserController {
         responseService.successF(res,Constantes.SuccessMessage.USER_FIND, user);
     }
 
+    @GetMapping("/all")
+    public void GetAllGenres(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+        List<User> userList = userService.getAll();
+        responseService.SuccessF(res, Constantes.SuccessMessage.USER_HAS_FETCH, userList);
+    }
+
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_CONNECTED_READ)
     @GetMapping(value = "/current")
     public void getUserConnected(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -147,5 +156,36 @@ public class UserController {
         UserDto userDto = new UserDto(userFetching);
 
         responseService.successF(res, Constantes.SuccessMessage.UPDATE_USER_PASSWORD_OK, userDto);
+    }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_GRANT_ROLE_ADMIN)
+    @PatchMapping(value = "/{idUser}/role/admin")
+    public void patchRoleUserGrantAdmin(@PathVariable(name = "idUser") Long idUser, @RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        User userFetching = userService.patchRoleUserGrantAdmin(currentUser, idUser);
+        UserDto userDto = new UserDto(userFetching);
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_ADMIN_OK, userDto);
+    }
+
+    @Operation(summary = Constantes.Swagger.SUMMARY_USER_GRANT_ROLE_USER)
+    @PatchMapping(value = "/{idUser}/role/user")
+    public void patchRoleUserGrantUser(@PathVariable(name = "idUser") Long idUser, @RequestBody User user, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        User userFetching = userService.patchRoleUserGrantUser(currentUser, idUser);
+        UserDto userDto = new UserDto(userFetching);
+
+        responseService.SuccessF(res, Constantes.SuccessMessage.GRANT_USER_ROLE_USER_OK, userDto);
+    }
+
+    @DeleteMapping("/{idUser}")
+    public void deleteUser(@PathVariable Long idUser, HttpServletRequest req, HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (userService.deleteUserById(currentUser, idUser)){
+            responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_USER_OK, true);
+        }
     }
 }
