@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface AnimeCommentRepository extends JpaRepository<AnimeComment,Long> {
     List<AnimeComment > findAllByAnimeIdApi(Long idApi);
-
-
 }

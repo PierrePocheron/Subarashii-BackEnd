@@ -14,6 +14,8 @@ private String contenu;
 
 private Long idApiAnime;
 
+private String nomAnime;
+
 private String date;
 
 private String nomUser;
@@ -30,6 +32,7 @@ public AnimeCommentDTO(AnimeComment animeComment, User userCurrent){
     this.id = animeComment.getId();
     this.contenu = animeComment.getContenu();
     this.idApiAnime = animeComment.getAnime().getIdApi();
+    this.nomAnime = animeComment.getAnime().getNomTraduit();
     this.date = animeComment.getDate();
     this.nomUser = animeComment.getUser().getUsername();
     this.isMineComment = userCurrent.getIdUser() == animeComment.getUser().getIdUser();
@@ -104,5 +107,14 @@ public AnimeComment toEntity(User user, Anime anime){
     public void setIdApiAnime(Long idApiAnime) {
         this.idApiAnime = idApiAnime;
     }
+
+    public String getNomAnime() {
+        return nomAnime;
+    }
+
+    public void setNomAnime(String nomAnime) {
+        this.nomAnime = nomAnime;
+    }
+
     //endregion
 }
