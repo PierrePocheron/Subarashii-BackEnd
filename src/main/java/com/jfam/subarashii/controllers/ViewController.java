@@ -27,7 +27,7 @@ public class ViewController {
     @PutMapping("/animes/{idApiAnime}/episodes/{idApiEpisode}")
     public void putEpisodeSeeByUser(@PathVariable Long idApiAnime , @PathVariable Long idApiEpisode, HttpServletRequest req, HttpServletResponse res) throws IOException {
         if(idApiAnime == null || idApiAnime == 0 ||  idApiEpisode == null || idApiEpisode<0 ){
-            responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+            responseService.errorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
         User currentUser = Helpers.getCurrentUser(req);
@@ -36,25 +36,25 @@ public class ViewController {
         Boolean isActiveSee = viewService.updateUserViewByIdApiEpisode(currentUser,idApiAnime, idApiEpisode);
 
         if(isActiveSee == null){
-            responseService.ErrorF(res, Constantes.ErrorMessage.EPISODE_NOT_FOUND,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+            responseService.errorF(res, Constantes.ErrorMessage.EPISODE_NOT_FOUND,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
 
         String message = isActiveSee ? Constantes.SuccessMessage.EPISODE_ADD_VIEW : Constantes.SuccessMessage.EPISODE_REMOVE_VIEW;
-        responseService.SuccessF(res,message,isActiveSee);
+        responseService.successF(res,message,isActiveSee);
     }
 
 
     @GetMapping("/animes/{idApiAnime}")
     public void getAllViewByAnime(@PathVariable Long idApiAnime , HttpServletRequest req, HttpServletResponse res) throws IOException {
         if(idApiAnime == null || idApiAnime == 0){
-            responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
+            responseService.errorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_NOT_ACCEPTABLE,false);
             return;
         }
         User currentUser = Helpers.getCurrentUser(req);
 
         List<View> viewList =  viewService.getAllViewByIdApiAnime(currentUser,idApiAnime);
 
-        responseService.SuccessF(res,String.format(Constantes.SuccessMessage.FETCH_EPISODE_VIEW_BY_ID_ANIME,viewList.size(),idApiAnime),viewList);
+        responseService.successF(res,String.format(Constantes.SuccessMessage.FETCH_EPISODE_VIEW_BY_ID_ANIME,viewList.size(),idApiAnime),viewList);
     }
 }

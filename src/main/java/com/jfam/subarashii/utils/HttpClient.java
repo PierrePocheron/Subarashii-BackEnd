@@ -29,7 +29,7 @@ public class HttpClient {
         return gson.toJsonTree(LTM).getAsJsonObject();
     }
 
-    public ApiPaginationResults GetQueryPageableResult(String url) throws ResourceApiNotFoundException {
+    public ApiPaginationResults getQueryPageableResult(String url) throws ResourceApiNotFoundException {
         LinkedTreeMap LTM = (LinkedTreeMap) Unirest.get(url)
                 .header("Content-Type", "application/json;charset=utf-8")
                 .header("Authorization", Constantes.ApiMovie.TOKEN_SECRET)

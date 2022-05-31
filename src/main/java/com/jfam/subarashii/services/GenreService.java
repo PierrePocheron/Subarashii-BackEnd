@@ -51,8 +51,8 @@ public class GenreService {
     public List<Genre> convertJsonObjectGenreToListGenre(JsonObject jsonResult,String keywordGenre){
         JsonArray genresJsonArray = jsonResult.get(keywordGenre).getAsJsonArray();
         List<Genre> genresList = new ArrayList<>();
-        genresJsonArray.forEach((JsonGenre)->{
-            Long idGenre = JsonGenre.getAsJsonObject().get(Constantes.ApiMovie.JSON_KEY_ID).getAsLong();
+        genresJsonArray.forEach((jsonGenre)->{
+            Long idGenre = jsonGenre.getAsJsonObject().get(Constantes.ApiMovie.JSON_KEY_ID).getAsLong();
             Genre gen = getGenreByIdApi(idGenre);
             genresList.add(gen);
         });
