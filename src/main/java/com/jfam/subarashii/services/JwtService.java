@@ -35,7 +35,7 @@ public class JwtService {
         try {
             return JWT.create()
                     .withHeader(headerClaims)
-                    .withExpiresAt(Helpers.CurrentDatePlusMinutes(Constantes.Token_value.MINUTE_VALIDATION))
+                    .withExpiresAt(Helpers.currentDatePlusMinutes(Constantes.Token_value.MINUTE_VALIDATION))
                     .sign(algorithm);
         } catch (JWTCreationException exception){
             logger.warn(Constantes.ErrorMessage.TOKEN_CREATE + exception.getMessage());

@@ -28,7 +28,7 @@ public class GenreService {
 
         List<Genre> genresList = genreRepository.findAll();
 
-        if(genresList.size() == 0)
+        if(genresList.isEmpty())
             genresList = fetchGenresFromApi();
 
         return genresList;
@@ -38,7 +38,7 @@ public class GenreService {
 
         List<Genre> genresList = genreRepository.findAll();
 
-        if(genresList.size() == 0)
+        if(genresList.isEmpty())
             genresList = fetchGenresFromApi();
 
         return genresList;
@@ -72,5 +72,5 @@ public class GenreService {
         });
         return genreRepository.saveAll(genresList);
     }
-    //endregion
+
 }

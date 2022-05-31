@@ -16,7 +16,7 @@ public class Helpers {
      * Get local date , add any minutes then convert to java.util.date
      * @return a current java.util.date plus x minutes
      */
-    public static Date CurrentDatePlusMinutes(int minute)
+    public static Date currentDatePlusMinutes(int minute)
     {
         Date date = new Date();
         // Convert Date to Calendar
@@ -26,11 +26,11 @@ public class Helpers {
         return c.getTime();
     }
 
-    public static String SubstringBefore(String sentence,String word){
+    public static String substringBefore(String sentence, String word){
         return StringUtils.substringBefore(sentence, word);
     }
 
-    public static List<String> GetElementInListNotInMapParams(Map<String,String> mapParams, List<String>  listParamsAuthorize ){
+    public static List<String> getElementInListNotInMapParams(Map<String,String> mapParams, List<String>  listParamsAuthorize ){
         return mapParams.keySet().stream()
                 .filter(element -> !listParamsAuthorize.contains(element))
                 .collect(Collectors.toList());

@@ -40,7 +40,7 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public final void sqlException(SQLIntegrityConstraintViolationException ex, HttpServletResponse res) throws IOException {
         loggers.error("SQLException: " + ex.getMessage());
-        responseService.errorF(res, Constantes.ErrorMessage.ERROR_UNIQUE_CONTRAINT_DATABASE,HttpServletResponse.SC_NOT_ACCEPTABLE, Helpers.SubstringBefore(ex.getMessage()," for"));
+        responseService.errorF(res, Constantes.ErrorMessage.ERROR_UNIQUE_CONTRAINT_DATABASE,HttpServletResponse.SC_NOT_ACCEPTABLE, Helpers.substringBefore(ex.getMessage()," for"));
     }
 
     @ExceptionHandler(AccessDeniedException.class)

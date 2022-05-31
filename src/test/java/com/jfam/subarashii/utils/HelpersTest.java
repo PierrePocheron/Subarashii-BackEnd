@@ -20,7 +20,7 @@ class HelpersTest {
 
 
         // when
-        String textSkip= Helpers.SubstringBefore(sentence, wordKey);
+        String textSkip= Helpers.substringBefore(sentence, wordKey);
 
         // then
         Assertions.assertThat(textSkip).isEqualTo(result);

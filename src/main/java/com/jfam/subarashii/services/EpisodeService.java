@@ -44,7 +44,7 @@ public class EpisodeService {
 
         Anime anime = animeService.getByIdApi(idApiAnime);
         List<Episode> episodeList = episodeRepository.findAllByAnimeIdApiAndSaison(idApiAnime, idApiSaison);
-        if(episodeList.size() != 0)
+        if(episodeList.isEmpty())
             return episodeList;
         episodeList = fetchApi(idApiAnime,idApiSaison,anime);
         return episodeRepository.saveAll(episodeList);
