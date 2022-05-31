@@ -9,7 +9,6 @@ import com.jfam.subarashii.entities.dto.UserListAnimeDTO;
 import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.UserListService;
-import com.jfam.subarashii.services.UserService;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,11 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/userlists")
@@ -46,7 +43,7 @@ public class UserListController {
     public void getCurrentUserList(HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
         List<UserList> listUserLists = userListService.getCurrentUserList(currentUser);
-        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST, listUserLists);
+        responseService.successF(res, Constantes.SuccessMessage.USER_LIST_GET_CURRENT_LIST, listUserLists);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_CREATE_LIST)
@@ -54,7 +51,7 @@ public class UserListController {
     public void createCustomList(@RequestBody UserList userList, HttpServletRequest req, HttpServletResponse res) throws IOException {
         User currentUser = Helpers.getCurrentUser(req);
         UserList customUserList = userListService.createCustomList(currentUser, userList.getNom());
-        responseService.SuccessF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK, customUserList);
+        responseService.successF(res, Constantes.SuccessMessage.USER_LIST_CREATE_OK, customUserList);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_USER_LIST_ADD_ANIME)
@@ -65,18 +62,18 @@ public class UserListController {
         UserList theUserListCurrentUser = userListService.getOneUserListByIdForCurrentUser(userListAnimeDTO.idUserList, currentUser);
 
         if (theUserListCurrentUser == null) {
-            responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_ADD_ANIME_TO_USER_LIST, HttpServletResponse.SC_NOT_FOUND, false);
+            responseService.errorF(res, Constantes.ErrorMessage.ERROR_ADD_ANIME_TO_USER_LIST, HttpServletResponse.SC_NOT_FOUND, false);
             return;
         }
 
         Anime animeToAdd = animeService.getByIdApi(userListAnimeDTO.idApiAnime);
         List<Anime> animeList = theUserListCurrentUser.getAnimes(); // récupération les animés dans la liste de l'utilisateur
         if (animeList.contains(animeToAdd)) {
-            responseService.ErrorF(res, Constantes.ErrorMessage.ERROR_ADD_ANIME_ALSO_EXIST, 404, false);
+            responseService.errorF(res, Constantes.ErrorMessage.ERROR_ADD_ANIME_ALSO_EXIST, 404, false);
             return;
         }
         UserList ul = userListService.addAnimeToUserList(animeToAdd, animeList, theUserListCurrentUser);
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNomTraduit(), theUserListCurrentUser.getNom()), ul);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.ADD_ANIME_ON_USER_LIST, animeToAdd.getNomTraduit(), theUserListCurrentUser.getNom()), ul);
     }
 
     @GetMapping("/{idList}/animes")
@@ -85,11 +82,11 @@ public class UserListController {
 
         List<Anime> animeList = userListService.getAllAnimeByUserList(currentUser, idList);
         if (animeList == null) {
-            responseService.ErrorF(res, Constantes.ErrorMessage.ANY_ANIME_FETCH, 404, false);
+            responseService.errorF(res, Constantes.ErrorMessage.ANY_ANIME_FETCH, 404, false);
             return;
         }
 
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.ALL_ANIME_ON_LIST, animeList.size()), animeList);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.ALL_ANIME_ON_LIST, animeList.size()), animeList);
     }
 
     @DeleteMapping("/{idList}")
@@ -99,18 +96,18 @@ public class UserListController {
         boolean isDeletable = userListService.deleteListByIdList(idList,currentUser);
 
         if (!isDeletable) {
-            responseService.ErrorF(res, Constantes.ErrorMessage.LIST_USER_NOT_EXIST_OR_CANT_DELETABLE, HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.errorF(res, Constantes.ErrorMessage.LIST_USER_NOT_EXIST_OR_CANT_DELETABLE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
 
-        responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_USERLIST_OK, isDeletable);
+        responseService.successF(res,Constantes.SuccessMessage.DELETE_USERLIST_OK, isDeletable);
     }
 
     @DeleteMapping("/{iduserlist}/animes/{idanime}")
     public void deleteAnimeList(@PathVariable Long iduserlist,@PathVariable Long idanime,HttpServletRequest req,HttpServletResponse res) throws IOException, CustomErrorMessageException {
 
         if(iduserlist == null || iduserlist<=0 || idanime == null || idanime <=0){
-            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_VALID,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
+            responseService.errorF(res,Constantes.ErrorMessage.PARAMETER_NOT_VALID,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
 
@@ -118,10 +115,10 @@ public class UserListController {
         UserList userList = userListService.deleteAnimeList(iduserlist,idanime,currentUser);
 
         if(userList == null){
-            responseService.ErrorF(res,Constantes.ErrorMessage.USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME,HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false);
+            responseService.errorF(res,Constantes.ErrorMessage.USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME,HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false);
             return;
         }
 
-        responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_ANIME_ON_USERLIST_OK, userList);
+        responseService.successF(res,Constantes.SuccessMessage.DELETE_ANIME_ON_USERLIST_OK, userList);
     }
 }

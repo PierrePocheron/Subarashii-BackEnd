@@ -5,7 +5,6 @@ import com.jfam.subarashii.entities.AnimeComment;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.dto.AnimeCommentDTO;
 import com.jfam.subarashii.services.AnimeCommentService;
-import com.jfam.subarashii.services.AnimeService;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.utils.Constantes;
 import com.jfam.subarashii.utils.Helpers;
@@ -36,10 +35,10 @@ public class AnimeCommentController {
 
 
     @GetMapping("/{idanime}")
-    public void GetAnimeComments(@PathVariable long idanime, HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void getAnimeComments(@PathVariable long idanime, HttpServletRequest req, HttpServletResponse res) throws IOException {
         List<AnimeComment> animeCommentList = animeCommentService.getCommentByIdAnime(idanime);
-        if (animeCommentList.size() == 0){
-            responseService.SuccessF(res,"commentaires inexistants", animeCommentList);
+        if(animeCommentList.isEmpty()){
+            responseService.successF(res,"commentaires inexistants", animeCommentList);
             return;
         }
         User currentUser  = Helpers.getCurrentUser(req);
@@ -63,21 +62,22 @@ public class AnimeCommentController {
     }
 
     @PostMapping
-    public void CreateAnimeComments(@RequestBody AnimeCommentDTO animeCommentDTO, HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {
+    public void createAnimeComments(@RequestBody AnimeCommentDTO animeCommentDTO, HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {
         if(animeCommentDTO == null || animeCommentDTO.getIdApiAnime() < 0 || animeCommentDTO.getContenu().isEmpty())
         {
-            responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_BAD_REQUEST,false);
+            responseService.errorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_BAD_REQUEST,false);
             return;
         }
         User currentUser  = Helpers.getCurrentUser(req);
         AnimeComment resultAnimeComment =  animeCommentService.createAnimeComment(currentUser,animeCommentDTO);
         if(resultAnimeComment == null){
-            responseService.ErrorF(res, "commentaire animé null",HttpServletResponse.SC_BAD_REQUEST,false);
+            responseService.errorF(res, "commentaire animé null",HttpServletResponse.SC_BAD_REQUEST,false);
             return;
         }
 
         responseService.SuccessF(res,"le commentaire a été ajouté", resultAnimeComment);
     }
+
 
     @DeleteMapping("/{idAnimeComment}")
     public void deleteAnimeCommentById(@PathVariable long idAnimeComment,HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {

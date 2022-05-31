@@ -5,36 +5,38 @@ import java.util.List;
 
 public class Constantes {
     public static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
-    public final static String ROUTE_SIGN_IN = "/users/sign-in";
-    public final static String ROUTE_SIGN_UP = "/users/sign-up";
+    public static final  String ROUTE_SIGN_IN = "/users/sign-in";
+    public static final  String ROUTE_SIGN_UP = "/users/sign-up";
+    public static final  String ROUTE_GET_ALL_SECRET_QUESTIONS = "/secretquestions";
     public static String ENVIRONNEMENT_TYPE;
     public static String ADRESS_FRONT;
     public static String BUILD_VERSION;
-    public final static String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
 
-    public final static String EMPTY_STRING = "";
+    public static final  String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
+
+    public static final  String EMPTY_STRING = "";
 
     public static class Keys {
-        public final static String USER = "user";
-        public final static String TOKEN = "token";
-        public final static String USERNAME = "username";
-        public final static String EMAIL = "email";
-        public final static String GENRES = "genres";
-        public final static String ROLE = "ROLE_";
+        public  static final  String USER = "user";
+        public  static final String TOKEN = "token";
+        public static final  String USERNAME = "username";
+        public static final  String EMAIL = "email";
+        public static final  String GENRES = "genres";
+        public static final  String ROLE = "ROLE_";
     }
 
     public static class Claims {
-        public final static String EMAIL = "email";
-        public final static String USERNAME = "username";
-        public final static String ROLE = "role";
+        public static final  String EMAIL = "email";
+        public static final  String USERNAME = "username";
+        public static final  String ROLE = "role";
     }
 
     public static class DefaultList {
-        public final static String A_VOIR = "A voir";
-        public final static String EN_COURS = "En cours";
-        public final static String TERMINEE = "Terminée";
-        public final static String EN_ATTENTE = "En attente";
-        public final static String FAVORIS = "Favoris";
+        public static final  String A_VOIR = "A voir";
+        public static final  String EN_COURS = "En cours";
+        public static final  String TERMINEE = "Terminée";
+        public static final  String EN_ATTENTE = "En attente";
+        public static final  String FAVORIS = "Favoris";
     }
 
     public static class ErrorMessage {
@@ -114,41 +116,73 @@ public class Constantes {
         public final static String DELETE_ANIME_ON_USERLIST_OK = "L'animé a correctement été supprimé de la liste";
         public final static String GRANT_USER_ROLE_ADMIN_OK = "L'utilisateur a été gradé administrateur";
         public final static String GRANT_USER_ROLE_USER_OK = "L'utilisateur a été rétrogradé";
-
+        public static final String TOKEN_EXPIRATION_DATE = "L'obtention de la date d'expiration n'a pas pû être effectué: ";
+        public static final String TOKEN_CLAIMS = "L'obtention de la claim n'a pas pû être effectué: ";
+        public static final String TOKEN_CREATE = "La création du token à échoué :";
+        public static final String TOKEN_NOT_EXIST = "%s - Veuillez vous identifier";
+        public static final String TOKEN_INVALIDE = "Le token est invalide";
+        public static final String AUTHENTIFICATION_NOT_OK = "Email ou mots de passe incorrect";
+        public static final String ANIME_NOT_FOUND = "Aucun animé a été trouvé ...";
+        public static final String ERROR_UNIQUE_CONTRAINT_DATABASE = "L'information existe déjà dans la base de donnée";
+        public static final String ANIME_NOT_FOUND_ON_PAGE = "Aucun animé n'a été trouvé à la page ";
+        public static final String PARAMETER_NOT_EXPECTED = "Le paramètre n'est pas celui attendu ou ne possède pas de la valeur";
+        public static final String NUMBER_FORMAT_NOT_OK = "Le paramètre attendait un nombre en entré et n'a pas reçu le bon format";
+        public static final String PARAMETER_TYPE_METHOD_MISMATCH = "Le paramètre fournit ne corresponds pas au type du paramètre attendu";
+        public static final String PARAMETER_NOT_VALID = "Le ou les paramètre fournis ne répondent pas aux critères attendus";
+        public static final String DATABASE_ACCESS_RESSOURCE_USAGE_NOT_OK = "L'accès à la ressource de la base de donnée n'a pas pu être réalisé";
+        public static final String REQUEST_REFUSED = "La requête n'a pas pu être accepté car elle ne corresponds pas au attente";
+        public static final String CONSTRAINT_FIELD_NOT_OK = "Une contrainte n'a pas été respecté sur une ou plusieurs valeurs";
+        public static final String NOT_UNIQUE_RESULT = "La requête a retourné plusieurs résultats alors qu'un seul était attentdu";
+        public static final String ANY_PARAMETER_PROVIDED = "Aucun paramètre n'a été fournis";
+        public static final String ERROR_ADD_ANIME_TO_USER_LIST = "La liste dans laquel vous souhaité ajouter l'animé n'existe pas ou n'appartient pas à l'utilisateur";
+        public static final String ERROR_ADD_ANIME_ALSO_EXIST = "L'animé est déjà présent dans la liste";
+        public static final String SIGN_UP_NOT_VALID = "Inscription incorrecte";
+        public static final String RESOURCE_NOT_FOUND = "La ressource recherché n'a pas pu être trouvé";
+        public static final String TOKEN_USER_NOT_EXIST = "L'utilisateur que vous tentez d'utiliser n'existe plus dans la base de donnée";
+        public static final String GENRE_NOT_FOUND = "Le genre recherché n'a pas été trouvé";
+        public static final String ERROR_PARSE = "Une erreur a eut lieu pendant le parcours de la méthode";
+        public static final String EPISODE_NOT_FOUND = "Aucun épisode n'a été trouvé";
+        public static final String ANY_ANIME_FETCH = "Aucune liste ne corresponds ou aucun animé n'a été trouvé";
+        public static final String ANY_USER_FETCH = "Aucun utilisateur ne corresponds à l'utilisateur connecté";
+        public static final String LIST_USER_NOT_EXIST_OR_CANT_DELETABLE = "La liste que vous souhaité supprimer n'existe pas ou n'est pas supprimable.";
+        public static final String USER_LIST_NOT_FOUND = "La liste recherché n'existe pas ou n'appartient pas l'utilisateur";
+        public static final String USER_LIST_NOT_CONTAIN_ANIME = "La liste ne contient pas d'animé";
+        public static final String USER_LIST_ANIME_NOT_EXIST = "L'animé que vous souhaité supprimer n'existe pas dans la liste";
+        public static final String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
     }
 
     public static class Token_value {
-        public static String JWT_SECRET_KEY;
-        public static Integer MINUTE_VALIDATION;
-        public final static String AUTHORIZATION_HEADER = "Authorization";
-        public final static String TOKEN_PREFIX = "Bearer ";
+        public static  String JWT_SECRET_KEY = null;
+        public static  Integer MINUTE_VALIDATION;
+        public static final String AUTHORIZATION_HEADER = "Authorization";
+        public static final String TOKEN_PREFIX = "Bearer ";
     }
 
     public static class ApiMovie {
-        public static String TOKEN_SECRET;
-        public final static int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION = 458;
-        public final static int ANIMATION_ID_GENRE = 16;
-        public final static String URL_IMAGE = "https://image.tmdb.org/t/p/w500";
-        public final static String URL_IMAGE_ORIGINE = "https://image.tmdb.org/t/p/original";
-        public final static String ROUTE_SERIES_DETAILS_BY_ID = "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
-        public final static String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON = "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
+        public static  String TOKEN_SECRET;
+        public static final int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION = 458;
+        public static final int ANIMATION_ID_GENRE = 16;
+        public static final String URL_IMAGE = "https://image.tmdb.org/t/p/w500";
+        public static final String URL_IMAGE_ORIGINE = "https://image.tmdb.org/t/p/original";
+        public static final String ROUTE_SERIES_DETAILS_BY_ID = "https://api.themoviedb.org/3/tv/%d?language=fr-Fr";
+        public static final String ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON = "https://api.themoviedb.org/3/tv/%d/season/%d?language=fr-Fr";
         /**
          * genre 16 = animation , original_language=ja = japan
          */
-        public final static String ROUTE_SERIES_DISCOVER_ANIME = "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc&original_language=ja";
-        public final static String ROUTE_GENRE_ANIME = "https://api.themoviedb.org/3/genre/tv/list?language=fr-Fr";
+        public static final String ROUTE_SERIES_DISCOVER_ANIME = "https://api.themoviedb.org/3/discover/tv?with_genres=16&original_language=ja&page=%d&language=fr-Fr&sort_by=original_title.asc&original_language=ja";
+        public static final String ROUTE_GENRE_ANIME = "https://api.themoviedb.org/3/genre/tv/list?language=fr-Fr";
 
 
-        public final static String ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS = "https://api.themoviedb.org/3/discover/tv?language=fr-FR&with_genres=16&sort_by=original_title.asc";
-        public final static String ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS = "https://api.themoviedb.org/3/search/tv?language=fr-FR";
+        public static final String ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS = "https://api.themoviedb.org/3/discover/tv?language=fr-FR&with_genres=16&sort_by=original_title.asc";
+        public static final String ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS = "https://api.themoviedb.org/3/search/tv?language=fr-FR";
 
-        public final static String OTHER_QUERY_PARAMS_SYNTAX = "&%s=%s";
+        public static final String OTHER_QUERY_PARAMS_SYNTAX = "&%s=%s";
 
-        public final static String JSON_KEY_RESULT = "results";
-        public final static String JSON_KEY_GENRE_IDS = "genre_ids";
-        public final static String JSON_KEY_GENRES = "genres";
-        public final static String JSON_KEY_ID = "id";
-        public final static String JSON_KEY_EPISODES = "episodes";
+        public static final String JSON_KEY_RESULT = "results";
+        public static final String JSON_KEY_GENRE_IDS = "genre_ids";
+        public static final String JSON_KEY_GENRES = "genres";
+        public static final String JSON_KEY_ID = "id";
+        public static final String JSON_KEY_EPISODES = "episodes";
     }
 
     public static class Swagger {
@@ -169,7 +203,7 @@ public class Constantes {
     }
 
 
-    public final static List<String> LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH = Arrays.asList(
+    public static final List<String> LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH = Arrays.asList(
             "first_air_date_year",
             "include_adult",
             "query",
@@ -177,7 +211,7 @@ public class Constantes {
             "language");
 
 
-    public final static List<String> LIST_QUERY_PARAMS_FOR_FULL_SEARCH = Arrays.asList(
+    public static final List<String> LIST_QUERY_PARAMS_FOR_FULL_SEARCH = Arrays.asList(
             "language",
             "region",
             "sort_by",
@@ -217,7 +251,7 @@ public class Constantes {
             "without_companies");
 
 
-    public static String START_MESSAGE = "\n" +
+    public static final String STARTMESSAGE = "\n" +
             "       ==================================== \n" +
             "          ______________    ____  ______\n" +
             "         / ___/_  __/   |  / __ \\/_  __/\n" +
