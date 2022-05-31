@@ -34,21 +34,32 @@ public class AnimeCommentController {
     @Autowired
     ResponseService responseService;
 
+
     @GetMapping("/{idanime}")
-    public void GetAnimeComments(@PathVariable long idanime,HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void GetAnimeComments(@PathVariable long idanime, HttpServletRequest req, HttpServletResponse res) throws IOException {
         List<AnimeComment> animeCommentList = animeCommentService.getCommentByIdAnime(idanime);
-        if(animeCommentList.size() == 0){
+        if (animeCommentList.size() == 0){
             responseService.SuccessF(res,"commentaires inexistants", animeCommentList);
             return;
         }
         User currentUser  = Helpers.getCurrentUser(req);
         List<AnimeCommentDTO> animeCommentDTOList =  animeCommentList.stream().map(animeComment -> new AnimeCommentDTO(animeComment, currentUser)).collect(Collectors.toList());
 
-
-
-
         responseService.SuccessF(res,"le commentaire a été trouvé", animeCommentDTOList);
+    }
 
+    @GetMapping()
+    public void getAll(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        // Todo : admin
+        List<AnimeComment> animeCommentList = animeCommentService.getAll();
+        if (animeCommentList.size() == 0){
+            responseService.SuccessF(res,"commentaires inexistants", animeCommentList);
+            return;
+        }
+        User currentUser  = Helpers.getCurrentUser(req);
+        List<AnimeCommentDTO> animeCommentDTOList =  animeCommentList.stream().map(animeComment -> new AnimeCommentDTO(animeComment, currentUser)).collect(Collectors.toList());
+
+        responseService.SuccessF(res,"les commentaires ont été trouvés", animeCommentDTOList);
     }
 
     @PostMapping
@@ -59,14 +70,19 @@ public class AnimeCommentController {
             return;
         }
         User currentUser  = Helpers.getCurrentUser(req);
-       AnimeComment resultAnimeComment =  animeCommentService.createAnimeComment(currentUser,animeCommentDTO);
+        AnimeComment resultAnimeComment =  animeCommentService.createAnimeComment(currentUser,animeCommentDTO);
         if(resultAnimeComment == null){
             responseService.ErrorF(res, "commentaire animé null",HttpServletResponse.SC_BAD_REQUEST,false);
             return;
         }
 
         responseService.SuccessF(res,"le commentaire a été ajouté", resultAnimeComment);
+    }
 
-
+    @DeleteMapping("/{idAnimeComment}")
+    public void deleteAnimeCommentById(@PathVariable long idAnimeComment,HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {
+        if (animeCommentService.deleteAnimeCommentById(idAnimeComment)){
+            responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_ANIMECOMMENT_OK, true);
+        }
     }
 }

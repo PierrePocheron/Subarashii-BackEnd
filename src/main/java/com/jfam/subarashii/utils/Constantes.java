@@ -73,6 +73,8 @@ public class Constantes {
         public final static String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
         public final static String EXCEPTION_USER_DOESNT_RIGHTS_ADMIN = "L'utilisateur ne possède pas les droits d'administrateurs";
         public final static String EXCEPTION_USER_DOESNT_EXISTS = "L'utilisateur n'existe pas";
+        public final static String EXCEPTION_ANIMECOMMENT_DOESNT_EXISTS = "Le commentaire n'existe pas";
+        public final static String EXCEPTION_ANIME_DOESNT_EXISTS = "L'animé n'existe pas";
 
     }
 
@@ -102,6 +104,7 @@ public class Constantes {
         public final static String READ_USER_OK = "L'utilisateur connecté a bien été récupérer";
         public final static String DELETE_USERLIST_OK = "La liste a correctement été supprimé";
         public final static String DELETE_USER_OK = "L'utilisateur a correctement été supprimé";
+        public final static String DELETE_ANIMECOMMENT_OK = "Le commentaire a correctement été supprimé";
         public final static String DELETE_ANIME_ON_USERLIST_OK = "L'animé a correctement été supprimé de la liste";
         public final static String GRANT_USER_ROLE_ADMIN_OK = "L'utilisateur a été gradé administrateur";
         public final static String GRANT_USER_ROLE_USER_OK = "L'utilisateur a été rétrogradé";
