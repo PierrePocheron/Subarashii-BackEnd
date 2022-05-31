@@ -36,7 +36,7 @@ public class AnimeCommentController {
     @GetMapping("/{idanime}")
     public void getAnimeComments(@PathVariable long idanime, HttpServletRequest req, HttpServletResponse res) throws IOException {
         List<AnimeComment> animeCommentList = animeCommentService.getCommentByIdAnime(idanime);
-        if(animeCommentList.size() == 0){
+        if(animeCommentList.isEmpty()){
             responseService.successF(res,"commentaires inexistants", animeCommentList);
             return;
         }
