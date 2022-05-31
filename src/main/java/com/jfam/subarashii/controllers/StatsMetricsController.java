@@ -29,13 +29,19 @@ public class StatsMetricsController {
 
     @GetMapping("/count/users/user")
     public void getCountUsersUser(HttpServletResponse res) throws IOException {
-        Integer countUser = statsMetricsService.getCountUsersRole(Role.USER.name());
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_ALL_USERS_USER,countUser), countUser);
+        Integer countUsers = statsMetricsService.getCountUsersRole(Role.USER.name());
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_USERS_USER,countUsers), countUsers);
     }
 
     @GetMapping("/count/users/admin")
     public void getCountUsersAdmin(HttpServletResponse res) throws IOException {
-        Integer countUser = statsMetricsService.getCountUsersRole(Role.ADMIN.name());
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_ALL_USERS_ADMIN,countUser), countUser);
+        Integer countUsers = statsMetricsService.getCountUsersRole(Role.ADMIN.name());
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_USERS_ADMIN,countUsers), countUsers);
+    }
+
+    @GetMapping("/count/comments")
+    public void getCountComments(HttpServletResponse res) throws IOException {
+        Long countComments = statsMetricsService.getCountComments();
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_COMMENTS,countComments), countComments);
     }
 }
