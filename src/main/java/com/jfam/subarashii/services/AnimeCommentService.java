@@ -34,7 +34,7 @@ public class AnimeCommentService {
     AnimeRepository animeRepository;
 
     public List<AnimeComment> getCommentByIdAnime(Long idAnime) {
-      return animeCommentRepository.findAllByAnime_IdApi(idAnime);
+      return animeCommentRepository.findAllByAnimeIdApi(idAnime);
     }
 
 
