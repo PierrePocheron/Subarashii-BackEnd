@@ -43,14 +43,14 @@ public class AnimeController {
     @GetMapping("/{idapi}")
     public void getById(@PathVariable long idapi, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
         Anime anime = animeService.getByIdApi(idapi);
-        responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_FIND, anime);
+        responseService.successF(res,Constantes.SuccessMessage.ANIME_FIND, anime);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_GET_SEASON_BY_ID_API)
     @GetMapping("/{idanime}/season/{idseason}")
     public void getByAllEpisodeByIdAnimeAndSeason(@PathVariable long idanime, @PathVariable long idseason, HttpServletResponse res) throws IOException, ResourceApiNotFoundException, ParseException {
-        List<Episode> episodeList = episodeService.GetEpisodesAnimeBySaisonId(idanime,idseason);
-        responseService.SuccessF(res,Constantes.SuccessMessage.EPISODE_FIND, episodeList);
+        List<Episode> episodeList = episodeService.getEpisodesAnimeBySaisonId(idanime,idseason);
+        responseService.successF(res,Constantes.SuccessMessage.EPISODE_FIND, episodeList);
     }
 
     @Operation(summary = Constantes.Swagger.SUMMARY_DISCOVER_ANIME)
@@ -61,11 +61,11 @@ public class AnimeController {
 
         if(resultSearch == null || resultSearch.results == null || resultSearch.results.size() == 0)
         {
-            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
+            responseService.errorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
         }
 
-        responseService.SuccessF(res,Constantes.SuccessMessage.ANIME_DISCOVER_OK, resultSearch);
+        responseService.successF(res,Constantes.SuccessMessage.ANIME_DISCOVER_OK, resultSearch);
     }
 
     @GetMapping("/search")
@@ -75,26 +75,26 @@ public class AnimeController {
         allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
 
         if(allParams.size() ==0){
-            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
+            responseService.errorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
 
         List<String> unauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH);
         if(unauthorizedParams.size() != 0)
         {
-            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, unauthorizedParams);
+            responseService.errorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, unauthorizedParams);
             return;
         }
 
         ApiPaginationResults resultSearch = animeService.simpleSearchAnime(allParams);
         if(resultSearch.results == null || resultSearch.results.size() == 0)
         {
-            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
+            responseService.errorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
         }
 
 
-        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.size()), resultSearch);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.size()), resultSearch);
     }
 
 
@@ -105,23 +105,23 @@ public class AnimeController {
         allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
 
         if(allParams.size() ==0){
-            responseService.ErrorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
+            responseService.errorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
         List<String> UnauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_FULL_SEARCH);
         if(UnauthorizedParams.size() != 0)
         {
-            responseService.ErrorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
+            responseService.errorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
             return;
         }
 
         ApiPaginationResults resultSearch  = animeService.complexeSearchAnime(allParams);
         if(resultSearch.results == null || resultSearch.results.size() == 0)
         {
-            responseService.ErrorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
+            responseService.errorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
         }
-        responseService.SuccessF(res,Constantes.SuccessMessage.COMPLEXE_SEARCH_OK,resultSearch);
+        responseService.successF(res,Constantes.SuccessMessage.COMPLEXE_SEARCH_OK,resultSearch);
 
     }
 

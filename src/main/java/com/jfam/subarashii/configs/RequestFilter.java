@@ -43,12 +43,12 @@ public class RequestFilter extends OncePerRequestFilter {
         String header = req.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER);
 
         if (header == null) {
-            responseService.ErrorF(res,String.format(Constantes.ErrorMessage.TOKEN_NOT_EXIST,Constantes.BUILD_VERSION), HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.errorF(res,String.format(Constantes.ErrorMessage.TOKEN_NOT_EXIST,Constantes.BUILD_VERSION), HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
         String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,Constantes.EMPTY_STRING);
-        if (!jwtService.VerifyToken(token)) {
-            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
+        if (!jwtService.verifyToken(token)) {
+            responseService.errorF(res, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
         // set user role for security
@@ -56,7 +56,7 @@ public class RequestFilter extends OncePerRequestFilter {
 
         User currrentUser = userService.getUserForFilterByEmail(email);
         if(currrentUser == null){
-            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_USER_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.errorF(res, Constantes.ErrorMessage.TOKEN_USER_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
 

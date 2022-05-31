@@ -18,17 +18,17 @@ public class ResponseService {
     ResponseDTO responsedto;
     private static final Logger logger = LoggerFactory.getLogger(ResponseService.class);
 
-    public void ErrorF(HttpServletResponse response, String errormessage, int Errorstatut, Object body) throws IOException {
+    public void errorF(HttpServletResponse response, String errormessage, int errorstatut, Object body) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(Errorstatut);
-        responsedto = new ResponseDTO(errormessage,Errorstatut,body);
+        response.setStatus(errorstatut);
+        responsedto = new ResponseDTO(errormessage,errorstatut,body);
         mapper = new ObjectMapper();
         String jsonResponse = mapper.writeValueAsString(responsedto);
         response.getOutputStream().write(jsonResponse.getBytes(StandardCharsets.UTF_8));
         logger.warn(errormessage);
     }
 
-    public void SuccessF(HttpServletResponse response, String successmessage, Object body) throws IOException {
+    public void successF(HttpServletResponse response, String successmessage, Object body) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
         responsedto = new ResponseDTO(successmessage,HttpServletResponse.SC_OK,body);

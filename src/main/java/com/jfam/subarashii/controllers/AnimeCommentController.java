@@ -37,7 +37,7 @@ public class AnimeCommentController {
     public void getAnimeComments(@PathVariable long idanime, HttpServletRequest req, HttpServletResponse res) throws IOException {
         List<AnimeComment> animeCommentList = animeCommentService.getCommentByIdAnime(idanime);
         if(animeCommentList.size() == 0){
-            responseService.SuccessF(res,"commentaires inexistants", animeCommentList);
+            responseService.successF(res,"commentaires inexistants", animeCommentList);
             return;
         }
         User currentUser  = Helpers.getCurrentUser(req);
@@ -46,7 +46,7 @@ public class AnimeCommentController {
 
 
 
-        responseService.SuccessF(res,"le commentaire a été trouvé", animeCommentDTOList);
+        responseService.successF(res,"le commentaire a été trouvé", animeCommentDTOList);
 
     }
 
@@ -54,17 +54,17 @@ public class AnimeCommentController {
     public void createAnimeComments(@RequestBody AnimeCommentDTO animeCommentDTO, HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException, ResourceApiNotFoundException {
         if(animeCommentDTO == null || animeCommentDTO.getIdApiAnime() < 0 || animeCommentDTO.getContenu().isEmpty())
         {
-            responseService.ErrorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_BAD_REQUEST,false);
+            responseService.errorF(res, Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_BAD_REQUEST,false);
             return;
         }
         User currentUser  = Helpers.getCurrentUser(req);
        AnimeComment resultAnimeComment =  animeCommentService.createAnimeComment(currentUser,animeCommentDTO);
         if(resultAnimeComment == null){
-            responseService.ErrorF(res, "commentaire animé null",HttpServletResponse.SC_BAD_REQUEST,false);
+            responseService.errorF(res, "commentaire animé null",HttpServletResponse.SC_BAD_REQUEST,false);
             return;
         }
 
-        responseService.SuccessF(res,"le commentaire a été ajouté", resultAnimeComment);
+        responseService.successF(res,"le commentaire a été ajouté", resultAnimeComment);
 
 
     }

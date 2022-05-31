@@ -71,7 +71,7 @@ public class AnimeService {
 
         String query = Helpers.getQueryFromMap(allParams);
         // récupère des série de tout genre :
-        ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
+        ApiPaginationResults apiPaginationResults = httpClient.getQueryPageableResult(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
 
         if(apiPaginationResults.results != null)
             // du coup je ne veux que les animés:
@@ -86,17 +86,17 @@ public class AnimeService {
      */
     public ApiPaginationResults complexeSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
         String query = Helpers.getQueryFromMap(allParams);
-        return httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
+        return httpClient.getQueryPageableResult(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
     }
 
     /**
      * Fetch anime and convert to ApiPaginationResults result
-     * @param Page
+     * @param page
      * @return ApiPaginationResults object (api objet with page and other infos)
      * @throws ResourceApiNotFoundException
      */
-    public ApiPaginationResults getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
-        ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, Page));
+    public ApiPaginationResults getDiscoverAnime(int page) throws ResourceApiNotFoundException {
+        ApiPaginationResults apiPaginationResults = httpClient.getQueryPageableResult(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, page));
         return apiPaginationResults;
     }
 
