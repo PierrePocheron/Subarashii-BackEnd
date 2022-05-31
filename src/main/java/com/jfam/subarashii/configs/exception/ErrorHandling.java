@@ -39,7 +39,7 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public final void sqlException(SQLIntegrityConstraintViolationException ex, HttpServletResponse res) throws IOException {
-        loggers.error("SQLException: " , ex.getMessage());
+        loggers.error("SQLException: " + ex.getMessage());
         responseService.errorF(res, Constantes.ErrorMessage.ERROR_UNIQUE_CONTRAINT_DATABASE,HttpServletResponse.SC_NOT_ACCEPTABLE, Helpers.SubstringBefore(ex.getMessage()," for"));
     }
 
@@ -74,40 +74,40 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     }
     @ExceptionHandler(NumberFormatException.class)
     public final void numberFormatException(NumberFormatException ex, HttpServletResponse res) throws IOException {
-        loggers.error("NumberFormatException: " ,ex.getMessage());
+        loggers.error("NumberFormatException: " + ex.getMessage());
 
         responseService.errorF(res,Constantes.ErrorMessage.NUMBER_FORMAT_NOT_OK,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public final void methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
-        loggers.error("MethodArgumentTypeMismatchException: ", ex.getMessage());
+        loggers.error("MethodArgumentTypeMismatchException: " +  ex.getMessage());
 
         responseService.errorF(res, Constantes.ErrorMessage.PARAMETER_TYPE_METHOD_MISMATCH,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(ParseException.class)
     public final void parseException(ParseException ex, HttpServletResponse res) throws IOException {
-        loggers.error("ParseException: " ,ex.getMessage());
+        loggers.error("ParseException: " + ex.getMessage());
 
         responseService.errorF(res, Constantes.ErrorMessage.ERROR_PARSE,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(RequestRejectedException.class)
     public final void requestRejectedException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
-        loggers.error("RequestRejectedException: ",ex.getMessage());
+        loggers.error("RequestRejectedException: " + ex.getMessage());
 
         responseService.errorF(res,Constantes.ErrorMessage.REQUEST_REFUSED,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NonUniqueResultException.class)
     public final void requestRejectedException(NonUniqueResultException ex, HttpServletResponse res) throws IOException {
-        loggers.error("NonUniqueResultException: ", ex.getMessage());
+        loggers.error("NonUniqueResultException: " +  ex.getMessage());
 
         responseService.errorF(res,Constantes.ErrorMessage.NOT_UNIQUE_RESULT,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(CustomErrorMessageException.class)
     public final void customErrorMessageException(CustomErrorMessageException ex, HttpServletResponse res) throws IOException {
-        loggers.error("CustomErrorMessageException: " , ex.getMessage());
+        loggers.error("CustomErrorMessageException: " + ex.getMessage());
         responseService.errorF(res,ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
@@ -118,8 +118,7 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
 
         Set<ConstraintViolation<?>> violationExceptionSet =  ex.getConstraintViolations();
 
-        // récupère toutes les contraintes non respectés lors de l'action
-        // et les renvois dans le body
+
         Map<String,String> contraintMap = new HashMap<>();
         violationExceptionSet.forEach(ves->{
             String contraintField =  ves.getPropertyPath().toString();
