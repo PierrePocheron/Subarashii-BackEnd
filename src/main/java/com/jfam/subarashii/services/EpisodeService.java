@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Episode;
-import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.EpisodeRepository;
 import com.jfam.subarashii.repositories.UserRepository;
@@ -60,7 +59,7 @@ public class EpisodeService {
      * @return
      */
     private List<Episode> fetchApi(Long idApiAnime,Long idApiSaison , Anime anime) throws ResourceApiNotFoundException {
-        JsonObject result = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON,idApiAnime,idApiSaison ));
+        JsonObject result = httpClient.getQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_GET_EPISODE_BY_ID_ANIME_AND_SEASON,idApiAnime,idApiSaison ));
         JsonArray jsonEpisodeArray = result.get(Constantes.ApiMovie.JSON_KEY_EPISODES).getAsJsonArray();
         List<Episode> episodeList = new ArrayList<>();
         jsonEpisodeArray.forEach((jsonEpisode) ->{

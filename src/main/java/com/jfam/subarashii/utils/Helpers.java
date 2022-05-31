@@ -1,13 +1,11 @@
 package com.jfam.subarashii.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.entities.User;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -67,7 +65,7 @@ public class Helpers {
 
     public static String getDateNow() {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.DATE_FORMAT_NOW);
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.DateFormatNow);
         return sdf.format(cal.getTime());
     }
 

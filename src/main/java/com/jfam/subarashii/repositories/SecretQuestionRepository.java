@@ -1,6 +1,5 @@
 package com.jfam.subarashii.repositories;
 
-import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.SecretQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -22,10 +22,10 @@ public class UserListService {
     public List<UserList> createDefaultList(User user) {
 
         List<UserList> defaultList = Arrays.asList(
-                new UserList(Constantes.DefaultList.A_VOIR, user, false),
-                new UserList(Constantes.DefaultList.EN_COURS, user, false),
+                new UserList(Constantes.DefaultList.AVoir, user, false),
+                new UserList(Constantes.DefaultList.EnCours, user, false),
                 new UserList(Constantes.DefaultList.TERMINEE, user, false),
-                new UserList(Constantes.DefaultList.EN_ATTENTE, user, false),
+                new UserList(Constantes.DefaultList.EnAttente, user, false),
                 new UserList(Constantes.DefaultList.FAVORIS, user, false)
         );
 

@@ -61,7 +61,7 @@ public class GenreService {
 
     // region === PRIVATE METHOD ===
     private List<Genre> fetchGenresFromApi() throws ResourceApiNotFoundException {
-        JsonObject genreResult = httpClient.GetQuery(ROUTE_GENRE_ANIME);
+        JsonObject genreResult = httpClient.getQuery(ROUTE_GENRE_ANIME);
         JsonArray jsonArrayGenre = genreResult.get(Constantes.ApiMovie.JSON_KEY_GENRES).getAsJsonArray();
         List<Genre> genresList = new ArrayList<>();
 

@@ -21,7 +21,7 @@ public class MyRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         genreService.getAllStartApplication();
 
-        logger.error(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
-        logger.info(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
+        logger.error(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.EnvironnementType));
+        logger.info(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.EnvironnementType));
     }
 }
