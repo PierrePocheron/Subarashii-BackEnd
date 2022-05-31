@@ -76,14 +76,14 @@ public class RequestFilter extends OncePerRequestFilter {
         if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
 
             return path.contains(Constantes.ROUTE_SIGN_UP) ||
-                    path.contains(Constantes.RouteSignIn) ||
-                    path.contains(Constantes.RouteGetAllSecretQuestions) ||
+                    path.contains(Constantes.ROUTE_SIGN_UP) ||
+                    path.contains(Constantes.ROUTE_GET_ALL_SECRET_QUESTIONS) ||
                     path.startsWith("/swagger-ui/") ||
                     path.startsWith("/api");
         }
 
         return path.contains(Constantes.ROUTE_SIGN_UP) ||
-                path.contains(Constantes.RouteSignIn) ||
-                path.contains(Constantes.RouteGetAllSecretQuestions);
+                path.contains(Constantes.ROUTE_SIGN_UP) ||
+                path.contains(Constantes.ROUTE_GET_ALL_SECRET_QUESTIONS);
     }
 }

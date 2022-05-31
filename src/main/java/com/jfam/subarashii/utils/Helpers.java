@@ -65,7 +65,7 @@ public class Helpers {
 
     public static String getDateNow() {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.DateFormatNow);
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.DATE_FORMAT_NOW);
         return sdf.format(cal.getTime());
     }
 
