@@ -35,7 +35,7 @@ public class RequestFilter extends OncePerRequestFilter {
     @Autowired
     UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(RequestFilter.class);
+    private static final Logger loggers = LoggerFactory.getLogger(RequestFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
