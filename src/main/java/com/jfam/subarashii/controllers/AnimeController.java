@@ -59,7 +59,7 @@ public class AnimeController {
         Integer pageNb = page.isEmpty() ? new Random().nextInt(Constantes.ApiMovie.MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION) : page.get();
         ApiPaginationResults resultSearch = animeService.getDiscoverAnime(pageNb);
 
-        if(resultSearch == null || resultSearch.results == null || resultSearch.results.size() == 0)
+        if(resultSearch == null || resultSearch.results == null || resultSearch.results.isEmpty())
         {
             responseService.errorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
@@ -74,27 +74,27 @@ public class AnimeController {
         // clear les params envoyé avec une valeur vide ou avec des espaces blancs
         allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
 
-        if(allParams.size() ==0){
+        if(allParams.isEmpty()){
             responseService.errorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
 
-        List<String> unauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH);
-        if(unauthorizedParams.size() != 0)
+        List<String> unauthorizedParams =  Helpers.getElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_SIMPLE_SEARCH);
+        if(unauthorizedParams.isEmpty())
         {
             responseService.errorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, unauthorizedParams);
             return;
         }
 
         ApiPaginationResults resultSearch = animeService.simpleSearchAnime(allParams);
-        if(resultSearch.results == null || resultSearch.results.size() == 0)
+        if(resultSearch.results == null || resultSearch.results.isEmpty())
         {
             responseService.errorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
         }
 
 
-        responseService.successF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.size()), resultSearch);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.isEmpty()), resultSearch);
     }
 
 
@@ -104,19 +104,19 @@ public class AnimeController {
         // clear les params envoyé avec une valeur vide ou avec des espaces blancs
         allParams.values().removeIf(val->val.isBlank() || val.isEmpty());
 
-        if(allParams.size() ==0){
+        if(allParams.isEmpty()){
             responseService.errorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
-        List<String> UnauthorizedParams =  Helpers.GetElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_FULL_SEARCH);
-        if(UnauthorizedParams.size() != 0)
+        List<String> UnauthorizedParams =  Helpers.getElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_FULL_SEARCH);
+        if(UnauthorizedParams.isEmpty())
         {
             responseService.errorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
             return;
         }
 
         ApiPaginationResults resultSearch  = animeService.complexeSearchAnime(allParams);
-        if(resultSearch.results == null || resultSearch.results.size() == 0)
+        if(resultSearch.results == null || resultSearch.results.isEmpty())
         {
             responseService.errorF(res,Constantes.ErrorMessage.ANIME_NOT_FOUND, HttpServletResponse.SC_NOT_FOUND,true);
             return;
