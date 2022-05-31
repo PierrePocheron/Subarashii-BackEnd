@@ -145,15 +145,20 @@ public class UserService {
         }
     }
 
-    public boolean deleteUserById(Long idUser) {
-        Optional<User> userOpt = userRepository.findById(idUser);
-        if(userOpt.isPresent()) {
-            User user = userOpt.get();
-            userRepository.delete(user);
-            return true;
+    public boolean deleteUserById(User currentUser, Long idUser) {
+        if (currentUser.getRole().equals(Role.ADMIN.toString())) {
+            Optional<User> userOpt = userRepository.findById(idUser);
+            if(userOpt.isPresent()) {
+                User user = userOpt.get();
+                userRepository.delete(user);
+                return true;
+            } else {
+                //User doesn't exist -> throw exception
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+            }
         } else {
-            //User doesn't exist -> throw exception
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+            //User doesn't admin -> throw exception
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
         }
     }
 }

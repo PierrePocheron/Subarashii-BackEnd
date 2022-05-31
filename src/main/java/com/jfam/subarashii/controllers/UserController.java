@@ -183,7 +183,9 @@ public class UserController {
 
     @DeleteMapping("/{idUser}")
     public void deleteUser(@PathVariable Long idUser, HttpServletRequest req, HttpServletResponse res) throws IOException {
-        if (userService.deleteUserById(idUser)){
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (userService.deleteUserById(currentUser, idUser)){
             responseService.SuccessF(res,Constantes.SuccessMessage.DELETE_USER_OK, true);
         }
     }
