@@ -1,13 +1,14 @@
 package com.jfam.subarashii.services;
 
 import com.jfam.subarashii.MyRunner;
-import com.jfam.subarashii.entities.SecretQuestion;
-import com.jfam.subarashii.entities.User;
-import com.jfam.subarashii.entities.UserList;
+import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
+import com.jfam.subarashii.entities.*;
 import com.jfam.subarashii.repositories.UserRepository;
+import com.jfam.subarashii.utils.Constantes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -67,8 +68,6 @@ public class UserService {
         return userRepository.getAllIdApiAnimeOnAllUserList(user.getIdUser());
     }
 
-
-    // Todo : add javadocs
     public User getByIdUser(long idUser) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(idUser);
 
@@ -77,6 +76,11 @@ public class UserService {
 
         User user = userOpt.get();
         return user;
+    }
+
+    public List<User> getAll() {
+        List<User> userList = userRepository.findAll();
+        return userList;
     }
 
     public User patchUsernameUserConnected(User user) throws ResponseStatusException {
@@ -103,6 +107,59 @@ public class UserService {
         User userPatched = userRepository.save(userToPatch);
 
         return userPatched;
+    }
+
+    public User patchRoleUserGrantAdmin(User currentUser, Long idUser) throws  ResponseStatusException {
+        if (currentUser.getRole().equals(Role.ADMIN.toString())) {
+            Optional<User> userOpt = userRepository.findById(idUser);
+            if(userOpt.isPresent()) {
+                User userTemp = userOpt.get();
+                userTemp.setRole(Role.ADMIN.toString());
+
+                return userRepository.save(userTemp);
+            } else {
+                //User doesn't exist -> throw exception
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+            }
+        } else {
+            //User doesn't admin -> throw exception
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
+        }
+    }
+
+    public User patchRoleUserGrantUser(User currentUser, Long idUser) throws  ResponseStatusException {
+        if (currentUser.getRole().equals(Role.ADMIN.toString())) {
+            Optional<User> userOpt = userRepository.findById(idUser);
+            if(userOpt.isPresent()) {
+                User userTemp = userOpt.get();
+                userTemp.setRole(Role.USER.toString());
+
+                return userRepository.save(userTemp);
+            } else {
+                //User doesn't exist -> throw exception
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+            }
+        } else {
+            //User doesn't admin -> throw exception
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
+        }
+    }
+
+    public boolean deleteUserById(User currentUser, Long idUser) {
+        if (currentUser.getRole().equals(Role.ADMIN.toString())) {
+            Optional<User> userOpt = userRepository.findById(idUser);
+            if(userOpt.isPresent()) {
+                User user = userOpt.get();
+                userRepository.delete(user);
+                return true;
+            } else {
+                //User doesn't exist -> throw exception
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+            }
+        } else {
+            //User doesn't admin -> throw exception
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
+        }
     }
 }
 
