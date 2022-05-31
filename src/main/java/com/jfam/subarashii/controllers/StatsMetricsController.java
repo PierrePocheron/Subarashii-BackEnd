@@ -50,4 +50,10 @@ public class StatsMetricsController {
         Long countAnimes = statsMetricsService.getCountAnimes();
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIMES,countAnimes), countAnimes);
     }
+
+    @GetMapping("/count/episodes")
+    public void getCountEpisodes(HttpServletResponse res) throws IOException {
+        Long countEpisodes = statsMetricsService.getCountEpisodes();
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_EPISODES,countEpisodes), countEpisodes);
+    }
 }
