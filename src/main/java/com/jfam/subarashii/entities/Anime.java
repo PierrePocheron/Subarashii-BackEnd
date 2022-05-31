@@ -85,10 +85,10 @@ public class Anime {
         this.originalName = jsonObject.get("original_name").getAsString();
 
         JsonElement jsonPosterPath = jsonObject.get("poster_path");
-        this.image =  jsonPosterPath == null ? Constantes.UrlImageNotFound : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
+        this.image =  jsonPosterPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE +  jsonObject.get("poster_path").getAsString();
 
         JsonElement jsonBackgroundPath= jsonObject.get("backdrop_path");
-        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.UrlImageNotFound : Constantes.ApiMovie.URL_IMAGE_ORIGINE +  jsonObject.get("backdrop_path").getAsString();
+        this.backgroundPath =  jsonBackgroundPath == null ? Constantes.URL_IMAGE_NOT_FOUND : Constantes.ApiMovie.URL_IMAGE_ORIGINE +  jsonObject.get("backdrop_path").getAsString();
     }
 
     //region  === getter-setter ===

@@ -43,10 +43,10 @@ public class RequestFilter extends OncePerRequestFilter {
         String header = req.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER);
 
         if (header == null) {
-            responseService.errorF(res,String.format(Constantes.ErrorMessage.TOKEN_NOT_EXIST,Constantes.BuildVersion), HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.errorF(res,String.format(Constantes.ErrorMessage.TOKEN_NOT_EXIST,Constantes.BUILD_VERSION), HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
-        String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,Constantes.EmptyString);
+        String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,Constantes.EMPTY_STRING);
         if (!jwtService.verifyToken(token)) {
             responseService.errorF(res, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
@@ -73,7 +73,7 @@ public class RequestFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        if(Constantes.EnvironnementType.equals("local")){
+        if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
 
             return path.contains(Constantes.ROUTE_SIGN_UP) ||
                     path.contains(Constantes.RouteSignIn) ||
