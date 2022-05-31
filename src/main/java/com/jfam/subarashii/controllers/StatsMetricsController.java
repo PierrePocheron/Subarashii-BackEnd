@@ -56,4 +56,10 @@ public class StatsMetricsController {
         Long countEpisodes = statsMetricsService.getCountEpisodes();
         responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_EPISODES,countEpisodes), countEpisodes);
     }
+
+    @GetMapping("/count/genres")
+    public void getCountGenres(HttpServletResponse res) throws IOException {
+        Long countGenres = statsMetricsService.getCountGenres();
+        responseService.SuccessF(res, String.format(Constantes.SuccessMessage.GET_COUNT_GENRES,countGenres), countGenres);
+    }
 }
