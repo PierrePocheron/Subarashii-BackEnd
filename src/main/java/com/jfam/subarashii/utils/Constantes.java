@@ -151,7 +151,7 @@ public class Constantes {
         public static final String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
     }
 
-    public static class Token_value {
+    public static class TokenValue {
         public static  String JWT_SECRET_KEY = null;
         public static  Integer MINUTE_VALIDATION;
         public static final String AUTHORIZATION_HEADER = "Authorization";

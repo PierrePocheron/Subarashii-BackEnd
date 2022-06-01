@@ -1,8 +1,10 @@
 package com.jfam.subarashii.services;
 
 import com.jfam.subarashii.MyRunner;
-import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
-import com.jfam.subarashii.entities.*;
+import com.jfam.subarashii.entities.Role;
+import com.jfam.subarashii.entities.SecretQuestion;
+import com.jfam.subarashii.entities.User;
+import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.UserRepository;
 import com.jfam.subarashii.utils.Constantes;
 import org.slf4j.Logger;
