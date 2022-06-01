@@ -15,37 +15,32 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 	}
 
 	@Value("${spring.jwt.secret.key}")
-	public static void setSecretKey(String secretKey) {
+	public void setSecretKey(String secretKey) {
 		Constantes.tokenValue.jwtSecretKey = secretKey;
 	}
 
 	@Value("${cors.authorize.adress.front}")
-	public static void setFrontAdress(String adressFront) {
+	public void setFrontAdress(String adressFront) {
 		Constantes.adressFront = adressFront;
 	}
 
 	@Value("${token.minute.validation}")
-	public static void setTokenTime(Integer minuteTokenValidation) {
+	public void setTokenTime(Integer minuteTokenValidation) {
 		Constantes.tokenValue.minuteValidation = minuteTokenValidation;
 	}
 
 	@Value("${api.movie.token}")
-	public static void setTokenTime(String tokenKey) {
+	public void setTokenTime(String tokenKey) {
 		Constantes.ApiMovie.tokenSecret = tokenKey;
 	}
 
-
 	@Value("${environnement.type}")
-	public static void setEnvironementType(String environnementType) {
+	public void setEnvironementType(String environnementType) {
 		Constantes.ENVIRONNEMENT_TYPE = environnementType;
 	}
-
 
 	@Value("${build.version}")
 	public static void getBuildVersion(String version) {
 		Constantes.buildVersion = version;
 	}
-
-
-
 }
