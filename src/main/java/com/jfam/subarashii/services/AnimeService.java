@@ -5,6 +5,7 @@ import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.api.ApiPaginationResults;
+import com.jfam.subarashii.entities.api.Result;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.UserListRepository;
 import com.jfam.subarashii.utils.Constantes;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,10 +75,16 @@ public class AnimeService {
         // récupère des série de tout genre :
         ApiPaginationResults apiPaginationResults = httpClient.getQueryPageableResult(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
 
-        if(apiPaginationResults.results != null)
+        if(apiPaginationResults.results != null) {
             // du coup je ne veux que les animés:
-            apiPaginationResults.results.removeIf(result ->  !result.genreIds.contains(16.0));
+            ApiPaginationResults temp = apiPaginationResults;
+            for (int i = 0; i < apiPaginationResults.results.size(); i++) {
+                if (null != apiPaginationResults.results && null != apiPaginationResults.results.get(i).genre_ids && apiPaginationResults.results.get(i).genre_ids.contains(16.0))
+                    temp.results.remove(i);
 
+            }
+            apiPaginationResults = temp;
+        }
         return apiPaginationResults;
     }
 
