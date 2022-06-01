@@ -1,55 +1,16 @@
 # Changelog
 
-## [1.0.3] - 31-05-2022
-### Added
-####  3 Dashboard Admin : 
-- add name of anime in AnimeCommentDTO
-- get all comments
-- delete comment
-- Update password
-- Count of users
-- Count of administrators
-- Count of animes
-- Count of comments
-- Count of episodes
-- Count of genres
+## [1.0.0]() - 01-06-2022
+All notable changes to this project will be documented in this file.
 
-#### 6 Readme :
-- Add Changelog
+
+### Feature
+- ***Profil Page***: display & update user's data [#5](https://github.com/PierrePocheron/Subarashii-BackEnd/issues/5)
+- ***Secret Question Account***: user can choose & answer a secret question [#6](https://github.com/PierrePocheron/Subarashii-BackEnd/issues/6)
+- ***Dashboard Admin***: display metrics & manage user and comments [#2](https://github.com/PierrePocheron/Subarashii-BackEnd/issues/2)
+
+### Changed 
+- ***Readme***: add description, initialisation & changelog [#7](https://github.com/PierrePocheron/Subarashii-BackEnd/issues/7)
 
 ### Fixed
-#### 5 Remove Code Smells :
-- Reduce codes smells 
-
-### Changed
-#### 6 Readme :
-- Update Readme
-
-
-
-## [1.0.2] - 30-05-2022
-### Added
-#### 2 Secret Question Account :
-- add secret question to user
-- add answer to secret question of user
-- get all secrets questions
-
-#### 3 Dashboard Admin : 
-- get all users
-- delete user
-- grant right to admin
-- de-grant right to user
-
-### Changed
-- Readme
-
-### Fixed
-- Remove code smells 
-
-## [1.0.1] - 13-05-2022
-### Added
-#### 1 Profil Page :
-- get current user informations
-- update username
-- update password
-- update entity User to manage Secret Question
+- ***Code Quality***: Remove code smells [#4](https://github.com/PierrePocheron/Subarashii-BackEnd/issues/4)
