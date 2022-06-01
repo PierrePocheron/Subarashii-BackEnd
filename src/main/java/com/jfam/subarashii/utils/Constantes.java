@@ -17,8 +17,8 @@ public class Constantes {
     public static final  String EMPTY_STRING = "";
 
     public static class Keys {
-        public  static final  String USER = "user";
-        public  static final String TOKEN = "token";
+        public static final  String USER = "user";
+        public static final String TOKEN = "token";
         public static final  String USERNAME = "username";
         public static final  String EMAIL = "email";
         public static final  String GENRES = "genres";
