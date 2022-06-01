@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.0.3] - 31-05-2022
+## [1.0.3] - 31-05-2022
 ### Added
 ####  3 Dashboard Admin : 
 - add name of anime in AnimeCommentDTO
@@ -30,7 +30,7 @@
 
 
 
-## [0.0.2] - 30-05-2022
+## [1.0.2] - 30-05-2022
 ### Added
 #### 2 Secret Question Account :
 - add secret question to user
@@ -49,7 +49,7 @@
 ### Fixed
 - Remove code smells 
 
-## [0.0.1] - 13-05-2022
+## [1.0.1] - 13-05-2022
 ### Added
 #### 1 Profil Page :
 - get current user informations
