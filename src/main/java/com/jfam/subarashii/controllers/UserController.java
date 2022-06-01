@@ -1,7 +1,6 @@
 package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
-import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.dto.UserDto;
 import com.jfam.subarashii.services.JwtService;
@@ -79,7 +78,7 @@ public class UserController {
         }
 
         String token = jwtService.createToken(userFetching.getEmail(), userFetching.getRole(), userFetching.getUsername());
-        res.setHeader(Constantes.Token_value.AUTHORIZATION_HEADER, Constantes.Token_value.TOKEN_PREFIX + token);
+        res.setHeader(Constantes.tokenValue.AUTHORIZATION_HEADER, Constantes.tokenValue.TOKEN_PREFIX + token);
 
         Map<String, String> result = new HashMap<>();
         result.put(Constantes.Keys.TOKEN, token);

@@ -18,7 +18,7 @@ public class HttpClient {
     public JsonObject getQuery(String url) throws ResourceApiNotFoundException {
         LinkedTreeMap ltm = (LinkedTreeMap) Unirest.get(url)
                 .header("Content-Type", "application/json;charset=utf-8")
-                .header("Authorization", Constantes.ApiMovie.TOKEN_SECRET)
+                .header("Authorization", Constantes.ApiMovie.tokenSecret)
                 .asObject(Object.class)
                 .getBody();
 
@@ -32,7 +32,7 @@ public class HttpClient {
     public ApiPaginationResults getQueryPageableResult(String url) throws ResourceApiNotFoundException {
         LinkedTreeMap ltm = (LinkedTreeMap) Unirest.get(url)
                 .header("Content-Type", "application/json;charset=utf-8")
-                .header("Authorization", Constantes.ApiMovie.TOKEN_SECRET)
+                .header("Authorization", Constantes.ApiMovie.tokenSecret)
                 .asObject(Object.class)
                 .getBody();
 
