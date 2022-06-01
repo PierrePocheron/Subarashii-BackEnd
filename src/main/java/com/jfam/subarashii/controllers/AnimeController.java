@@ -94,7 +94,7 @@ public class AnimeController {
         }
 
 
-        responseService.successF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.isEmpty()), resultSearch);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.SEARCH_ANIME_FIND,  resultSearch.results.size()), resultSearch);
     }
 
 
