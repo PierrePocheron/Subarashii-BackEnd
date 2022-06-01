@@ -9,8 +9,8 @@ public class Constantes {
     public static final  String ROUTE_SIGN_UP = "/users/sign-up";
     public static final  String ROUTE_GET_ALL_SECRET_QUESTIONS = "/secretquestions";
     public static String ENVIRONNEMENT_TYPE;
-    public static String ADRESS_FRONT;
-    public static String BUILD_VERSION;
+    public static String adressFront;
+    public static String buildVersion;
 
     public static final  String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
 
@@ -151,15 +151,15 @@ public class Constantes {
         public static final String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
     }
 
-    public static class Token_value {
-        public static  String JWT_SECRET_KEY = null;
-        public static  Integer MINUTE_VALIDATION;
+    public static class tokenValue {
+        public static  String jwtSecretKey = null;
+        public static  Integer minuteValidation;
         public static final String AUTHORIZATION_HEADER = "Authorization";
         public static final String TOKEN_PREFIX = "Bearer ";
     }
 
     public static class ApiMovie {
-        public static  String TOKEN_SECRET;
+        public static  String tokenSecret;
         public static final int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION = 458;
         public static final int ANIMATION_ID_GENRE = 16;
         public static final String URL_IMAGE = "https://image.tmdb.org/t/p/w500";

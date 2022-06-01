@@ -16,22 +16,22 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 
 	@Value("${spring.jwt.secret.key}")
 	public static void setSecretKey(String secretKey) {
-		Constantes.Token_value.JWT_SECRET_KEY = secretKey;
+		Constantes.tokenValue.jwtSecretKey = secretKey;
 	}
 
 	@Value("${cors.authorize.adress.front}")
 	public static void setFrontAdress(String adressFront) {
-		Constantes.ADRESS_FRONT = adressFront;
+		Constantes.adressFront = adressFront;
 	}
 
 	@Value("${token.minute.validation}")
 	public static void setTokenTime(Integer minuteTokenValidation) {
-		Constantes.Token_value.MINUTE_VALIDATION = minuteTokenValidation;
+		Constantes.tokenValue.minuteValidation = minuteTokenValidation;
 	}
 
 	@Value("${api.movie.token}")
 	public static void setTokenTime(String tokenKey) {
-		Constantes.ApiMovie.TOKEN_SECRET = tokenKey;
+		Constantes.ApiMovie.tokenSecret = tokenKey;
 	}
 
 
@@ -43,7 +43,7 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 
 	@Value("${build.version}")
 	public static void getBuildVersion(String version) {
-		Constantes.BUILD_VERSION = version;
+		Constantes.buildVersion = version;
 	}
 
 
