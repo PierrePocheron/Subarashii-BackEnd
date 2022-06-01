@@ -108,10 +108,10 @@ public class AnimeController {
             responseService.errorF(res,Constantes.ErrorMessage.ANY_PARAMETER_PROVIDED,HttpServletResponse.SC_NOT_ACCEPTABLE, false);
             return;
         }
-        List<String> UnauthorizedParams =  Helpers.getElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_FULL_SEARCH);
-        if(UnauthorizedParams.isEmpty())
+        List<String> unauthorizedParams =  Helpers.getElementInListNotInMapParams(allParams, Constantes.LIST_QUERY_PARAMS_FOR_FULL_SEARCH);
+        if(!unauthorizedParams.isEmpty())
         {
-            responseService.errorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, UnauthorizedParams);
+            responseService.errorF(res,Constantes.ErrorMessage.PARAMETER_NOT_EXPECTED,HttpServletResponse.SC_UNAUTHORIZED, unauthorizedParams);
             return;
         }
 
@@ -122,11 +122,7 @@ public class AnimeController {
             return;
         }
         responseService.successF(res,Constantes.SuccessMessage.COMPLEXE_SEARCH_OK,resultSearch);
-
     }
-
-
-
 
 
 }
