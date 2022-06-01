@@ -174,7 +174,7 @@ public class Constantes {
 
 
         public static final String ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS = "https://api.themoviedb.org/3/discover/tv?language=fr-FR&with_genres=16&sort_by=original_title.asc";
-        public static final String ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS = "https://api.themoviedb.org/3/search/tv?language=fr-FR";
+        public static final String ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS = "https://api.themoviedb.org/3/discover/tv?language=fr-FR";
 
         public static final String OTHER_QUERY_PARAMS_SYNTAX = "&%s=%s";
 
