@@ -82,7 +82,7 @@ public class UserListService {
 
         List<Anime> animeList = userList.getAnimes();
 
-        if (animeList.size() == 0)
+        if (animeList.isEmpty())
             throw new CustomErrorMessageException(Constantes.ErrorMessage.USER_LIST_NOT_CONTAIN_ANIME);
 
         Anime anime = animeList.stream().filter(anim -> anim.getIdApi().equals(idApiAnnime)).findFirst().orElse(null);

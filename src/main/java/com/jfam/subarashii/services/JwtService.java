@@ -27,7 +27,7 @@ public class JwtService {
 
     public String createToken(String email, String role, String username){
         role = role == null ? Role.USER.toString() : role;
-        algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
+        algorithm  = Algorithm.HMAC256(Constantes.TokenValue.JWT_SECRET_KEY);
         Map<String, Object> headerClaims = new HashMap();
         headerClaims.put(Constantes.Claims.EMAIL, email);
         headerClaims.put(Constantes.Claims.ROLE, role);
@@ -35,7 +35,7 @@ public class JwtService {
         try {
             return JWT.create()
                     .withHeader(headerClaims)
-                    .withExpiresAt(Helpers.currentDatePlusMinutes(Constantes.Token_value.MINUTE_VALIDATION))
+                    .withExpiresAt(Helpers.currentDatePlusMinutes(Constantes.TokenValue.MINUTE_VALIDATION))
                     .sign(algorithm);
         } catch (JWTCreationException exception){
             logger.warn(Constantes.ErrorMessage.TOKEN_CREATE + exception.getMessage());
@@ -45,7 +45,7 @@ public class JwtService {
 
     public boolean verifyToken(String token){
         try {
-            algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
+            algorithm  = Algorithm.HMAC256(Constantes.TokenValue.JWT_SECRET_KEY);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
@@ -57,7 +57,7 @@ public class JwtService {
 
     public Date getExpirationDate(String token){
         try {
-            algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
+            algorithm  = Algorithm.HMAC256(Constantes.TokenValue.JWT_SECRET_KEY);
             DecodedJWT jwt =  JWT.decode(token);
             return jwt.getExpiresAt();
         } catch (JWTDecodeException exception){
@@ -69,7 +69,7 @@ public class JwtService {
 
     public Claim getClaims(String token,String claimValue){
         try {
-            algorithm  = Algorithm.HMAC256(Constantes.Token_value.JWT_SECRET_KEY);
+            algorithm  = Algorithm.HMAC256(Constantes.TokenValue.JWT_SECRET_KEY);
             DecodedJWT jwt =  JWT.decode(token);
             return jwt.getHeaderClaim(claimValue);
         }

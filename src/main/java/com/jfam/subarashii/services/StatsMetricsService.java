@@ -1,7 +1,5 @@
 package com.jfam.subarashii.services;
 
-import com.jfam.subarashii.entities.AnimeComment;
-import com.jfam.subarashii.entities.Role;
 import com.jfam.subarashii.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

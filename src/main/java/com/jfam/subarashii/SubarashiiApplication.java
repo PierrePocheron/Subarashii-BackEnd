@@ -16,7 +16,7 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 
 	@Value("${spring.jwt.secret.key}")
 	public static void setSecretKey(String secretKey) {
-		Constantes.Token_value.JWT_SECRET_KEY = secretKey;
+		Constantes.TokenValue.JWT_SECRET_KEY = secretKey;
 	}
 
 	@Value("${cors.authorize.adress.front}")
@@ -26,7 +26,7 @@ public class SubarashiiApplication extends SpringBootServletInitializer{
 
 	@Value("${token.minute.validation}")
 	public static void setTokenTime(Integer minuteTokenValidation) {
-		Constantes.Token_value.MINUTE_VALIDATION = minuteTokenValidation;
+		Constantes.TokenValue.MINUTE_VALIDATION = minuteTokenValidation;
 	}
 
 	@Value("${api.movie.token}")
