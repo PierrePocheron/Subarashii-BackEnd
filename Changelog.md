@@ -19,10 +19,7 @@
 
 ### Fixed
 #### 5 Remove Code Smells :
-- Reduce bugs 
-- Reduce Security Hotspots 
 - Reduce codes smells 
-- Reduce Vulnerabilities
 
 ### Changed
 #### 6 Readme :
