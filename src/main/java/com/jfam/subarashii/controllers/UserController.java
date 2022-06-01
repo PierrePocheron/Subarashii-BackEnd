@@ -103,7 +103,7 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public void GetAllGenres(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
+    public void getAllGenres(HttpServletResponse res) throws IOException, ResourceApiNotFoundException {
         List<User> userList = userService.getAll();
         responseService.successF(res, Constantes.SuccessMessage.USER_HAS_FETCH, userList);
     }

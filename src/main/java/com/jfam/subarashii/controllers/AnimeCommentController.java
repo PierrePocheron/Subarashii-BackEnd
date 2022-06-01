@@ -51,7 +51,7 @@ public class AnimeCommentController {
     public void getAll(HttpServletRequest req, HttpServletResponse res) throws IOException {
         // Todo : admin
         List<AnimeComment> animeCommentList = animeCommentService.getAll();
-        if (animeCommentList.size() == 0){
+        if (animeCommentList.isEmpty()){
             responseService.successF(res,"commentaires inexistants", animeCommentList);
             return;
         }
