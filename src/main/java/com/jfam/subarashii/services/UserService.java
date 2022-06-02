@@ -71,7 +71,7 @@ public class UserService {
     public User getByIdUser(long idUser) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(idUser);
 
-        if (userOpt == null)
+        if(!userOpt.isPresent())
             return null;
 
         User user = userOpt.get();
@@ -86,7 +86,7 @@ public class UserService {
     public User patchUsernameUserConnected(User user) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(user.getIdUser());
 
-        if (userOpt == null)
+        if(!userOpt.isPresent())
             return null;
 
         User userToPatch = userOpt.get();
@@ -99,7 +99,7 @@ public class UserService {
     public User patchPasswordUserConnected(User user) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(user.getIdUser());
 
-        if (userOpt == null)
+        if(!userOpt.isPresent())
             return null;
 
         User userToPatch = userOpt.get();
