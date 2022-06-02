@@ -70,12 +70,13 @@ public class UserService {
 
     public User getByIdUser(long idUser) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(idUser);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+            return user;
 
-        if(!userOpt.isPresent())
-            return null;
-
-        User user = userOpt.get();
-        return user;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+        }
     }
 
     public List<User> getAll() {
@@ -85,31 +86,31 @@ public class UserService {
 
     public User patchUsernameUserConnected(User user) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(user.getIdUser());
+        if(userOpt.isPresent()){
+            User userToPatch = userOpt.get();
+            userToPatch.setUsername(user.getUsername());
+            User userPatched = userRepository.save(userToPatch);
 
-        if(!userOpt.isPresent())
-            return null;
-
-        User userToPatch = userOpt.get();
-        userToPatch.setUsername(user.getUsername());
-        User userPatched = userRepository.save(userToPatch);
-
-        return userPatched;
+            return userPatched;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+        }
     }
 
     public User patchPasswordUserConnected(User user) throws ResponseStatusException {
         Optional<User> userOpt = userRepository.findById(user.getIdUser());
+        if(userOpt.isPresent()){
+            User userToPatch = userOpt.get();
+            userToPatch.setPassword(user.getPassword());
+            User userPatched = userRepository.save(userToPatch);
 
-        if(!userOpt.isPresent())
-            return null;
-
-        User userToPatch = userOpt.get();
-        userToPatch.setPassword(user.getPassword());
-        User userPatched = userRepository.save(userToPatch);
-
-        return userPatched;
+            return userPatched;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+        }
     }
 
-    public User patchRoleUserGrantAdmin(User currentUser, Long idUser) throws  ResponseStatusException {
+    public User patchRoleUserGrantAdmin(User currentUser, Long idUser) throws ResponseStatusException {
         if (currentUser.getRole().equals(Role.ADMIN.toString())) {
             Optional<User> userOpt = userRepository.findById(idUser);
             if(userOpt.isPresent()) {
