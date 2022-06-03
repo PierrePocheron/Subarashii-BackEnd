@@ -5,38 +5,38 @@ import java.util.List;
 
 public class Constantes {
     public static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
-    public static final  String ROUTE_SIGN_IN = "/users/sign-in";
-    public static final  String ROUTE_SIGN_UP = "/users/sign-up";
-    public static final  String ROUTE_GET_ALL_SECRET_QUESTIONS = "/secretquestions";
+    public static final String ROUTE_SIGN_IN = "/users/sign-in";
+    public static final String ROUTE_SIGN_UP = "/users/sign-up";
+    public static final String ROUTE_GET_ALL_SECRET_QUESTIONS = "/secretquestions";
     public static String ENVIRONNEMENT_TYPE;
     public static String adressFront;
     public static String buildVersion;
 
-    public static final  String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
+    public static final String URL_IMAGE_NOT_FOUND = "https://espace-stockage.fra1.digitaloceanspaces.com/school/Master/Subarashii/not_found.jpg";
 
-    public static final  String EMPTY_STRING = "";
+    public static final String EMPTY_STRING = "";
 
     public static class Keys {
-        public static final  String USER = "user";
+        public static final String USER = "user";
         public static final String TOKEN = "token";
-        public static final  String USERNAME = "username";
-        public static final  String EMAIL = "email";
-        public static final  String GENRES = "genres";
-        public static final  String ROLE = "ROLE_";
+        public static final String USERNAME = "username";
+        public static final String EMAIL = "email";
+        public static final String GENRES = "genres";
+        public static final String ROLE = "ROLE_";
     }
 
     public static class Claims {
-        public static final  String EMAIL = "email";
-        public static final  String USERNAME = "username";
-        public static final  String ROLE = "role";
+        public static final String EMAIL = "email";
+        public static final String USERNAME = "username";
+        public static final String ROLE = "role";
     }
 
     public static class DefaultList {
-        public static final  String A_VOIR = "A voir";
-        public static final  String EN_COURS = "En cours";
-        public static final  String TERMINEE = "Terminée";
-        public static final  String EN_ATTENTE = "En attente";
-        public static final  String FAVORIS = "Favoris";
+        public static final String A_VOIR = "A voir";
+        public static final String EN_COURS = "En cours";
+        public static final String TERMINEE = "Terminée";
+        public static final String EN_ATTENTE = "En attente";
+        public static final String FAVORIS = "Favoris";
     }
 
     public static class ErrorMessage {
@@ -157,14 +157,14 @@ public class Constantes {
     }
 
     public static class tokenValue {
-        public static  String jwtSecretKey = null;
+        public static String jwtSecretKey = null;
         public static  Integer minuteValidation;
         public static final String AUTHORIZATION_HEADER = "Authorization";
         public static final String TOKEN_PREFIX = "Bearer ";
     }
 
     public static class ApiMovie {
-        public static  String tokenSecret;
+        public static String tokenSecret;
         public static final int MAX_PAGE_FOR_DISCOVER_JAPAN_ANIMATION = 458;
         public static final int ANIMATION_ID_GENRE = 16;
         public static final String URL_IMAGE = "https://image.tmdb.org/t/p/w500";
