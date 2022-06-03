@@ -58,4 +58,8 @@ public class StatsMetricsService {
     public Long getCurrentUserCountAnimeByStatus(String status, User currentUser){
         return userListRepository.getCurrentUserCountAnimeByStatus(status, currentUser.getIdUser());
     }
+
+    public Long getCurrentUserCountComments(User currentUser){
+        return animeCommentRepository.getCurrentUserCountComments(currentUser.getIdUser());
+    }
 }

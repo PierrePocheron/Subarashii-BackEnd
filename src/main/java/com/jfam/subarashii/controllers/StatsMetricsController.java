@@ -134,6 +134,20 @@ public class StatsMetricsController {
         }
 
         Long countAnimeTerminee = statsMetricsService.getCurrentUserCountAnimeByStatus(Constantes.DefaultList.TERMINEE, currentUser);
-        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIME_TERMINEE,countAnimeTerminee), countAnimeTerminee);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_CURRENT_USER_COUNT_ANIME_TERMINEE,countAnimeTerminee), countAnimeTerminee);
+    }
+
+    @GetMapping("/current/count/comments")
+    public void getCurrentUserCountComments(HttpServletRequest req,
+                                                 HttpServletResponse res) throws IOException {
+        User currentUser = Helpers.getCurrentUser(req);
+
+        if (currentUser == null) {
+            responseService.errorF(res, Constantes.ErrorMessage.ANY_USER_FETCH, 404, false);
+            return;
+        }
+
+        Long countComments = statsMetricsService.getCurrentUserCountComments(currentUser);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_CURRENT_USER_COUNT_COMMENTS, countComments), countComments);
     }
 }
