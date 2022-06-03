@@ -76,6 +76,7 @@ public class Constantes {
         public static final String EXCEPTION_USER_DOESNT_RIGHTS_ADMIN = "L'utilisateur ne possède pas les droits d'administrateurs";
         public static final String EXCEPTION_USER_DOESNT_EXISTS = "L'utilisateur n'existe pas";
         public static final String EXCEPTION_ANIMECOMMENT_DOESNT_EXISTS = "Le commentaire n'existe pas";
+        public static final String EXCEPTION_SECRET_QUESTION_DOESNT_EXISTS = "La question secrete n'existe pas";
         public static final String EXCEPTION_ANIME_DOESNT_EXISTS = "L'animé n'existe pas";
 
     }
@@ -95,7 +96,6 @@ public class Constantes {
         public static final String USER_LIST_GET_CURRENT_LIST = "La liste de l'utilisateur a correctement été récupéré";
         public static final String USER_LIST_CREATE_OK = "La liste custom a correctement été crée";
         public static final String FETCH_ALL_ID_API_ANIME_ON_ALL_USER_LIST = "récupération de tous les id api animés dans les listes de l'utilisateur: %d au total";
-        public static final String GET_ALL_SECRET_QUESTIONS = "récupération de toutes les questions secretes: %d au total";
         public static final String GET_COUNT_USERS_ADMIN = "Récupération du nombre d'administrateurs : %d au total";
         public static final String GET_COUNT_USERS_USER = "Récupération du nombre d'utilisateurs : %d au total";
         public static final String GET_COUNT_COMMENTS = "Récupération du nombre de commentaires : %d au total";
@@ -109,7 +109,12 @@ public class Constantes {
         public static final String UPDATE_USER_USERNAME_OK = "Username de l'utilisateur mis à jour";
         public static final String UPDATE_USER_PASSWORD_OK = "Password de l'utilisateur mis à jour";
         public static final String ALL_ANIME_ON_LIST = "Vous avez récupéré %d animé(s) dans la liste";
-        public static final String READ_USER_OK = "L'utilisateur connecté a bien été récupérer";
+        public static final String GET_ALL_SECRET_QUESTIONS = "récupération de toutes les questions secretes: %d au total";
+        public static final String CREATE_SECRET_QUESTION = "Question secrete bien enregistré";
+        public static final String GET_SECRET_QUESTION = "La question secrete a bien été récupéré";
+        public static final String PATCH_SECRET_QUESTION = "La question secrete a été mise à jour";
+        public static final String DELETE_SECRET_QUESTION = "Question secrete a bien été supprimé";
+        public static final String READ_USER_OK = "L'utilisateur connecté a bien été récupéré";
         public static final String DELETE_USERLIST_OK = "La liste a correctement été supprimé";
         public static final String DELETE_USER_OK = "L'utilisateur a correctement été supprimé";
         public static final String DELETE_ANIMECOMMENT_OK = "Le commentaire a correctement été supprimé";
