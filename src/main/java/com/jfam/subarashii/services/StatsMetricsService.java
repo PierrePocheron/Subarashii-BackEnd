@@ -1,8 +1,13 @@
 package com.jfam.subarashii.services;
 
+import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.AnimeComment;
 import com.jfam.subarashii.entities.Role;
+import com.jfam.subarashii.entities.User;
+import com.jfam.subarashii.entities.UserList;
 import com.jfam.subarashii.repositories.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +31,10 @@ public class StatsMetricsService {
     @Autowired
     private GenreRepository genreRepository;
 
+    @Autowired
+    private UserListRepository userListRepository;
+
+
     public Integer getCountUsersByRole(String role){
         return userRepository.countByRole(role);
     }
@@ -44,5 +53,9 @@ public class StatsMetricsService {
 
     public Long getCountGenres(){
         return genreRepository.count();
+    }
+
+    public Long getCurrentUserCountAnimeByStatus(String status, User currentUser){
+        return userListRepository.getCurrentUserCountAnimeByStatus(status, currentUser.getIdUser());
     }
 }
