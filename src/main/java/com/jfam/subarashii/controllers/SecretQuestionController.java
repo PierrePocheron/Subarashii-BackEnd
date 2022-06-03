@@ -1,13 +1,16 @@
 package com.jfam.subarashii.controllers;
 
 import com.jfam.subarashii.entities.SecretQuestion;
+import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.services.ResponseService;
 import com.jfam.subarashii.services.SecretQuestionService;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +26,7 @@ public class SecretQuestionController {
     @Autowired
     private SecretQuestionService secretQuestionService;
 
-    @GetMapping
+    @GetMapping(path = "/all")
     public void getAllSecretQuestions(HttpServletResponse res) throws IOException {
         List<SecretQuestion> secretQuestionList = secretQuestionService.getAll();
         responseService.successF(res, String.format(Constantes.SuccessMessage.GET_ALL_SECRET_QUESTIONS,secretQuestionList.size()), secretQuestionList);
@@ -31,9 +34,12 @@ public class SecretQuestionController {
 
 
     @PostMapping
-    public void createSecretQuestion(HttpServletResponse res,
+    public void createSecretQuestion(HttpServletRequest req,
+                                     HttpServletResponse res,
                                      @RequestBody SecretQuestion secretQuestion) throws IOException{
-        SecretQuestion secretQuestionCreated = secretQuestionService.createSecretQuestion(secretQuestion);
+        User currentUser = Helpers.getCurrentUser(req);
+
+        SecretQuestion secretQuestionCreated = secretQuestionService.createSecretQuestion(currentUser, secretQuestion);
         responseService.successF(res, Constantes.SuccessMessage.CREATE_SECRET_QUESTION, secretQuestionCreated);
     }
 
@@ -47,18 +53,24 @@ public class SecretQuestionController {
 
 
     @PatchMapping(path = "/{idSecretQuestion}")
-    public void patchSecretQuestion(HttpServletResponse res,
+    public void patchSecretQuestion(HttpServletRequest req,
+                                    HttpServletResponse res,
                                     @RequestBody SecretQuestion secretQuestion,
                                     @PathVariable(value = "idSecretQuestion") Long idSecretQuestion) throws IOException{
-        SecretQuestion secretQuestionUpdated = secretQuestionService.patchSecretQuestionById(secretQuestion, idSecretQuestion);
+        User currentUser = Helpers.getCurrentUser(req);
+
+        SecretQuestion secretQuestionUpdated = secretQuestionService.patchSecretQuestionById(currentUser, secretQuestion, idSecretQuestion);
         responseService.successF(res, Constantes.SuccessMessage.PATCH_SECRET_QUESTION, secretQuestionUpdated);
     }
 
 
     @DeleteMapping(path = "/{idSecretQuestion}")
-    public void deleteSecretQuestion(HttpServletResponse res,
+    public void deleteSecretQuestion(HttpServletRequest req,
+                                     HttpServletResponse res,
                                      @PathVariable(value = "idSecretQuestion") Long idSecretQuestion) throws IOException{
-        Boolean isDeleted = secretQuestionService.deleteSecretQuestionById(idSecretQuestion);
+        User currentUser = Helpers.getCurrentUser(req);
+
+        Boolean isDeleted = secretQuestionService.deleteSecretQuestionById(currentUser, idSecretQuestion);
         responseService.successF(res, Constantes.SuccessMessage.DELETE_SECRET_QUESTION, isDeleted);
     }
 }
