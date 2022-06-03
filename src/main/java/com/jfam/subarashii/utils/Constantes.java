@@ -107,6 +107,7 @@ public class Constantes {
         public static final String GET_COUNT_ANIME_TERMINEE = "Récupération du nombre d'animés terminés : %d au total";
         public static final String GET_COUNT_ANIME_EN_ATTENTE = "Récupération du nombre d'animés en attente : %d au total";
         public static final String GET_COUNT_ANIME_FAVORIS = "Récupération du nombre d'animés favoris : %d au total";          public static final String EPISODE_REMOVE_VIEW = "L'épisode a correctement été retiré aux vus";
+        public static final String GET_CURRENT_USER_COUNT_COMMENTS = "Récupération du nombre de commentaires : %d au total";          public static final String EPISODE_REMOVE_VIEW = "L'épisode a correctement été retiré aux vus";
         public static final String EPISODE_ADD_VIEW = "L'épisode a correctement été ajouté aux vus";
         public static final String FETCH_EPISODE_VIEW_BY_ID_ANIME = "Il y a %d épisode(s) vu(s) récupéré(s) pour l'animé %d";
         public static final String CREATE_ANIME_COMMENT = "Commentaire bien enregistré";
