@@ -78,7 +78,7 @@ public class StatsMetricsController {
         }
 
         Long countAnimeAvoir = statsMetricsService.getCurrentUserCountAnimeByStatus(Constantes.DefaultList.A_VOIR, currentUser);
-        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIME_A_VOIR,countAnimeAvoir), countAnimeAvoir);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_CURRENT_USER_COUNT_ANIME_A_VOIR,countAnimeAvoir), countAnimeAvoir);
     }
 
     @GetMapping("/current/count/anime/encours")
@@ -92,7 +92,7 @@ public class StatsMetricsController {
         }
 
         Long countAnimeEncours = statsMetricsService.getCurrentUserCountAnimeByStatus(Constantes.DefaultList.EN_COURS, currentUser);
-        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIME_EN_COURS,countAnimeEncours), countAnimeEncours);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_CURRENT_USER_COUNT_ANIME_EN_COURS,countAnimeEncours), countAnimeEncours);
     }
 
     @GetMapping("/current/count/anime/attente")
@@ -106,7 +106,7 @@ public class StatsMetricsController {
         }
 
         Long countAnimeAttente = statsMetricsService.getCurrentUserCountAnimeByStatus(Constantes.DefaultList.EN_ATTENTE, currentUser);
-        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIME_EN_ATTENTE,countAnimeAttente), countAnimeAttente);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_CURRENT_USER_COUNT_ANIME_EN_ATTENTE,countAnimeAttente), countAnimeAttente);
     }
 
     @GetMapping("/current/count/anime/favoris")
@@ -120,7 +120,7 @@ public class StatsMetricsController {
         }
 
         Long countAnimeFavoris = statsMetricsService.getCurrentUserCountAnimeByStatus(Constantes.DefaultList.FAVORIS, currentUser);
-        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_COUNT_ANIME_FAVORIS,countAnimeFavoris), countAnimeFavoris);
+        responseService.successF(res, String.format(Constantes.SuccessMessage.GET_CURRENT_USER_COUNT_ANIME_FAVORIS,countAnimeFavoris), countAnimeFavoris);
     }
 
     @GetMapping("/current/count/anime/terminee")
