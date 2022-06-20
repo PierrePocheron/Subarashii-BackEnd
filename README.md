@@ -3,7 +3,6 @@
 [![Build](https://github.com/PierrePocheron/Subarashii-BackEnd/workflows/Java%20CI%20with%20Maven/badge.svg)](#)
 [![Deploy](https://github.com/PierrePocheron/Subarashii-BackEnd/workflows/Heroku%20github%20actions%20CI%20and%20CD%20demo/badge.svg)](#)
 [![GitHub Super-Linter](https://github.com/PierrePocheron/Subarashii-BackEnd/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
-[![GitHub Super-Linter](https://github.com/PierrePocheron/Subarashii-BackEnd/workflows/SonarCloud%20analysis/badge.svg)](#)
 
 
 
