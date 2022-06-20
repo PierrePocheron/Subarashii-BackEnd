@@ -5,12 +5,12 @@ Il y a aussi la possibilitée de faire une recherche sur différents filtres(com
 
 
 ## Comment exécuter le projet
-1. Clone the [repository](https://github.com/PierrePocheron/Subarashii-BackEnd) to your local machine:
+1. Cloner le [repository](https://github.com/PierrePocheron/Subarashii-BackEnd) sur votre machine local:
 ```bash
 $ git clone https://github.com/PierrePocheron/Subarashii-BackEnd.git
 ```
-2. Reload the Maven's dependencies
-3. Run theMyRunner : right click -> "Run Java"
+2. Recharger les dépendances de Maven
+3. Lancer l'application runner : Clic droit -> "Run Java"
 
 
 ## Changelog
