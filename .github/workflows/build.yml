@@ -13,6 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+     ##########################
+    # Checkout the code base #
+    ##########################
+    - name: Checkout Code
     - uses: actions/checkout@v3
     
     - name: Set up JDK 11
@@ -24,4 +28,14 @@ jobs:
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      
+    ################################
+    # Run Linter against code base #
+    ################################
+    - name: Lint Code Base
+      uses: github/super-linter/slim@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: develop
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
