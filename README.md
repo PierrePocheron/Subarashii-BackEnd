@@ -1,5 +1,8 @@
 # Subarashii-BackEnd
 
+[![GitHub Super-Linter](https://github.com/PierrePocheron/Subarashii-BackEnd/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
+
 Subarashii est une application qui va permettre aux fans des animés de pouvoir enregistrer dans une liste tous les animés déjà visionner.
 Il y a aussi la possibilitée de faire une recherche sur différents filtres(comédie,amour,humoristique), et pouvoir inclure des animés dans des listes différentes(à voir,en cours, à terminer) ou encore la possibilitée de pouvoir les insérer  dans  des listes personnalisées.
 
