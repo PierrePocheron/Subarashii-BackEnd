@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends TrackingData{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

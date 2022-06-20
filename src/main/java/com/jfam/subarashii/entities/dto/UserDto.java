@@ -3,7 +3,7 @@ package com.jfam.subarashii.entities.dto;
 import com.jfam.subarashii.entities.User;
 
 
-public class UserDto {
+public class UserDto extends TrackingDataDto{
 
     private String email;
 

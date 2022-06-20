@@ -6,7 +6,7 @@ import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.utils.Helpers;
 
 
-public class AnimeCommentDTO {
+public class AnimeCommentDTO extends TrackingDataDto {
 
     private Long id;
     private String contenu;

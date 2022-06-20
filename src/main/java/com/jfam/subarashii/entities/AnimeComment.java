@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "AnimeComments")
-public class AnimeComment {
+public class AnimeComment extends TrackingData{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
