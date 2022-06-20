@@ -8,16 +8,12 @@ public class UserDto {
     private String email;
 
 
-
     public UserDto() {
     }
 
     public UserDto(User user) {
         this.email = user.getEmail();
-
     }
-
-
 
     public User toEntity(){
         User user = new User();
