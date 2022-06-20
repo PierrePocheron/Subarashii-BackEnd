@@ -1,6 +1,7 @@
 package com.jfam.subarashii.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.dto.ResponseDTO;
 import org.slf4j.Logger;
@@ -22,7 +23,8 @@ public class ResponseService {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(errorstatut);
         responsedto = new ResponseDTO(errormessage,errorstatut,body);
-        mapper = new ObjectMapper();
+        mapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule());
         String jsonResponse = mapper.writeValueAsString(responsedto);
         response.getOutputStream().write(jsonResponse.getBytes(StandardCharsets.UTF_8));
         logger.warn(errormessage);
@@ -32,7 +34,8 @@ public class ResponseService {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
         responsedto = new ResponseDTO(successmessage,HttpServletResponse.SC_OK,body);
-        mapper = new ObjectMapper();
+        mapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule());
         String jsonResponse = mapper.writeValueAsString(responsedto);
         response.getOutputStream().write(jsonResponse.getBytes(StandardCharsets.UTF_8));
     }
