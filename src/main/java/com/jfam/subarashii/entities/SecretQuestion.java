@@ -18,8 +18,9 @@ public class SecretQuestion {
     @OneToMany(mappedBy = "secretQuestion")
     private List<User> listUsers;
 
-    public SecretQuestion(long idSecretQuestion) {
+    public SecretQuestion(long idSecretQuestion, String question) {
         this.idSecretQuestion = idSecretQuestion;
+        this.question = question;
     }
 
     public SecretQuestion() {
