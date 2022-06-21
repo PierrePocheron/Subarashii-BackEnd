@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "userlists")
 @SecurityRequirement(name = "javainuseapi")
-public class UserList {
+public class UserList extends TrackingData{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
