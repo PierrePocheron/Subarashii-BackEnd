@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,12 +63,14 @@ public class Helpers {
         return (User) req.getAttribute(Constantes.Keys.USER);
     }
 
-
-
     public static String getDateNow() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(Constantes.DATE_FORMAT_NOW);
         return sdf.format(cal.getTime());
     }
 
+    public static LocalDateTime getDateTimeNow() {
+        LocalDateTime dateTimeNow = LocalDateTime.now();
+        return dateTimeNow;
+    }
 }
