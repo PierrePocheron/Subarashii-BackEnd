@@ -7,7 +7,7 @@ public class Constantes {
     public static final String DATE_FORMAT_NOW = "dd-MM-yyyy HH:mm:ss";
     public static final String ROUTE_SIGN_IN = "/users/sign-in";
     public static final String ROUTE_SIGN_UP = "/users/sign-up";
-    public static final String ROUTE_GET_ALL_SECRET_QUESTIONS = "/secretquestions/all";
+    public static final String ROUTE_GET_PUBLIC_SECRET_QUESTIONS = "/secretquestions/public";
     public static String ENVIRONNEMENT_TYPE;
     public static String adressFront;
     public static String buildVersion;
@@ -160,6 +160,7 @@ public class Constantes {
         public static final String USER_LIST_ANIME_NOT_EXIST = "L'animé que vous souhaité supprimer n'existe pas dans la liste";
         public static final String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
         public static final String QUESTION_SECRETE_FOUND = "La question secrète existe";
+        public static final String ANSWER_QUESTION_SECRETE_FOUND = "La réponse a la question secrete a été trouvé";
     }
 
     public static class tokenValue {

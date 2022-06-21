@@ -49,27 +49,26 @@ public class SecretQuestionController {
     @Autowired
     private SecretQuestionService secretQuestionService;
 
-    @GetMapping(path = "/all")
+
+    @GetMapping(path = "/public/all")
     public void getAllSecretQuestions(HttpServletResponse res) throws IOException {
         List<SecretQuestion> secretQuestionList = secretQuestionService.getAll();
         responseService.successF(res, String.format(Constantes.SuccessMessage.GET_ALL_SECRET_QUESTIONS,secretQuestionList.size()), secretQuestionList);
     }
 
-
-    @PostMapping(value = "/{idUser}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void sendSecretQuestion( HttpServletResponse res,Long idUser) throws IOException {
+    @GetMapping(path = "/public/{idUser}")
+    public void sendSecretQuestion(HttpServletResponse res,
+                                   @PathVariable(value = "idUser") Long idUser) throws IOException {
         SecretQuestion questionSecrete = secretQuestionService.sendSecretQuestion(idUser);
         responseService.successF(res, Constantes.SuccessMessage.QUESTION_SECRETE_FOUND, questionSecrete);
     }
 
-    @PostMapping(value = "/{idUser}/answer-secret-question", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void sendAnswerSecretQuestion(HttpServletResponse res, Long idUser) throws IOException {
+    @GetMapping(path = "/public/{idUser}/answer-secret-question")
+    public void sendAnswerSecretQuestion(HttpServletResponse res,
+                                         @PathVariable(value = "idUser") Long idUser) throws IOException {
         String answerQuestionSecrete = secretQuestionService.sendAnswerSecretQuestion(idUser);
-        responseService.successF(res, Constantes.SuccessMessage.QUESTION_SECRETE_FOUND, answerQuestionSecrete);
+        responseService.successF(res, Constantes.SuccessMessage.ANSWER_QUESTION_SECRETE_FOUND, answerQuestionSecrete);
     }
-
-
-
 
     @PostMapping
     public void createSecretQuestion(HttpServletRequest req,
@@ -89,7 +88,6 @@ public class SecretQuestionController {
         responseService.successF(res, Constantes.SuccessMessage.GET_SECRET_QUESTION, secretQuestion);
     }
 
-
     @PatchMapping(path = "/{idSecretQuestion}")
     public void patchSecretQuestion(HttpServletRequest req,
                                     HttpServletResponse res,
@@ -101,7 +99,6 @@ public class SecretQuestionController {
         responseService.successF(res, Constantes.SuccessMessage.PATCH_SECRET_QUESTION, secretQuestionUpdated);
     }
 
-
     @DeleteMapping(path = "/{idSecretQuestion}")
     public void deleteSecretQuestion(HttpServletRequest req,
                                      HttpServletResponse res,
@@ -111,5 +108,4 @@ public class SecretQuestionController {
         Boolean isDeleted = secretQuestionService.deleteSecretQuestionById(currentUser, idSecretQuestion);
         responseService.successF(res, Constantes.SuccessMessage.DELETE_SECRET_QUESTION, isDeleted);
     }
-
 }
