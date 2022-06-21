@@ -6,50 +6,43 @@ import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.utils.Helpers;
 
 
-public class AnimeCommentDTO {
+public class AnimeCommentDTO extends TrackingDataDto {
 
-private Long id;
+    private Long id;
+    private String contenu;
+    private Long idApiAnime;
+    private String nomAnime;
+    private String date;
+    private String nomUser;
+    private boolean isMineComment;
+    private String idUser;
 
-private String contenu;
+    public AnimeCommentDTO(){
 
-private Long idApiAnime;
+    }
 
-private String nomAnime;
+    public AnimeCommentDTO(AnimeComment animeComment, User userCurrent){
+        this.id = animeComment.getId();
+        this.contenu = animeComment.getContenu();
+        this.idApiAnime = animeComment.getAnime().getIdApi();
+        this.nomAnime = animeComment.getAnime().getNomTraduit();
+        this.date = animeComment.getDate();
+        this.nomUser = animeComment.getUser().getUsername();
+        this.isMineComment = userCurrent.getIdUser() == animeComment.getUser().getIdUser();
+        this.idUser = animeComment.getId().toString();
+    }
 
-private String date;
+    public AnimeComment toEntity(User user, Anime anime){
+        AnimeComment animeComment = new AnimeComment();
+        animeComment.setContenu(this.contenu);
+        animeComment.setUser(user);
+        animeComment.setAnime(anime);
+        animeComment.setDate(Helpers.getDateNow());
+        animeComment.setDate(Helpers.getDateNow());
+        return animeComment;
+    }
 
-private String nomUser;
-
-private boolean isMineComment;
-
-private String idUser;
-
-public AnimeCommentDTO(){
-
-}
-
-public AnimeCommentDTO(AnimeComment animeComment, User userCurrent){
-    this.id = animeComment.getId();
-    this.contenu = animeComment.getContenu();
-    this.idApiAnime = animeComment.getAnime().getIdApi();
-    this.nomAnime = animeComment.getAnime().getNomTraduit();
-    this.date = animeComment.getDate();
-    this.nomUser = animeComment.getUser().getUsername();
-    this.isMineComment = userCurrent.getIdUser() == animeComment.getUser().getIdUser();
-    this.idUser = animeComment.getId().toString();
-}
-
-public AnimeComment toEntity(User user, Anime anime){
-    AnimeComment animeComment = new AnimeComment();
-    animeComment.setContenu(this.contenu);
-    animeComment.setUser(user);
-    animeComment.setAnime(anime);
-    animeComment.setDate(Helpers.getDateNow());
-    animeComment.setDate(Helpers.getDateNow());
-    return animeComment;
-}
-
-//#region === GETTER / SETTER
+    //#region === GETTER / SETTER
 
 
     public String getIdUser() {

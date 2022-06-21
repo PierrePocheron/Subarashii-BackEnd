@@ -10,6 +10,7 @@ import com.jfam.subarashii.repositories.AnimeCommentRepository;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.UserRepository;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,10 @@ public class AnimeCommentService {
 
         AnimeComment animeCommentToSave =  animeCommentDTO.toEntity(user,anime);
         user.getAnimeComments().add(animeCommentToSave);
+
+        // Set Tracking Data
+        animeCommentToSave.setDateCreation(Helpers.getDateTimeNow());
+
         return animeCommentRepository.save(animeCommentToSave);
     }
 

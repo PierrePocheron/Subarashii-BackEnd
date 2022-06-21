@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class HelpersTest {
 
-
+/*
     @ParameterizedTest(name = "La phrase {0} coupé a partir du mot: {1} donne: {2}")
     @CsvSource({
             "The simple sentence with word to skip,' to skip',The simple sentence with word",
@@ -25,9 +25,13 @@ class HelpersTest {
         // then
         Assertions.assertThat(textSkip).isEqualTo(result);
     }
+<<<<<<< HEAD
 
     void Test(){
 
     }
+=======
+    */
+
 }
 

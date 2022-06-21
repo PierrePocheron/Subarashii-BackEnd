@@ -5,6 +5,7 @@ import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.*;
 import com.jfam.subarashii.repositories.UserRepository;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(MyRunner.class);
 
     @Autowired
     UserRepository userRepository;
@@ -41,19 +40,29 @@ public class UserService {
     }
 
     public User create(User userToCreate) {
+        // Set Tracking Data
+        userToCreate.setDateCreation(Helpers.getDateTimeNow());
+
         User usr = userRepository.save(userToCreate);
         List<UserList> userListList = userListService.createDefaultList(usr);
         usr.setLists(userListList);
+
         User usrT = userRepository.save(userToCreate);
         return usrT;
     }
 
     public User create(User userToCreate, SecretQuestion secretQuestion) {
         userToCreate.setSecretQuestion(secretQuestion);
+
+        // Set Tracking Data
+        userToCreate.setDateCreation(Helpers.getDateTimeNow());
+
         User usr = userRepository.save(userToCreate);
+
         List<UserList> userListList = userListService.createDefaultList(usr);
         usr.setLists(userListList);
         User usrT = userRepository.save(userToCreate);
+
         return usrT;
     }
 
