@@ -5,9 +5,13 @@ import com.jfam.subarashii.entities.Role;
 import com.jfam.subarashii.entities.SecretQuestion;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.repositories.SecretQuestionRepository;
+
+import com.jfam.subarashii.repositories.UserRepository;
+
 import com.jfam.subarashii.utils.Constantes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,11 +28,36 @@ public class SecretQuestionService {
     @Autowired
     private SecretQuestionRepository secretQuestionRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     public List<SecretQuestion> getAll() {
         List<SecretQuestion> secretQuestionList = secretQuestionRepository.findAll();
         return secretQuestionList;
     }
 
+
+    public SecretQuestion sendSecretQuestion(Long idUser){
+        Optional<User> userTemp = userRepository.findById(idUser);
+        if (userTemp.isPresent()){
+            //recupérer la question secrète du user
+            return userTemp.get().getSecretQuestion();
+        } else {
+            //User doesn't exist -> throw exception
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+        }
+    }
+
+    public String sendAnswerSecretQuestion(Long idUser){
+        Optional<User> userTemp = userRepository.findById(idUser);
+        if (userTemp.isPresent()){
+            //recupérer la réponse a la question secrète du user
+            return userTemp.get().getAnswerSecretQuestion();
+        } else {
+            //User doesn't exist -> throw exception
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+        }
+    }
 
     public SecretQuestion createSecretQuestion(User currentUser, SecretQuestion secretQuestion) throws ResponseStatusException {
         if (currentUser.getRole().equals(Role.ADMIN.toString())) {
@@ -40,7 +69,6 @@ public class SecretQuestionService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
         }
     }
-
 
     public SecretQuestion getSecretQuestionById(Long idSecretQuestion) throws ResponseStatusException {
         Optional<SecretQuestion> secretQuestionOpt = secretQuestionRepository.findById(idSecretQuestion);
@@ -54,7 +82,6 @@ public class SecretQuestionService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_SECRET_QUESTION_DOESNT_EXISTS);
         }
     }
-
 
     public SecretQuestion patchSecretQuestionById(User currentUser, SecretQuestion secretQuestion, Long idSecretQuestion) throws ResponseStatusException{
         if (currentUser.getRole().equals(Role.ADMIN.toString())) {
