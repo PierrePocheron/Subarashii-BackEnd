@@ -36,6 +36,7 @@ public class UserService {
 
         boolean passOK = passwordEncoder.matches(user.getPassword(), userFetching.getPassword());
         return passOK ? userFetching : null;
+
     }
 
     public User create(User userToCreate) {
@@ -171,5 +172,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
         }
     }
+
+
 }
 
