@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
 public class MyRunner implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(MyRunner.class);
+    private static final Logger loggers = LoggerFactory.getLogger(MyRunner.class);
 
     @Autowired
     GenreService genreService;
@@ -23,7 +21,7 @@ public class MyRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         genreService.getAllStartApplication();
 
-        logger.error(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
-        logger.info(String.format(Constantes.START_MESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
+        loggers.error(String.format(Constantes.STARTMESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
+        loggers.info(String.format(Constantes.STARTMESSAGE, Helpers.getDateNow(), Constantes.ENVIRONNEMENT_TYPE));
     }
 }

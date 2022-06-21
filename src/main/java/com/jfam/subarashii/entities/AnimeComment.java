@@ -1,15 +1,13 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "AnimeComments")
-public class AnimeComment {
+public class AnimeComment extends TrackingData{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

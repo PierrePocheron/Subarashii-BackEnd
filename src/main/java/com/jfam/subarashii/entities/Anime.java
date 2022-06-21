@@ -38,11 +38,8 @@ public class Anime {
     private Float note;
 
 
-
-
     @OneToMany(mappedBy = "anime")
     private List<Episode> episodes;
-
 
     @ManyToMany(mappedBy = "animes")
     @JsonBackReference

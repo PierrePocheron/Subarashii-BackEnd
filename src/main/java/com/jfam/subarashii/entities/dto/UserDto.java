@@ -1,11 +1,9 @@
 package com.jfam.subarashii.entities.dto;
 
 import com.jfam.subarashii.entities.User;
-import com.jfam.subarashii.entities.UserList;
 
-import java.util.List;
 
-public class UserDto {
+public class UserDto extends TrackingDataDto{
 
     private String email;
 
@@ -15,7 +13,6 @@ public class UserDto {
 
     public UserDto(User user) {
         this.email = user.getEmail();
-
     }
 
     public User toEntity(){
@@ -32,8 +29,4 @@ public class UserDto {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
-
-
 }
