@@ -77,13 +77,13 @@ public class RequestFilter extends OncePerRequestFilter {
 
             return path.contains(Constantes.ROUTE_SIGN_IN) ||
                     path.contains(Constantes.ROUTE_SIGN_UP) ||
-                    path.contains(Constantes.ROUTE_GET_ALL_SECRET_QUESTIONS) ||
+                    path.contains(Constantes.ROUTE_GET_PUBLIC_SECRET_QUESTIONS) ||
                     path.startsWith("/swagger-ui/") ||
                     path.startsWith("/api");
         }
 
         return path.contains(Constantes.ROUTE_SIGN_IN) ||
                 path.contains(Constantes.ROUTE_SIGN_UP) ||
-                path.contains(Constantes.ROUTE_GET_ALL_SECRET_QUESTIONS);
+                path.contains(Constantes.ROUTE_GET_PUBLIC_SECRET_QUESTIONS);
     }
 }
