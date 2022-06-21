@@ -187,4 +187,6 @@ public class UserController {
             responseService.successF(res,Constantes.SuccessMessage.DELETE_USER_OK, true);
         }
     }
+
+
 }

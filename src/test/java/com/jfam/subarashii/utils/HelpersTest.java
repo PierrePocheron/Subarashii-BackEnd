@@ -25,5 +25,9 @@ class HelpersTest {
         // then
         Assertions.assertThat(textSkip).isEqualTo(result);
     }
+
+    void Test(){
+
+    }
 }
 
