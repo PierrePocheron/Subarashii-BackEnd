@@ -38,27 +38,26 @@ public class SecretQuestionService {
 
 
     public SecretQuestion sendSecretQuestion(Long idUser){
-        // recupère l'idUser
         Optional<User> userTemp = userRepository.findById(idUser);
-
-        //recupérer la question secrète du user
-       return userTemp.get().getSecretQuestion();
-
-
+        if (userTemp.isPresent()){
+            //recupérer la question secrète du user
+            return userTemp.get().getSecretQuestion();
+        } else {
+            //User doesn't exist -> throw exception
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+        }
     }
 
     public String sendAnswerSecretQuestion(Long idUser){
-        // recupère l'idUser
         Optional<User> userTemp = userRepository.findById(idUser);
-
-        //recupérer la question secrète du user
-        return userTemp.get().getAnswerSecretQuestion();
-
-
+        if (userTemp.isPresent()){
+            //recupérer la réponse a la question secrète du user
+            return userTemp.get().getAnswerSecretQuestion();
+        } else {
+            //User doesn't exist -> throw exception
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
+        }
     }
-
-
-
 
     public SecretQuestion createSecretQuestion(User currentUser, SecretQuestion secretQuestion) throws ResponseStatusException {
         if (currentUser.getRole().equals(Role.ADMIN.toString())) {
@@ -70,7 +69,6 @@ public class SecretQuestionService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
         }
     }
-
 
     public SecretQuestion getSecretQuestionById(Long idSecretQuestion) throws ResponseStatusException {
         Optional<SecretQuestion> secretQuestionOpt = secretQuestionRepository.findById(idSecretQuestion);
@@ -84,7 +82,6 @@ public class SecretQuestionService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_SECRET_QUESTION_DOESNT_EXISTS);
         }
     }
-
 
     public SecretQuestion patchSecretQuestionById(User currentUser, SecretQuestion secretQuestion, Long idSecretQuestion) throws ResponseStatusException{
         if (currentUser.getRole().equals(Role.ADMIN.toString())) {
@@ -124,5 +121,4 @@ public class SecretQuestionService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_RIGHTS_ADMIN);
         }
     }
-
 }
