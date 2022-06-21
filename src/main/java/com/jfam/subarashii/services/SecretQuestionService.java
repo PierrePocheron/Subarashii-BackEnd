@@ -37,22 +37,22 @@ public class SecretQuestionService {
     }
 
 
-    public SecretQuestion sendSecretQuestion(Long idUser){
-        Optional<User> userTemp = userRepository.findById(idUser);
-        if (userTemp.isPresent()){
+    public SecretQuestion sendSecretQuestion(String emailUser){
+        User userTemp = userRepository.findByEmail(emailUser);
+        if (userTemp != null){
             //recupérer la question secrète du user
-            return userTemp.get().getSecretQuestion();
+            return userTemp.getSecretQuestion();
         } else {
             //User doesn't exist -> throw exception
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);
         }
     }
 
-    public String sendAnswerSecretQuestion(Long idUser){
-        Optional<User> userTemp = userRepository.findById(idUser);
-        if (userTemp.isPresent()){
-            //recupérer la réponse a la question secrète du user
-            return userTemp.get().getAnswerSecretQuestion();
+    public String sendAnswerSecretQuestion(String emailUser){
+        User userTemp = userRepository.findByEmail(emailUser);
+        if (userTemp != null){
+            //recupérer la question secrète du user
+            return userTemp.getAnswerSecretQuestion();
         } else {
             //User doesn't exist -> throw exception
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constantes.ErrorMessage.EXCEPTION_USER_DOESNT_EXISTS);

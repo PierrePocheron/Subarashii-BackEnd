@@ -56,17 +56,17 @@ public class SecretQuestionController {
         responseService.successF(res, String.format(Constantes.SuccessMessage.GET_ALL_SECRET_QUESTIONS,secretQuestionList.size()), secretQuestionList);
     }
 
-    @GetMapping(path = "/public/{idUser}")
+    @PostMapping(path = "/public", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void sendSecretQuestion(HttpServletResponse res,
-                                   @PathVariable(value = "idUser") Long idUser) throws IOException {
-        SecretQuestion questionSecrete = secretQuestionService.sendSecretQuestion(idUser);
+                                   @RequestBody User user) throws IOException {
+        SecretQuestion questionSecrete = secretQuestionService.sendSecretQuestion(user.getEmail());
         responseService.successF(res, Constantes.SuccessMessage.QUESTION_SECRETE_FOUND, questionSecrete);
     }
 
-    @GetMapping(path = "/public/{idUser}/answer-secret-question")
+    @PostMapping(path = "/public/answer-secret-question", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void sendAnswerSecretQuestion(HttpServletResponse res,
-                                         @PathVariable(value = "idUser") Long idUser) throws IOException {
-        String answerQuestionSecrete = secretQuestionService.sendAnswerSecretQuestion(idUser);
+                                         @RequestBody User user) throws IOException {
+        String answerQuestionSecrete = secretQuestionService.sendAnswerSecretQuestion(user.getEmail());
         responseService.successF(res, Constantes.SuccessMessage.ANSWER_QUESTION_SECRETE_FOUND, answerQuestionSecrete);
     }
 
@@ -82,7 +82,8 @@ public class SecretQuestionController {
 
 
     @GetMapping(path = "/{idSecretQuestion}")
-    public void getSecretQuestion(HttpServletResponse res,
+    public void getSecretQuestion(HttpServletRequest req,
+                                  HttpServletResponse res,
                                   @PathVariable(name = "idSecretQuestion") Long idSecretQuestion) throws IOException{
         SecretQuestion secretQuestion = secretQuestionService.getSecretQuestionById(idSecretQuestion);
         responseService.successF(res, Constantes.SuccessMessage.GET_SECRET_QUESTION, secretQuestion);
