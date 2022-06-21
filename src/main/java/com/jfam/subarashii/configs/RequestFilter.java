@@ -1,6 +1,5 @@
 package com.jfam.subarashii.configs;
 
-import com.jfam.subarashii.MyRunner;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.services.JwtService;
 import com.jfam.subarashii.services.ResponseService;
@@ -36,20 +35,20 @@ public class RequestFilter extends OncePerRequestFilter {
     @Autowired
     UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(RequestFilter.class);
+    private static final Logger loggers = LoggerFactory.getLogger(RequestFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws ServletException, IOException, AuthenticationException {
-        String header = req.getHeader(Constantes.Token_value.AUTHORIZATION_HEADER);
+        String header = req.getHeader(Constantes.tokenValue.AUTHORIZATION_HEADER);
 
         if (header == null) {
-            responseService.ErrorF(res,String.format(Constantes.ErrorMessage.TOKEN_NOT_EXIST,Constantes.BUILD_VERSION), HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.errorF(res,String.format(Constantes.ErrorMessage.TOKEN_NOT_EXIST,Constantes.buildVersion), HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
-        String token = header.replace(Constantes.Token_value.TOKEN_PREFIX,Constantes.EMPTY_STRING);
-        if (!jwtService.VerifyToken(token)) {
-            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
+        String token = header.replace(Constantes.tokenValue.TOKEN_PREFIX,Constantes.EMPTY_STRING);
+        if (!jwtService.verifyToken(token)) {
+            responseService.errorF(res, Constantes.ErrorMessage.TOKEN_INVALIDE, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
         // set user role for security
@@ -57,7 +56,7 @@ public class RequestFilter extends OncePerRequestFilter {
 
         User currrentUser = userService.getUserForFilterByEmail(email);
         if(currrentUser == null){
-            responseService.ErrorF(res, Constantes.ErrorMessage.TOKEN_USER_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
+            responseService.errorF(res, Constantes.ErrorMessage.TOKEN_USER_NOT_EXIST, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
 
@@ -76,10 +75,15 @@ public class RequestFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         if(Constantes.ENVIRONNEMENT_TYPE.equals("local")){
 
-            return path.contains(Constantes.ROUTE_SIGN_UP) || path.contains(Constantes.ROUTE_SIGN_IN) ||
-                    path.startsWith("/swagger-ui/") || path.startsWith("/api");
+            return path.contains(Constantes.ROUTE_SIGN_IN) ||
+                    path.contains(Constantes.ROUTE_SIGN_UP) ||
+                    path.contains(Constantes.ROUTE_GET_ALL_SECRET_QUESTIONS) ||
+                    path.startsWith("/swagger-ui/") ||
+                    path.startsWith("/api");
         }
 
-        return path.contains(Constantes.ROUTE_SIGN_UP) || path.contains(Constantes.ROUTE_SIGN_IN);
+        return path.contains(Constantes.ROUTE_SIGN_IN) ||
+                path.contains(Constantes.ROUTE_SIGN_UP) ||
+                path.contains(Constantes.ROUTE_GET_ALL_SECRET_QUESTIONS);
     }
 }

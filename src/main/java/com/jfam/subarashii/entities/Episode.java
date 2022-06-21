@@ -1,13 +1,10 @@
 package com.jfam.subarashii.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.JsonObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Table(name = "episodes")
@@ -42,7 +39,7 @@ public class Episode {
 
 
 
-    private Long IdApiAnime;
+    private Long idApiAnime;
 
 
     public Episode(){}
@@ -54,7 +51,7 @@ public class Episode {
         this.note = jsonObject.get("vote_average").getAsFloat();
         this.anime = anime;
         this.numeroEpisode = jsonObject.get("episode_number").getAsLong();
-        this.IdApiAnime = anime.getIdApi();
+        this.idApiAnime = anime.getIdApi();
     }
     //region  === getter-setter ===
 
@@ -119,11 +116,11 @@ public class Episode {
 
 
     public Long getIdApiAnime() {
-        return IdApiAnime;
+        return idApiAnime;
     }
 
     public void setIdApiAnime(Long idApiAnime) {
-        IdApiAnime = idApiAnime;
+        this.idApiAnime = idApiAnime;
     }
 
 

@@ -4,9 +4,9 @@ import com.jfam.subarashii.configs.exception.CustomErrorMessageException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.User;
 import com.jfam.subarashii.entities.UserList;
-import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.UserListRepository;
 import com.jfam.subarashii.utils.Constantes;
+import com.jfam.subarashii.utils.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +35,10 @@ public class UserListService {
 
     public UserList createCustomList(User user, String nameList) {
         UserList customList = new UserList(nameList, user, true);
+
+        // Set Tracking Data
+        customList.setDateCreation(Helpers.getDateTimeNow());
+
         return userListRepository.save(customList);
     }
 

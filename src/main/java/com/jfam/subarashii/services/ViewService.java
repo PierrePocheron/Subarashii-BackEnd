@@ -19,27 +19,27 @@ public class ViewService {
     @Autowired
     EpisodeRepository episodeRepository;
 
-    public Boolean updateUserViewByIdApiEpisode(User user , Long IdApiAnime, Long idApiEpisode){
+    public Boolean updateUserViewByIdApiEpisode(User user , Long idApiAnime, Long idApiEpisode){
         Episode episode = episodeRepository.findByIdApi(idApiEpisode);
-        if(episode == null || !episode.getIdApiAnime().equals(IdApiAnime))
+        if(episode == null || !episode.getIdApiAnime().equals(idApiAnime))
             return null;
 
-        View view = viewRepository.findByIdApiAnimeAndIdApiEpisodeAndUser(IdApiAnime,idApiEpisode , user);
+        View view = viewRepository.findByIdApiAnimeAndIdApiEpisodeAndUser(idApiAnime,idApiEpisode , user);
 
         // si jamais vue
         if (view == null){
             View v = new View();
             v.setUser(user);
             v.setIdApiEpisode(idApiEpisode);
-            v.setIdApiAnime(IdApiAnime);
+            v.setIdApiAnime(idApiAnime);
             viewRepository.save(v);
             return true;
         }
 
-        boolean has_see = view.isSee();
-        view.setSee(!has_see);
+        boolean hasSee = view.isSee();
+        view.setSee(!hasSee);
         viewRepository.save(view);
-        return !has_see;
+        return !hasSee;
     }
 
     public List<View> getAllViewByIdApiAnime(User user, Long idApiAnime){

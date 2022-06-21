@@ -1,12 +1,11 @@
 package com.jfam.subarashii.services;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jfam.subarashii.configs.exception.ResourceApiNotFoundException;
 import com.jfam.subarashii.entities.Anime;
 import com.jfam.subarashii.entities.Genre;
 import com.jfam.subarashii.entities.api.ApiPaginationResults;
+import com.jfam.subarashii.entities.api.Result;
 import com.jfam.subarashii.repositories.AnimeRepository;
 import com.jfam.subarashii.repositories.UserListRepository;
 import com.jfam.subarashii.utils.Constantes;
@@ -18,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +51,7 @@ public class AnimeService {
         Anime anime = animeRepository.findByIdApi(idApi);
 
         if (anime == null) {
-            JsonObject jsonObject = httpClient.GetQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID, idApi));
+            JsonObject jsonObject = httpClient.getQuery(String.format(Constantes.ApiMovie.ROUTE_SERIES_DETAILS_BY_ID, idApi));
             Anime animeApi = new Anime(jsonObject);
 
             // récupère les genres associés à l'animé avant de le sauvegarder
@@ -73,12 +73,18 @@ public class AnimeService {
 
         String query = Helpers.getQueryFromMap(allParams);
         // récupère des série de tout genre :
-        ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
+        ApiPaginationResults apiPaginationResults = httpClient.getQueryPageableResult(Constantes.ApiMovie.ROUTE_SIMPLE_SEARCH_ANIME_WITHOUT_PARAMS + query);
 
-        if(apiPaginationResults.results != null)
+        if(apiPaginationResults.results != null) {
             // du coup je ne veux que les animés:
-            apiPaginationResults.results.removeIf(result ->  !result.genre_ids.contains(16.0));
+            ApiPaginationResults temp = apiPaginationResults;
+            for (int i = 0; i < apiPaginationResults.results.size(); i++) {
+                if (null != apiPaginationResults.results && null != apiPaginationResults.results.get(i).genre_ids && apiPaginationResults.results.get(i).genre_ids.contains(16.0))
+                    temp.results.remove(i);
 
+            }
+            apiPaginationResults = temp;
+        }
         return apiPaginationResults;
     }
 
@@ -88,17 +94,17 @@ public class AnimeService {
      */
     public ApiPaginationResults complexeSearchAnime(Map<String, String> allParams) throws ResourceApiNotFoundException {
         String query = Helpers.getQueryFromMap(allParams);
-        return httpClient.GetQueryPageableResult(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
+        return httpClient.getQueryPageableResult(Constantes.ApiMovie.ROUTE_COMPLEXE_SEARCH_ANIME_WITHOUT_PARAMS + query);
     }
 
     /**
      * Fetch anime and convert to ApiPaginationResults result
-     * @param Page
+     * @param page
      * @return ApiPaginationResults object (api objet with page and other infos)
      * @throws ResourceApiNotFoundException
      */
-    public ApiPaginationResults getDiscoverAnime(int Page) throws ResourceApiNotFoundException {
-        ApiPaginationResults apiPaginationResults = httpClient.GetQueryPageableResult(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, Page));
+    public ApiPaginationResults getDiscoverAnime(int page) throws ResourceApiNotFoundException {
+        ApiPaginationResults apiPaginationResults = httpClient.getQueryPageableResult(String.format(Constantes.ApiMovie.ROUTE_SERIES_DISCOVER_ANIME, page));
         return apiPaginationResults;
     }
 
