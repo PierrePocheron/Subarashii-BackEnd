@@ -149,6 +149,7 @@ public class Constantes {
         public static final String USER_LIST_NOT_CONTAIN_ANIME = "La liste ne contient pas d'animé";
         public static final String USER_LIST_ANIME_NOT_EXIST = "L'animé que vous souhaité supprimer n'existe pas dans la liste";
         public static final String USER_LIST_BAD_SAVE_AFTER_DELETE_ANIME = "La modification pendant la supression d'un animé dans la liste utilisateur n'as pas été correctement sauvegardé";
+        public static final String QUESTION_SECRETE_FOUND = "La question secrète existe";
     }
 
     public static class tokenValue {
