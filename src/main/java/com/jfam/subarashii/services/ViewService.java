@@ -45,7 +45,4 @@ public class ViewService {
     public List<View> getAllViewByIdApiAnime(User user, Long idApiAnime){
         return viewRepository.findAllByUserAndIdApiAnimeAndSeeIsTrue(user, idApiAnime);
     }
-
-
-
 }
