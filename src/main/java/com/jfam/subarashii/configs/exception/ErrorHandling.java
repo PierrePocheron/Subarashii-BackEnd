@@ -30,7 +30,7 @@ import java.util.Set;
 @ControllerAdvice
 @RestController
 //extends ResponseEntityExceptionHandler si besoin mais supprimer method region overrideSpring.
-public class ErrorHandling extends ResponseEntityExceptionHandler{
+public class ErrorHandling extends ResponseEntityExceptionHandler {
 
     @Autowired
     ResponseService responseService;
@@ -60,6 +60,7 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
         loggers.error("SQLGrammarExceptionException: " + ex.getMessage());
         responseService.errorF(res,ex.getMessage(),HttpServletResponse.SC_SERVICE_UNAVAILABLE,false);
     }
+
     @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
     public final void invalidDataAccessResourceUsageExceptionException(InvalidDataAccessResourceUsageException ex, HttpServletResponse res) throws IOException {
         loggers.error("InvalidDataAccessResourceUsageException: " + ex.getMostSpecificCause());
@@ -69,39 +70,34 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     @ExceptionHandler(ResourceApiNotFoundException.class)
     public final void resourceApiNotFoundException(ResourceApiNotFoundException ex, HttpServletResponse res) throws IOException {
         loggers.error("ResourceApiNotFoundException: " + ex.getMessage());
-
         responseService.errorF(res,ex.getMessage(),HttpServletResponse.SC_BAD_GATEWAY,false);
     }
+
     @ExceptionHandler(NumberFormatException.class)
     public final void numberFormatException(NumberFormatException ex, HttpServletResponse res) throws IOException {
         loggers.error("NumberFormatException: " + ex.getMessage());
-
         responseService.errorF(res,Constantes.ErrorMessage.NUMBER_FORMAT_NOT_OK,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public final void methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletResponse res) throws IOException {
         loggers.error("MethodArgumentTypeMismatchException: " +  ex.getMessage());
-
         responseService.errorF(res, Constantes.ErrorMessage.PARAMETER_TYPE_METHOD_MISMATCH,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(ParseException.class)
     public final void parseException(ParseException ex, HttpServletResponse res) throws IOException {
         loggers.error("ParseException: " + ex.getMessage());
-
         responseService.errorF(res, Constantes.ErrorMessage.ERROR_PARSE,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
     @ExceptionHandler(RequestRejectedException.class)
     public final void requestRejectedException(RequestRejectedException ex, HttpServletResponse res) throws IOException {
         loggers.error("RequestRejectedException: " + ex.getMessage());
-
         responseService.errorF(res,Constantes.ErrorMessage.REQUEST_REFUSED,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
     @ExceptionHandler(NonUniqueResultException.class)
     public final void requestRejectedException(NonUniqueResultException ex, HttpServletResponse res) throws IOException {
         loggers.error("NonUniqueResultException: " +  ex.getMessage());
-
         responseService.errorF(res,Constantes.ErrorMessage.NOT_UNIQUE_RESULT,HttpServletResponse.SC_BAD_GATEWAY,false);
     }
 
@@ -112,12 +108,9 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
     }
 
 
-
     @ExceptionHandler(javax.validation.ConstraintViolationException.class)
     public final void constraintViolationException(javax.validation.ConstraintViolationException ex, HttpServletResponse res) throws IOException {
-
         Set<ConstraintViolation<?>> violationExceptionSet =  ex.getConstraintViolations();
-
 
         Map<String,String> contraintMap = new HashMap<>();
         violationExceptionSet.forEach(ves->{
@@ -126,8 +119,6 @@ public class ErrorHandling extends ResponseEntityExceptionHandler{
 
             contraintMap.put(contraintField,contraintText);
         });
-
         responseService.errorF(res,Constantes.ErrorMessage.CONSTRAINT_FIELD_NOT_OK, HttpServletResponse.SC_BAD_GATEWAY,contraintMap);
     }
-
 }

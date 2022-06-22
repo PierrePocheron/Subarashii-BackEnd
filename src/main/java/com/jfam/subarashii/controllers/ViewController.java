@@ -32,7 +32,6 @@ public class ViewController {
         }
         User currentUser = Helpers.getCurrentUser(req);
 
-
         Boolean isActiveSee = viewService.updateUserViewByIdApiEpisode(currentUser,idApiAnime, idApiEpisode);
 
         if(isActiveSee == null){
